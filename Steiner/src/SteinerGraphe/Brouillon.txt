@@ -1,0 +1,21 @@
+TU AS : - Une liste triée 
+	- Nombres d'éléments de cette liste
+	- Le nom de sommets de cette liste
+
+Il faut :
+	- Savoir si il y a une boucle dans le graphe
+
+Pour cela :
+	- Rentrer sur le sommet que l'on vient d'ajouter
+	- Vérifier que ce sommet n'est pas un cycle
+		-> il ne peut pas retourner sur lui même
+
+ALGO : 
+1	-> Tu es sur un sommet donc il est visité
+2	-> tu vas sur les sommets qui l'entoure
+	3	-> si le sommet sur le quel tu vas est le sommet de départ, alors il y a un cycle
+		4	-> Sub le sommet
+	5	-> si le sommet est visité, il y a un cycle 
+		6	-> Erreur dans la construction du graphe
+	7	-> sinon
+	8		-> on retourne à la 1
