@@ -1,4 +1,5 @@
 package SteinerGraphe.Lecture;
+
 import java.io.BufferedReader;
 
 import SteinerGraphe.StructFile;

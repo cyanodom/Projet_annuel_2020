@@ -1,5 +1,6 @@
 package SteinerGraphe.Kruskal;
 
+
 class QuickSort {
 
 	// CONSTRUCTEUR
