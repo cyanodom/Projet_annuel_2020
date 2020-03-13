@@ -54,15 +54,21 @@ public class Graphe {
 			e.printStackTrace();
 		}
 		
+		// PARTIE HashTable
+		
+		/*
+		 * Faire la HashTable
+		 */
+		
 		// PARTIE génétique
 		
 		switch(struct.getNomSommetsT().length) {
 		case 1 :
-			System.out.println(getNomSommetsT()[0]);
+			System.out.println("Arbre Final : " + struct.getNomSommetsT()[0]);
 			System.out.println("Poids de 0");
 			break;
 		case 2 :
-			
+			// DIJKSTRA
 			break;
 		default :
 			if (struct.getNomSommetsT().length == struct.getNbSommets()) {  
