@@ -18,12 +18,13 @@ public class Graphe {
 	
 	private File file;
 	
-	private Kruskal kruskal;
+	private Genetique gene;
 	
 	
 	// CONSTRUCTEUR
 	
 	public Graphe () {
+		// FICHIER TXT qui contient le graphe
 		file = new File("C:\\Users\\tisda\\eclipse-workspace2\\Steiner\\src\\SteinerGraphe\\text.txt");
 		this.struct = new StructFile();
 		
@@ -45,8 +46,8 @@ public class Graphe {
 			e.printStackTrace();
 		}
 		
-		kruskal = new Kruskal(struct, reader.getLength());
-		kruskal.kruskal();
+		gene = new Genetique(struct);
+		gene.AlgoGene();
 	}
 	
 	

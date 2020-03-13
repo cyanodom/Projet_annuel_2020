@@ -12,7 +12,7 @@ public class Cycle {
 	
 	private int nb;
 	private int length;
-	private LinkedList<Integer> list[]; 
+	private LinkedList<Integer> list[];
 	private StructFile struct;
 	
 	
@@ -24,26 +24,20 @@ public class Cycle {
 		this.nb = struct.getNbSommets();
 	}
 
-	// A recursive function that uses visited[] and parent to detect 
-	// cycle in subgraph reachable from vertex v. 
 	public Boolean searchCycle(int v, Boolean visite[], int parent) {
 		visite[v] = true;
 		Integer i; 
 		
-		// Recur for all the vertices adjacent to this vertex 
 		Iterator<Integer> it = list[v].iterator(); 
 		while (it.hasNext()) { 
 			i = it.next() - 1;
-			// If an adjacent is not visited, then recur for that 
-			// adjacent 
+			
 			if (!visite[i]) { 
 				if (searchCycle(i, visite, v)) {
 					return true;
 				}
 			}
 
-			// If an adjacent is visited and not parent of current 
-			// vertex, then there is a cycle. 
 			else if (i != parent) {
 				return true;
 			}
@@ -51,15 +45,14 @@ public class Cycle {
 		return false; 
 	} 
 
-	// Returns true if the graph contains a cycle, else false. 
+	
 	public Boolean findCycle(int[][] tab, int l) { 
 		length = l;
 		list = new LinkedList[nb]; 
 		for (int i = 0; i < nb; ++i) {
 			list[i] = new LinkedList<Integer>();
 		}
-		// Mark all the vertices as not visited and not part of 
-		// recursion stack
+
 		Boolean visite[] = new Boolean[nb]; 
 		for (int i = 0; i < nb; i++) {
 			visite[i] = false;
@@ -75,7 +68,7 @@ public class Cycle {
 		
 		for (int u = 0; u < nb; u++) {
 			if (!visite[u]) { // Si tu ne l'as toujours pas visité, alors
-				if (searchCycle(u, visite, -1)) { // Rechercher depuis de sommet
+				if (searchCycle(u, visite, -1)) { // Rechercher depuis ce sommet
 					return true;
 				}
 			}
@@ -137,7 +130,9 @@ public class Cycle {
 	}
 	
 	
-	/* A utility function to print array of size n */
+	// PRINT FUNCTIONS
+	
+	// INT 
 	public void printArray(int[][] js) { 
 		int n = js.length; 
 		for (int i=0; i<n; ++i) { 
@@ -146,6 +141,7 @@ public class Cycle {
 		}
 	}
 	
+	// STRING
 	public void printArrayS(String[][] js) { 
 		int n = js.length; 
 		for (int i=0; i<n; ++i) { 
