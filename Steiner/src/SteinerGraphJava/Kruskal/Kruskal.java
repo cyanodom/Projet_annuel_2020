@@ -5,36 +5,36 @@ import SteinerGraphe.StructFile;
 
 public class Kruskal {
 	// CONSTANTE
-	
+
 	private final static int NB_ELEMENT = 2;
-	
+
 	// ATTRIBUTS
-	
+
 	private StructFile struct;
 	private QuickSort quickSort;
 	private Cycle cycle;
 	private int length;
-	
-	
+
+
 	// CONSTRUCTEUR
-	
+
 	public Kruskal (StructFile struct, int length) {
 		this.struct = struct;
 		this.quickSort = new QuickSort();
 		this.cycle = new Cycle(length - 3, this.struct);
 		this.length = length;
 	}
-	
-	
+
+
 	// REQUETES
-	
+
 	public int getLength() {
 		return length;
 	}
-	
-	
+
+
 	// COMMANDES
-	
+
 	public int[][] trierList(int pos) {
 		return quickSort.sort(struct.getList(), 0, getLength() - 4, pos);
 	}
@@ -53,11 +53,11 @@ public class Kruskal {
 				n--;
 			} else {
 				System.out.println("Not a CYCLE");
-			}	
+			}
 		}
 		return kara;
 	}
-	
+
 	public void vide(int[] tab) {
 		tab[0] = 0;
 		tab[1] = 0;
