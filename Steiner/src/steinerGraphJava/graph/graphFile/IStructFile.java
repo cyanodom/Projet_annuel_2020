@@ -1,4 +1,4 @@
-package SteinerGraphe;
+package steinerGraphJava.graph.graphFile;
 
 public interface IStructFile {
 

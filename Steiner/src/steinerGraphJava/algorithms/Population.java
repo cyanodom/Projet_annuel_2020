@@ -1,7 +1,4 @@
-package SteinerGraphe;
-
-import java.util.Iterator;
-import java.util.LinkedList;
+package steinerGraphJava.algorithms;
 
 public class Population {
 
