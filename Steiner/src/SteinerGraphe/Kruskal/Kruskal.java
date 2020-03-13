@@ -39,7 +39,7 @@ public class Kruskal {
 		return quickSort.sort(struct.getList(), 0, getLength() - 4, pos);
 	}
 
-	public void kruskal() {
+	public int[][] kruskal() {
 		int n = 0; // Controle pour ne pas avoir des tailles trop grandes de tableau avec des cases vides
 		int res[][] = trierList(NB_ELEMENT);
 		quickSort.printArray(res);
@@ -55,6 +55,7 @@ public class Kruskal {
 				System.out.println("Not a CYCLE");
 			}	
 		}
+		return kara;
 	}
 	
 	public void vide(int[] tab) {

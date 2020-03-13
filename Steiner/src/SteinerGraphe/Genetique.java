@@ -8,7 +8,7 @@ public class Genetique {
 	
 	// ATTRIBUTS
 	
-	private int compil;
+	private int complex;
 	private StructFile struct;
 	private Population population;
 	private Kruskal kruskal;
@@ -17,8 +17,8 @@ public class Genetique {
 	
 	public Genetique(StructFile struct) {
 		this.struct = struct;
-		this.compil = struct.getNomSommets().length - struct.getNomSommetsT().length;
-		this.population = new Population(compil);
+		this.complex = struct.getNbSommets() - struct.getNomSommetsT().length;
+		this.population = new Population(complex);
 	}
 	
 	
@@ -29,21 +29,20 @@ public class Genetique {
 		population.generatePopulation();
 		System.out.println("------------ GENERATIN FINISHED -----------");
 		
-//		for (int i = 0; i < compil; i++) {
-//			int[][] res = createV();
-//		}
+		String[] res = createV();
 	}
 	
-//	public int[][] createV() {
-//		Arrays.sort(struct.getNomSommets());
-//		Arrays.sort(struct.getNomSommetsT());
-//		int[][] res = ;
-//		int n = 0;
-//		for (int i = 0; i < struct.getNbSommets(); i++) {
-//			if (!(struct.getNomSommets()[i].equals(struct.getNomSommetsT()[i - n]))) {
-//				int k = Integer.parseInt(struct.getNomSommets()[i]);
-//				++n;
-//			}
-//		}
-//	}
+	public String[] createV() {
+		Arrays.sort(struct.getNomSommets());
+		Arrays.sort(struct.getNomSommetsT());
+		String[] res = new String[complex];
+		int n = 0;
+		for (int i = 0; i < struct.getNbSommets(); i++) {
+			if (!(struct.getNomSommets()[i].equals(struct.getNomSommetsT()[i - n]))) {
+				int k = Integer.parseInt(struct.getNomSommets()[i]);
+				++n;
+			}
+		}
+		return res;
+	}
 }

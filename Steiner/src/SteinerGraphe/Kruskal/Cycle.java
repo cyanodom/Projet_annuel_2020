@@ -53,10 +53,7 @@ public class Cycle {
 			list[i] = new LinkedList<Integer>();
 		}
 
-		Boolean visite[] = new Boolean[nb]; 
-		for (int i = 0; i < nb; i++) {
-			visite[i] = false;
-		}
+		Boolean visite[] = new Boolean[nb];
 		
 		int[][] tab1 = trans(tab, l);
 		
@@ -73,7 +70,7 @@ public class Cycle {
 				}
 			}
 		}
-		return false; 
+		return false;
 	}
 
 	/*

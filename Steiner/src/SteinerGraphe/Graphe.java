@@ -24,8 +24,16 @@ public class Graphe {
 	// CONSTRUCTEUR
 	
 	public Graphe () {
-		// FICHIER TXT qui contient le graphe
+		runAlgo();
+	}
+	
+	
+	// COMMANDES
+	
+	public void runAlgo() {
 		file = new File("C:\\Users\\tisda\\eclipse-workspace2\\Steiner\\src\\SteinerGraphe\\text.txt");
+		
+		// Partie Reader
 		this.struct = new StructFile();
 		
 		try {
@@ -46,10 +54,28 @@ public class Graphe {
 			e.printStackTrace();
 		}
 		
-		gene = new Genetique(struct);
-		gene.AlgoGene();
+		// PARTIE génétique
+		
+		switch(struct.getNomSommetsT().length) {
+		case 1 :
+			System.out.println(getNomSommetsT()[0]);
+			System.out.println("Poids de 0");
+			break;
+		case 2 :
+			
+			break;
+		default :
+			if (struct.getNomSommetsT().length == struct.getNbSommets()) {  
+				// SI S = T
+				Kruskal kruskal = new Kruskal(struct, reader.getLength());
+				int[][] tab = kruskal.kruskal();
+			} else {
+				gene = new Genetique(struct);
+				gene.AlgoGene();
+			}
+			break;
+		}
 	}
-	
 	
 	// MAIN
 	
