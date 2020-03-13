@@ -19,63 +19,63 @@ import SteinerGraphe.StructFile;;
  * 			getStruct() == struct
  */
 public interface ITranslator {
-	
+
 	// CONSTANTE
-	
+
 	/*
-	 * Le nombre représentant l'infini
+	 * Le nombre reprï¿½sentant l'infini
 	 */
 	static int I = 99999999;
-	
+
 	// REQUETES
-	
+
 	/*
 	 * Renvoie le BufferedReader 1 permettant de count le nombre de lignes
 	 */
 	BufferedReader getBr1();
-	
+
 	/*
-	 * Renvoie le BufferedReader 2 permettant de créer notre structure
+	 * Renvoie le BufferedReader 2 permettant de crï¿½er notre structure
 	 */
 	BufferedReader getBr2();
-	
+
     /*
      * La structure
      */
     StructFile getStruct();
-	
-    
+
+
 	// COMMANDE
-	
+
 	/*
 	 * Compte le nombre de ligne et le renvoie
 	 * @pre
 	 * 		br1 != null
 	 */
 	int count() throws Exception;
-    
+
 	/*
 	 * Permet de remplir la structure
 	 * @pre
 	 * 		br2 != null
-	 * 		struct.getNbSommets() == première ligne
-	 * 		struct.getNomSommets() == deuxième ligne
-	 * 		struct.getNbSommetsRdv() == troisième ligne
-	 *   	struct.getNomSommetsRdv() == quatrième ligne
-	 *   	struct.getNomSommetsIni() == cinquième ligne
+	 * 		struct.getNbSommets() == premiï¿½re ligne
+	 * 		struct.getNomSommets() == deuxiï¿½me ligne
+	 * 		struct.getNbSommetsRdv() == troisiï¿½me ligne
+	 *   	struct.getNomSommetsRdv() == quatriï¿½me ligne
+	 *   	struct.getNomSommetsIni() == cinquiï¿½me ligne
 	 *		struct.getBase() == fromArrayToDist(ligne 6 et plus)
 	 */
 	void trans(int i) throws Exception;
-	
+
 	/*
-	 * Créé un tableau bidimentionel représentant la situation envoyé depuis le .txt
+	 * Crï¿½ï¿½ un tableau bidimentionel reprï¿½sentant la situation envoyï¿½ depuis le .txt
 	 *		tab[0] != null
 	 */
 	int[][] fromArrayToDist(String[] tab);
-	
-	
-	// OUTILS 
-	
+
+
+	// OUTILS
+
 	/*
 	 * Transforme un char en un int tq a = 0, b = 1, etc
 	 * @pre

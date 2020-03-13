@@ -16,39 +16,39 @@ import SteinerGraphe.StructFile;
  * 			getStruct() == struct
  */
 public interface IReader {
-	
+
     // REQUETES
-    
+
     /*
      * BufferedReader utilis� pour connaitre length
      */
     BufferedReader getBr1();
-    
+
     /*
      * BufferedReader utilis� pour la traduction
      */
     BufferedReader getBr2();
-    
+
     /*
      * Le Translator actuellement en cours
      * @pre
      * 		translate != null
      */
     Translator getTranslate();
-    
+
     /*
      * Le nombre de lignes du fichier
      */
     int getLength();
-    
+
     /*
      * La structure
      */
     StructFile getStruct();
-    
-    
+
+
     // COMMANDES
-    
+
     /*
      * Utilis� pour initialiser le Translator et la length du fichier
      * @post
@@ -56,21 +56,21 @@ public interface IReader {
      *		length == translate.count();
      */
     void translate() throws Exception;
-    
+
     /*
      * Lire le fichier afin de remplir la structure en utilisant le Translator
      * @pre
      * 		length >= 6
-     * @post 
+     * @post
      * 		struct != old struct
      * 		br1 == null
      * 		br2 == null
      */
     void read() throws Exception;
-    
+
     /*
      * Permet de fermer les fichiers
-     * @post 
+     * @post
      * 		br1 == null
      * 		br2 == null
      */

@@ -8,42 +8,42 @@ import util.Contract;
 
 public class Translator implements ITranslator {
 	// CONSTANTES
-	
+
 	private static final int NB_ELEMENT = 3;
-	
-	
+
+
 	// ATTRIBUTS
-	
+
 	private BufferedReader br1;
 	private BufferedReader br2;
 	private StructFile struct;
-	
+
 	// CONSTRUCTEUR
-	
+
 	public Translator(BufferedReader br1, BufferedReader br2, StructFile struct) {
 		Contract.checkCondition(br1 != null && br2 != null && struct != null);
 		this.br1 = br1;
 		this.br2 = br2;
 		this.struct = struct;
 	}
-	
-	
+
+
 	// REQUETES
-	
+
 	public BufferedReader getBr1() {
 		return br1;
 	}
-	
+
 	public BufferedReader getBr2() {
 		return br2;
 	}
-	
+
 	public StructFile getStruct() {
 		return struct;
 	}
-	
+
 	// COMMANDES
-	
+
 	public int count() throws Exception {
 		Contract.checkCondition(getBr1() != null);
 		int i = 0;
@@ -52,7 +52,7 @@ public class Translator implements ITranslator {
 		}
 		return i;
 	}
-    
+
 	public void trans(int i) throws Exception {
 		Contract.checkCondition(getBr2() != null);
 		int n = 0;
@@ -60,7 +60,7 @@ public class Translator implements ITranslator {
 		while (n < i) {
 			if (n== 0) {
 				struct.addNbSommets(Integer.parseInt(getBr2().readLine()));
-			} 
+			}
 			else if (n == 1) {
 				struct.addNomSommets(getBr2().readLine().split(" "));
 			}
@@ -74,7 +74,7 @@ public class Translator implements ITranslator {
 		}
 		struct.addList(fromArrayToList(tab, i - 3));
 	}
-	
+
 	public int[][] fromArrayToList(String[] tab, int n) {
 		Contract.checkCondition(tab[0] != null);
 		int[][] res = new int[n][NB_ELEMENT];
@@ -90,8 +90,8 @@ public class Translator implements ITranslator {
 		}
 		return res;
 	}
-	
-	
+
+
 	public int[][] fromArrayToDist(String[] tab) {
 		Contract.checkCondition(tab[0] != null);
 		int[][] res = new int[struct.getNbSommets()][struct.getNbSommets()];
@@ -104,7 +104,7 @@ public class Translator implements ITranslator {
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < tab.length; i++) {
 			String[] temp = new String[3];
 			tab[i].trim();
@@ -116,9 +116,9 @@ public class Translator implements ITranslator {
 		return res;
 	}
 
-	
-	// OUTILS 
-	
+
+	// OUTILS
+
 	public int fromPredToInt(String car) {
 		Contract.checkCondition(car != null);
 		return Integer.parseInt(car);
