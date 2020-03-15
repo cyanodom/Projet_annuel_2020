@@ -23,36 +23,38 @@ class QuickSort {
 				i++;
 
 				Arc temp = arr.get(i);
-				arr.add(i, arr.get(j));
-				arr.add(j, temp);
+				arr.set(i, arr.get(j));
+				arr.set(j, temp);
 			}
 		}
 
 		Arc temp = arr.get(i + 1);
-		arr.add(i + 1, arr.get(high));
-		arr.add(high, temp);
+		arr.set(i + 1, arr.get(high));
+		arr.set(high, temp);
 
 		return i+1;
 	}
 
 
 	public LinkedList<Arc> sort(LinkedList<Arc> linkedList, int low, int high) {
-		LinkedList<Arc> arr = linkedList;
+		System.out.println(linkedList.size());
 		if (low < high) {
-			int pi = partition(arr, low, high);
+			int pi = partition(linkedList, low, high);
 
-			sort(arr, low, pi-1);
-			sort(arr, pi+1, high);
+			sort(linkedList, low, pi-1);
+			sort(linkedList, pi+1, high);
 		}
-		return arr;
+		return linkedList;
 	}
 
 
-//	public void printArray(LinkedList<Arc> res) {
-//		int n = res.length;
-//		for (int i=0; i<n; ++i) {
-//			System.out.print("(" + res[i].getNodes()[0] + "," + res[i].getNodes()[1] + "," + res[i].getWeight() + ")");
-//			System.out.println();
-//		}
-//	}
+	public void printArray(LinkedList<Arc> res) {
+		System.out.println("Résultat du QuickSort :");
+		for (int i = 0; i < res.size(); ++i) {
+			System.out.println("(" + res.get(i).getNodes()[0].getName() + "," 
+								   + res.get(i).getNodes()[1].getName() + ","
+								   + res.get(i).getWeight() + ")");
+		}
+		System.out.println("FIN résultat du QuickSort :" + res.size());
+	}
 }

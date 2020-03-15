@@ -20,7 +20,7 @@ public class Cycle {
 	// CONSTRUCTEUR
 
 	public Cycle(Graph graph) {
-		this.length = graph.getShape().size();
+		this.length = 0;
 		this.nb = graph.getNodes().length;
 	}
 
@@ -46,15 +46,16 @@ public class Cycle {
 	}
 
 
-	public Boolean findCycle(Arc[] kara, int l) {
+	public Boolean findCycle(LinkedList<Arc> kara, int l) {
 		length = l;
 		list = new LinkedList[nb];
+		Boolean visite[] = new Boolean[nb];
 		for (int i = 0; i < nb; ++i) {
 			list[i] = new LinkedList<Integer>();
+			visite[i] = false;
 		}
-
-		Boolean visite[] = new Boolean[nb];
-
+		
+		
 //		Arc[] tab1 = trans(kara, l);
 //
 //		String[][] res = newTab();
@@ -64,7 +65,7 @@ public class Cycle {
 		createList(kara);
 
 		for (int u = 0; u < nb; u++) {
-			if (!visite[u]) { // Si tu ne l'as toujours pas visit�, alors
+			if (!visite[u]) {
 				if (searchCycle(u, visite, -1)) { // Rechercher depuis ce sommet
 					return true;
 				}
@@ -115,35 +116,14 @@ public class Cycle {
 	 * TAB
 	 */
 
-	public void createList(Arc[] tab1) {
+	public void createList(LinkedList<Arc> kara) {
 		for (int i = 0; i < length; i++) {
-			addList(tab1[i]);
+			addList(kara.get(i));
 		}
 	}
 
 	public void addList(Arc tab1) {
 		list[tab1.getNodes()[0].getName() - 1].add(tab1.getNodes()[1].getName());
 		list[tab1.getNodes()[1].getName() - 1].add(tab1.getNodes()[0].getName());
-	}
-
-
-	// PRINT FUNCTIONS
-
-	// INT
-	public void printArray(int[][] js) {
-		int n = js.length;
-		for (int i=0; i<n; ++i) {
-			System.out.print("(" + js[i][0] + "," + js[i][1] + "," + js[i][2] + ")");
-			System.out.println();
-		}
-	}
-
-	// STRING
-	public void printArrayS(String[][] js) {
-		int n = js.length;
-		for (int i=0; i<n; ++i) {
-			System.out.print("(" + js[i][0] + "," + js[i][1] + ")");
-			System.out.println();
-		}
 	}
 }

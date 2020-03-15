@@ -1,5 +1,7 @@
 package steinerGraphJava.algorithms.Kruskal;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 import steinerGraphJava.graph.Arc;
@@ -7,9 +9,6 @@ import steinerGraphJava.graph.Graph;
 import steinerGraphJava.graph.Node;
 
 public class Kruskal {
-	// CONSTANTE
-
-	private final static int NB_ELEMENT = 2;
 
 	// ATTRIBUTS
 
@@ -38,24 +37,20 @@ public class Kruskal {
 
 	// COMMANDES
 
-	public LinkedList<Arc> trierList(int pos) {
-		return quickSort.sort(graph.getShape(), 0, getLength() - 4);
+	public void trierList() {
+		Collections.sort(graph.getShape(), new SortPerso());
 	}
 
-	public Arc[] kruskal() {
+	public LinkedList<Arc> kruskal() {
 		int n = 0; // Controle pour ne pas avoir des tailles trop grandes de tableau avec des cases vides
-		LinkedList<Arc> res = trierList(NB_ELEMENT);
-//		quickSort.printArray(res);
-		Arc kara[] = new Arc[getLength()];
+		trierList();
+		quickSort.printArray(graph.getShape());
+		LinkedList<Arc> kara = new LinkedList<Arc>();
 		for (int i = 0; i < getLength(); i++) {
-			kara[i + n] = res[i];
-			System.out.println(kara[i + n].getNodes()[0] + "," + kara[i + n].getNodes()[1] + "," + kara[i + n].getWeight());
-			if (cycle.findCycle(kara, i + 1 + n)) {
-				System.out.println("CYCLE");
-				vide(kara[i + n]);
-				n--;
-			} else {
-				System.out.println("Not a CYCLE");
+			kara.add(graph.getShape().get(i));
+			if (cycle.findCycle(kara, i + 1 - n)) {
+				kara.removeLast();
+				++n;
 			}
 		}
 		return kara;
@@ -65,5 +60,18 @@ public class Kruskal {
 		kara.getNodes()[0] = new Node(0);
 		kara.getNodes()[1] = new Node(0);
 		kara.changeWeight(0);
+	}
+	
+	// Class SortPerso
+	
+	public class SortPerso implements Comparator<Arc> {
+	    @Override
+	    public int compare(Arc e1, Arc e2) {
+	        if(e1.getWeight() > e2.getWeight()){
+	            return 1;
+	        } else {
+	            return -1;
+	        }
+	    }
 	}
 }

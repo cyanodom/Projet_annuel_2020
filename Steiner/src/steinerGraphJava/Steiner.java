@@ -4,8 +4,6 @@ import java.io.File;
 import javax.swing.SwingUtilities;
 
 import steinerGraphJava.algorithms.Genetique;
-import steinerGraphJava.algorithms.Kruskal.Kruskal;
-import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
 
 public class Steiner {
@@ -37,6 +35,7 @@ public class Steiner {
 		graph.loadFile(file,graph);
 		
 		// ============ TEST ==============
+		
 		System.out.println("Nb Terminal : " + graph.getMaxTerminalNodeId());
 		
 		System.out.println("Tous les Sommets :");
@@ -59,44 +58,14 @@ public class Steiner {
 								   + graph.getShape().get(i).getNodes()[1].getName() + ","
 								   + graph.getShape().get(i).getWeight() + ")");
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		// ============ TEST ==============
+
+
+		// PARTIE Genetique
 		
-		// PARTIE HashTable
-
-		/*
-		 * Faire la HashTable
-		 */
-
-		// PARTIE g�n�tique
-//
-//		switch(graph.getMaxTerminalNodeId()) {
-//		case 1 :
-//			System.out.println("Arbre Final : " + graph.getNodes()[0]);
-//			System.out.println("Poids de 0");
-//			break;
-//		case 2 :
-//			// DIJKSTRA
-//			break;
-//		default :
-//			if (graph.getShape().length == graph.getMaxTerminalNodeId()) {
-//				// SI S = T
-//				Kruskal kruskal = new Kruskal(graph);
-//				Arc[] tab = kruskal.kruskal();
-//			} else {
-//				gene = new Genetique(graph);
-//				gene.AlgoGene();
-//			}
-//			break;
-//		}
+		gene = new Genetique(graph);
+		gene.algoGene();
 	}
 
 	// MAIN
