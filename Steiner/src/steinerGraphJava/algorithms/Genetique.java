@@ -1,48 +1,49 @@
-package SteinerGraphe;
+package steinerGraphJava.algorithms;
 
-import java.util.Arrays;
-
-import SteinerGraphe.Kruskal.Kruskal;
+import steinerGraphJava.algorithms.Kruskal.Kruskal;
+import steinerGraphJava.graph.Graph;
 
 public class Genetique {
-	
+
 	// ATTRIBUTS
-	
+
 	private int complex;
-	private StructFile struct;
 	private Population population;
-	private Kruskal kruskal;
 	private Graph graph;
-	
-	
+
+
 	// CONSTRUCTEURS
-	
-	public Genetique(StructFile struct, Graph graph) {
-		this.struct = struct;
-		this.complex = struct.getNbSommets() - struct.getNomSommetsT().length;
+
+	public Genetique(Graph graph) {
+		this.complex = graph.getMaxTerminalNodeId();
 		this.population = new Population(complex);
 		this.graph = graph;
 	}
-	
-	
+
+
 	// COMMANDES
-	
+
 	public void AlgoGene() {
 		System.out.println("----------- GENERATIN POPULATION ----------");
 		population.generatePopulation();
 		System.out.println("------------ GENERATIN FINISHED -----------");
 		
-		for (int i = 0; i < complex; ++i) {
-			Graph temp[] = graph[i];	
-		}
+		Graph temp[] = null;
 		
+		for (int i = 0; i < complex; ++i) {
+			temp[i] = graph;
+		}
+
 		for (int i = 0; i < complex; ++i) {
 			for (int j = 0; j < complex; ++j) {
 				if (population.getList()[i][j] == 0) {
-					temp[k].removeNode(graph.getNode()[graph.getMaxTerminalNodeId() + j]);
+					temp[i].removeNode(graph.getNodes()[graph.getMaxTerminalNodeId() + j]);
 				}
 			}
+			// FAIRE KRUSKAL SUR temp[i]
+			
+			Kruskal tempKruskal = new Kruskal(temp[i]);
+			tempKruskal.kruskal();
 		}
-		
 	}
 }
