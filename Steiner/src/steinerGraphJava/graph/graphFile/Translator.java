@@ -1,9 +1,8 @@
-package SteinerGraphe.Lecture;
+package steinerGraphJava.graph.graphFile;
 
 
 import java.io.BufferedReader;
 
-import SteinerGraphe.StructFile;
 import util.Contract;
 
 public class Translator implements ITranslator {

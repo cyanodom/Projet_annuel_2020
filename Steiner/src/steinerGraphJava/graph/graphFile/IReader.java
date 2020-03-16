@@ -1,8 +1,6 @@
-package SteinerGraphe.Lecture;
+package steinerGraphJava.graph.graphFile;
 
 import java.io.BufferedReader;
-
-import SteinerGraphe.StructFile;
 
 /*
  * @cons

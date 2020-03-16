@@ -1,10 +1,10 @@
-package SteinerGraphe.Kruskal;
+package steinerGraphJava.algorithms.kruskal;
 
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import SteinerGraphe.StructFile;
+import steinerGraphJava.graph.graphFile.StructFile;
 
 public class Cycle {
 

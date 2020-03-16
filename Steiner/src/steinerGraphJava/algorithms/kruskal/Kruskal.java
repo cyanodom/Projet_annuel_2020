@@ -1,7 +1,6 @@
-package SteinerGraphe.Kruskal;
+package steinerGraphJava.algorithms.kruskal;
 
-
-import SteinerGraphe.StructFile;
+import steinerGraphJava.graph.graphFile.StructFile;
 
 public class Kruskal {
 	// CONSTANTE

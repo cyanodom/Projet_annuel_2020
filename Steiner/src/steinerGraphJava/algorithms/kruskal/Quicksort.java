@@ -1,4 +1,4 @@
-package SteinerGraphe.Kruskal;
+package steinerGraphJava.algorithms.kruskal;
 
 
 class QuickSort {

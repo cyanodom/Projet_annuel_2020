@@ -1,14 +1,12 @@
-package SteinerGraphe.Lecture;
+package steinerGraphJava.graph.graphFile;
 
-
-import util.Contract;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import SteinerGraphe.StructFile;;
+import util.Contract;;
 
 public class Reader implements IReader {
 

@@ -1,8 +1,11 @@
-package SteinerGraphe;
+package steinerGraphJava.algorithms;
 
 import java.util.Arrays;
 
-import SteinerGraphe.Kruskal.Kruskal;
+import steinerGraphJava.algorithms.Kruskal.Kruskal;
+import steinerGraphJava.graph.Graph;
+import steinerGraphJava.graph.IGraph;
+import steinerGraphJava.graph.graphFile.StructFile;
 
 public class Genetique {
 
@@ -12,7 +15,7 @@ public class Genetique {
 	private StructFile struct;
 	private Population population;
 	private Kruskal kruskal;
-	private Graph graph;
+	private IGraph graph;
 
 
 	// CONSTRUCTEURS

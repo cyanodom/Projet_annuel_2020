@@ -1,0 +1,5 @@
+*
+!src/
+!toolbox/
+!misc/
+!.gitignore
