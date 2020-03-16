@@ -1,0 +1,6 @@
+*
+!src/
+!toolbox/
+!misc/
+!.gitignore
+!.classpath
