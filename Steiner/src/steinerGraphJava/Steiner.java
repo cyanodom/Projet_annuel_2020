@@ -33,7 +33,7 @@ public class Steiner {
 	// COMMANDES
 
 	public void runAlgo() {
-		file = new File("C:\\Users\\tisda\\eclipse-workspace2\\Steiner\\src\\SteinerGraphe\\text.txt");
+		file = new File("misc/text.txt");
 
 		// Partie Reader
 		this.struct = new StructFile();
