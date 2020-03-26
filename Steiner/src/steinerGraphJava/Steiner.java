@@ -27,7 +27,7 @@ public class Steiner {
 	// COMMANDES
 
 	public void runAlgo() {
-		file = new File("C:\\Users\\tisda\\eclipse-workspace2\\Steiner\\src\\SteinerGraphe\\text.txt");
+		file = new File("C:\\Users\\tisda\\AppData\\Local\\Packages\\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\\LocalState\\rootfs\\home\\tisdam\\Projet_annuel_2020\\Steiner\\misc\\text.txt");
 
 		// NEW PARTIE LOAD
 		
@@ -64,7 +64,8 @@ public class Steiner {
 
 		// PARTIE Genetique
 		
-		gene = new Genetique(graph);
+		// True = elitiste / false = generationnel
+		gene = new Genetique(graph, true);
 		gene.algoGene();
 	}
 

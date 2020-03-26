@@ -14,7 +14,7 @@ public class Cycle {
 	private int nb;
 	private int length;
 	private LinkedList<Integer> list[];
-	private Graph graph;
+	private int nbArbre;
 
 
 	// CONSTRUCTEUR
@@ -22,8 +22,18 @@ public class Cycle {
 	public Cycle(Graph graph) {
 		this.length = 0;
 		this.nb = graph.getNodes().length;
+		nbArbre = 0;
 	}
 
+	// REQUETES
+	
+	public int getNbArbre() {
+		return nbArbre;
+	}
+	
+	
+	// COMMANDES
+	
 	public Boolean searchCycle(int v, Boolean visite[], int parent) {
 		visite[v] = true;
 		Integer i;
@@ -54,18 +64,14 @@ public class Cycle {
 			list[i] = new LinkedList<Integer>();
 			visite[i] = false;
 		}
-		
-		
-//		Arc[] tab1 = trans(kara, l);
-//
-//		String[][] res = newTab();
-//
-//		transNewTab(tab1, res);
 
+		nbArbre = 0;
+		
 		createList(kara);
 
 		for (int u = 0; u < nb; u++) {
 			if (!visite[u]) {
+				++nbArbre;
 				if (searchCycle(u, visite, -1)) { // Rechercher depuis ce sommet
 					return true;
 				}
@@ -73,44 +79,6 @@ public class Cycle {
 		}
 		return false;
 	}
-
-	/*
-	 * RES
-	 */
-
-//	public Arc[] trans(Arc[] kara, int i) {
-//		Arc[] tab1 = new Arc[i];
-//		for (int j = 0; j < i; j++) {
-//			tab1[j] = kara[j];
-//		}
-//		return tab1;
-//	}
-//
-//	public String[][] newTab() {
-//		String[][] res = new String[nb][2];
-//		for (int i = 0; i < nb; i++) {
-//			res[i][0] = graph.getNomSommets()[i];
-//			res[i][1] = Integer.toString(i + 1);
-//		}
-//		return res;
-//	}
-//
-//	public void transNewTab(Arc[] tab1, String[][] res) {
-//		for(int i = 0; i < length; i++) {
-//			Node j = tab1[i].getNodes()[0];
-//			Node k = tab1[i].getNodes()[1];
-//			tab1[i].getNodes()[0] = passToNewTab(j, res);
-//			tab1[i].getNodes()[1] = passToNewTab(k, res);
-//		}
-//	}
-//
-//	public Node passToNewTab(Node j, String[][] res) {
-//		int k = 0;
-//		while(!Integer.toString(j).equals(res[k][0])) {
-//			k++;
-//		}
-//		return Integer.parseInt(res[k].[1]);
-//	}
 
 	/*
 	 * TAB

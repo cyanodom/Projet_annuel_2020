@@ -1,6 +1,8 @@
 package steinerGraphJava.graph;
 
-public class Arc {
+import java.io.Serializable;
+
+public class Arc implements Serializable {
 	private int weight;
 	private Node[] nodes;
 	

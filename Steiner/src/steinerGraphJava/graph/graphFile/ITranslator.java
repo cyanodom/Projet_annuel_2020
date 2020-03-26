@@ -1,7 +1,6 @@
 package steinerGraphJava.graph.graphFile;
 
 
-import java.io.BufferedReader;
 import java.io.File;
 
 import steinerGraphJava.graph.Graph;;

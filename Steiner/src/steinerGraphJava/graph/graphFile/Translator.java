@@ -5,13 +5,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Hashtable;
 import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
 import steinerGraphJava.graph.Node;
 import util.Contract;
 
-public class Translator implements ITranslator {
+public class Translator implements ITranslator, Serializable {
 
 	// CONSTRUCTEUR
 
