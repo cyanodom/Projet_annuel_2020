@@ -1,6 +1,8 @@
 package steinerGraphJava.graph;
 
-public class Node {
+import java.io.Serializable;
+
+public class Node implements Serializable {
 	private int name;
 	
 	public Node(int name) {

@@ -1,26 +1,20 @@
 package steinerGraphJava;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-
 import javax.swing.SwingUtilities;
 
 import steinerGraphJava.algorithms.Genetique;
-import steinerGraphJava.algorithms.Kruskal.Kruskal;
-import steinerGraphJava.graph.graphFile.Reader;
-import steinerGraphJava.graph.graphFile.StructFile;
+import steinerGraphJava.graph.Graph;
 
 public class Steiner {
 
 	// ATTRIBUTS
 
-	private Reader reader;
-
-	private StructFile struct;
-
 	private File file;
 
 	private Genetique gene;
+	
+	private Graph graph;
 
 
 	// CONSTRUCTEUR
@@ -33,56 +27,46 @@ public class Steiner {
 	// COMMANDES
 
 	public void runAlgo() {
-		file = new File("C:\\Users\\tisda\\eclipse-workspace2\\Steiner\\src\\SteinerGraphe\\text.txt");
+		file = new File("C:\\Users\\tisda\\AppData\\Local\\Packages\\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\\LocalState\\rootfs\\home\\tisdam\\Projet_annuel_2020\\Steiner\\misc\\text.txt");
 
-		// Partie Reader
-		this.struct = new StructFile();
-
-		try {
-			reader = new Reader(struct, file);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+		// NEW PARTIE LOAD
+		
+		graph = new Graph();
+		graph.loadFile(file,graph);
+		
+		// ============ TEST ==============
+		
+		System.out.println("Nb Terminal : " + graph.getMaxTerminalNodeId());
+		
+		System.out.println("Tous les Sommets :");
+		for (int i = 0; i < graph.getNodes().length; i++) {
+			System.out.println(graph.getNodes()[i].getName());
 		}
 
-		try {
-			reader.translate();
-		} catch (Exception e) {
-			e.printStackTrace();
+		System.out.println();
+		
+		System.out.println("Tous les sommets Terminaux :");
+		for (int i = 0; i < graph.getMaxTerminalNodeId(); i++) {
+			System.out.println(graph.getNodes()[i].getName());
+		}
+		
+		System.out.println();
+		
+		System.out.println("Tous les Arcs :");
+		for (int i = 0; i < graph.getShape().size(); ++i) {
+			System.out.println("(" + graph.getShape().get(i).getNodes()[0].getName() + "," 
+								   + graph.getShape().get(i).getNodes()[1].getName() + ","
+								   + graph.getShape().get(i).getWeight() + ")");
 		}
 
-		try {
-			reader.read();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		// ============ TEST ==============
 
-		// PARTIE HashTable
 
-		/*
-		 * Faire la HashTable
-		 */
-
-		// PARTIE g�n�tique
-
-		switch(struct.getNomSommetsT().length) {
-		case 1 :
-			System.out.println("Arbre Final : " + struct.getNomSommetsT()[0]);
-			System.out.println("Poids de 0");
-			break;
-		case 2 :
-			// DIJKSTRA
-			break;
-		default :
-			if (struct.getNomSommetsT().length == struct.getNbSommets()) {
-				// SI S = T
-				Kruskal kruskal = new Kruskal(struct, reader.getLength());
-				int[][] tab = kruskal.kruskal();
-			} else {
-				gene = new Genetique(struct);
-				gene.AlgoGene();
-			}
-			break;
-		}
+		// PARTIE Genetique
+		
+		// True = elitiste / false = generationnel
+		gene = new Genetique(graph, true);
+		gene.algoGene();
 	}
 
 	// MAIN

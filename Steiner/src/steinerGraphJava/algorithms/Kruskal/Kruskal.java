@@ -1,27 +1,28 @@
 package steinerGraphJava.algorithms.Kruskal;
 
-import steinerGraphJava.graph.graphFile.StructFile;
+import java.util.LinkedList;
+
+import steinerGraphJava.graph.Arc;
+import steinerGraphJava.graph.Graph;
+import steinerGraphJava.graph.Node;
 
 public class Kruskal {
-	// CONSTANTE
-
-	private final static int NB_ELEMENT = 2;
 
 	// ATTRIBUTS
 
-	private StructFile struct;
-	private QuickSort quickSort;
+	private Graph graph;
 	private Cycle cycle;
 	private int length;
+	private int arbre;
 
 
 	// CONSTRUCTEUR
 
-	public Kruskal (StructFile struct, int length) {
-		this.struct = struct;
-		this.quickSort = new QuickSort();
-		this.cycle = new Cycle(length - 3, this.struct);
-		this.length = length;
+	public Kruskal (Graph temp) {
+		this.graph = temp;
+		this.length = graph.getShape().size();
+		this.cycle = new Cycle(this.graph);
+		this.arbre = 1;
 	}
 
 
@@ -30,36 +31,31 @@ public class Kruskal {
 	public int getLength() {
 		return length;
 	}
-
+	
+	public int getNbArbre() {
+		return arbre;
+	}
 
 	// COMMANDES
 
-	public int[][] trierList(int pos) {
-		return quickSort.sort(struct.getList(), 0, getLength() - 4, pos);
-	}
-
-	public int[][] kruskal() {
-		int n = 0; // Controle pour ne pas avoir des tailles trop grandes de tableau avec des cases vides
-		int res[][] = trierList(NB_ELEMENT);
-		quickSort.printArray(res);
-		int kara[][] = new int[getLength() - 3][NB_ELEMENT];
-		for (int i = 0; i < getLength() - 3; i++) {
-			kara[i + n] = res[i];
-			System.out.println(kara[i + n][0] + "," + kara[i + n][1] + "," + kara[i + n][2]);
-			if (cycle.findCycle(kara, i + 1 + n)) {
-				System.out.println("CYCLE");
-				vide(kara[i + n]);
-				n--;
+	public LinkedList<Arc> kruskal() {
+		int n = 0;
+		LinkedList<Arc> kara = new LinkedList<Arc>();
+		for (int i = 0; i < getLength(); i++) {
+			kara.add(graph.getShape().get(i));
+			if (cycle.findCycle(kara, i + 1 - n)) {
+				kara.removeLast();
+				++n;
 			} else {
-				System.out.println("Not a CYCLE");
+				arbre = cycle.getNbArbre();
 			}
 		}
 		return kara;
 	}
-
-	public void vide(int[] tab) {
-		tab[0] = 0;
-		tab[1] = 0;
-		tab[2] = 0;
+	
+	public void vide(Arc kara) {
+		kara.getNodes()[0] = new Node(0);
+		kara.getNodes()[1] = new Node(0);
+		kara.changeWeight(0);
 	}
 }

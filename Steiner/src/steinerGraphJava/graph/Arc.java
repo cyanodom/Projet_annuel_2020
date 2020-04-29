@@ -1,6 +1,8 @@
 package steinerGraphJava.graph;
 
-public class Arc {
+import java.io.Serializable;
+
+public class Arc implements Serializable {
 	private int weight;
 	private Node[] nodes;
 	
@@ -8,6 +10,7 @@ public class Arc {
 		nodes = new Node[2];
 		nodes[0] = first;
 		nodes[1] = second;
+		this.weight = weight;
 	}
 	
 	public Node[] getNodes() {
@@ -16,5 +19,9 @@ public class Arc {
 	
 	public int getWeight() {
 		return weight;
+	}
+	
+	public void changeWeight(int i) {
+		weight = i;
 	}
 }

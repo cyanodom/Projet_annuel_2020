@@ -1,16 +1,34 @@
 package steinerGraphJava.graph;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
-public class Graph implements IGraph {
+import steinerGraphJava.graph.graphFile.Translator;
+
+public class Graph implements IGraph, Serializable {
+	
+	// ATTRIBUTS
 	
 	private int maxTerminalNodeId;
-	private Arc[] shape;
+	private LinkedList<Arc> shape;
 	private Node[] nodes;
-	private Hashtable<Node, String> userAssociatedNodeNames;
+	private Hashtable<String, Node> userAssociatedNodeNames;
 	
-	public Graph() {}
+	private Translator translator;
+	
+	// CONSTRUCTEUR
+	
+	public Graph() {
+		translator = new Translator();
+		userAssociatedNodeNames = new Hashtable<String, Node>();
+		maxTerminalNodeId = 0;
+		shape = new LinkedList<Arc>();
+	}
+	
+	
+	// REQUETES
 	
 	@Override
 	public Node[] getNodes() {
@@ -18,12 +36,7 @@ public class Graph implements IGraph {
 	}
 	
 	@Override
-	public void removeNode(Node n) {
-		//TODO
-	}
-	
-	@Override
-	public Arc[] getShape() {
+	public LinkedList<Arc> getShape() {
 		return shape;
 	}
 	
@@ -33,13 +46,40 @@ public class Graph implements IGraph {
 	}
 	
 	@Override
-	public void loadFile(File f) {
-		//TODO
-	}
-	
-	@Override
-	public Hashtable<Node, String> getUserAssociatedNodeNames() {
+	public Hashtable<String, Node> getUserAssociatedNodeNames() {
 		return userAssociatedNodeNames;
 	}
 	
+	
+	// COMMANDES
+	
+	@Override
+	public void loadFile(File f, Graph graph) {
+		translator.trans(f, graph);
+	}
+	
+	@Override
+	public void removeNode(Node n) {
+		int j = 0;
+		for (int i = 0; i < shape.size(); ++i) {
+			if (shape.get(i - j).getNodes()[0].getName() == n.getName() || shape.get(i - j).getNodes()[1].getName() == n.getName()) {
+				shape.remove(i - j);
+				j++;
+			}
+		}
+	}
+	
+	@Override
+	public void addData(int length, Node[] nodeTab) {
+		maxTerminalNodeId = length;
+		nodes = nodeTab;
+	}
+	
+	public void addHash(Hashtable<String, Node> newHash) {
+		userAssociatedNodeNames = newHash;
+	}
+	
+	public void changeShape(LinkedList<Arc> shape) {
+		this.shape = shape;
+	}
 }

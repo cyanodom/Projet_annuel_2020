@@ -1,4 +1,4 @@
-package steinerGraphJava.algorithms;
+package steinerGraphJava.algorithms.Population;
 
 public class Population {
 
@@ -25,9 +25,9 @@ public class Population {
 
 	// COMMANDES
 
-	public void generatePopulation() {
+	public void generatePopulation(int nbRes) {
 		System.out.println("Entering Generation");
-		for (int i = 0; i < nbIndividu; ++i) {
+		for (int i = nbRes; i < nbIndividu; ++i) {
 			for (int j = 0; j < nbIndividu; ++j) {
 				list[i][j] = randomBit();
 			}

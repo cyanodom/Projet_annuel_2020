@@ -1,7 +1,9 @@
 package steinerGraphJava.graph.graphFile;
 
 
-import java.io.BufferedReader;;
+import java.io.File;
+
+import steinerGraphJava.graph.Graph;;
 
 /*
  * @cons
@@ -18,39 +20,7 @@ import java.io.BufferedReader;;
  */
 public interface ITranslator {
 
-	// CONSTANTE
-
-	/*
-	 * Le nombre repr�sentant l'infini
-	 */
-	static int I = 99999999;
-
-	// REQUETES
-
-	/*
-	 * Renvoie le BufferedReader 1 permettant de count le nombre de lignes
-	 */
-	BufferedReader getBr1();
-
-	/*
-	 * Renvoie le BufferedReader 2 permettant de cr�er notre structure
-	 */
-	BufferedReader getBr2();
-
-    /*
-     * La structure
-     */
-    StructFile getStruct();
-
-
 	// COMMANDE
-
-	/*
-	 * Compte le nombre de ligne et le renvoie
-	 * @pre
-	 * 		br1 != null
-	 */
-	int count() throws Exception;
 
 	/*
 	 * Permet de remplir la structure
@@ -63,21 +33,5 @@ public interface ITranslator {
 	 *   	struct.getNomSommetsIni() == cinqui�me ligne
 	 *		struct.getBase() == fromArrayToDist(ligne 6 et plus)
 	 */
-	void trans(int i) throws Exception;
-
-	/*
-	 * Cr�� un tableau bidimentionel repr�sentant la situation envoy� depuis le .txt
-	 *		tab[0] != null
-	 */
-	int[][] fromArrayToDist(String[] tab);
-
-
-	// OUTILS
-
-	/*
-	 * Transforme un char en un int tq a = 0, b = 1, etc
-	 * @pre
-	 * 		car != null
-	 */
-	int fromPredToInt(String car);
+	void trans(File f, Graph graph);
 }
