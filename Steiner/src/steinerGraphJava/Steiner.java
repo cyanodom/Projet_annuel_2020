@@ -1,9 +1,13 @@
 package steinerGraphJava;
 
 import java.io.File;
+import java.util.LinkedList;
+
 import javax.swing.SwingUtilities;
 
 import steinerGraphJava.algorithms.Genetique;
+import steinerGraphJava.algorithms.Population.PoidsPenality;
+import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
 
 public class Steiner {
@@ -15,6 +19,8 @@ public class Steiner {
 	private Genetique gene;
 	
 	private Graph graph;
+	
+	private PoidsPenality res;
 
 
 	// CONSTRUCTEUR
@@ -67,6 +73,26 @@ public class Steiner {
 		// True = elitiste / false = generationnel
 		gene = new Genetique(graph, true);
 		gene.algoGene();
+		
+		res = gene.getRes();
+		
+		
+		System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
+		System.out.println("Poids " + ": " + res.getPoids() + " et la Penality : " + res.getPenality());
+		System.out.println("Les arcs restants sont :");
+		printArray(res.getArc());
+	}
+	
+	// OUTILS
+	
+	public void printArray(LinkedList<Arc> res) {
+		System.out.println("Début Print du tab");
+		for (int i = 0; i < res.size(); ++i) {
+			System.out.println("(" + res.get(i).getNodes()[0].getName() + "," 
+								   + res.get(i).getNodes()[1].getName() + ","
+								   + res.get(i).getWeight() + ")");
+		}
+		System.out.println("Fin Print du tab\n");
 	}
 
 	// MAIN
