@@ -61,12 +61,11 @@ public class Genetique {
 				kruskal.kruskal();
 				System.out.println("Le poids de notre arbre est : "); // TODO finir poids
 			} else {
-				algoGeneNormal(0); // Aucun élément à garder
+				algoGeneNormal(0); // Aucun Ã©lÃ©ment Ã  garder
 				for (int i = 0; i < complex - 1; ++i) {
 					if (remplacement) {
 						// do Elitiste Algo
-						System.out.println("Passage : " + i);
-						algoGeneNormal(1); // On garde un élément
+						algoGeneNormal(1); // On garde un Ã©lÃ©ment
 					} else {
 						// do Gerenationnel Algo
 						algoGeneNormal((complex - (complex%2))/2);
@@ -77,10 +76,12 @@ public class Genetique {
 		}
 	}
 	
+	public PoidsPenality getRes() {
+		return res[0];
+	}
+	
 	public void algoGeneNormal(int nbRes) {
-		System.out.println("----------- GENERATIN POPULATION ----------");
 		population.generatePopulation(nbRes);
-		System.out.println("------------ GENERATIN FINISHED -----------\n");
 
 		trierListArc(graph.getShape());
 		
@@ -115,40 +116,12 @@ public class Genetique {
 			res[i].addPenality(tempKruskal.getNbArbre());
 		}
 		
-		System.out.println("--------- Début du print du POIDS ---------");
 		additionner(nbRes);
 		quicksort.sortPoids(res, 0, complex - 1);
-		printPoids();
-		System.out.println("---------- Fin du print du POIDS ----------\n");
 	}
 
-
-	private void printPoids() {
-		for (int i = 0; i < res.length; ++i) {
-			System.out.println("Poids " + i + " :" + res[i].getPoids() + " et la Penality : " + res[i].getPenality());
-		}
-	}
 	
-	public void printArray(Graph[] temp) {
-		for (int k = 0; k < temp.length; ++k) {
-			System.out.println("Graphe : " + k);
-			for (int i = 0; i < temp[k].getShape().size(); ++i) {
-				System.out.println("(" + temp[k].getShape().get(i).getNodes()[0].getName() + "," 
-									   + temp[k].getShape().get(i).getNodes()[1].getName() + ","
-									   + temp[k].getShape().get(i).getWeight() + ")");
-			}
-		}
-	}
-	
-	public void printArray(LinkedList<Arc> res) {
-		System.out.println("Début Print du tab");
-		for (int i = 0; i < res.size(); ++i) {
-			System.out.println("(" + res.get(i).getNodes()[0].getName() + "," 
-								   + res.get(i).getNodes()[1].getName() + ","
-								   + res.get(i).getWeight() + ")");
-		}
-		System.out.println("Fin Print du tab\n");
-	}
+	// OUTILS
 	
 	public void additionner(int nbRes) {
 		for (int j = nbRes; j < res.length; ++j) {
@@ -176,7 +149,7 @@ public class Genetique {
 		return graph;
 	}
 	
-	// Sort perso (possibilité d'utiliser le quicksort dans la class QuickSort)
+	// Sort perso (possibilitÃ© d'utiliser le quicksort dans la class QuickSort)
 	
 	public class SortPerso implements Comparator<Arc> {
 	    @Override
@@ -209,5 +182,15 @@ public class Genetique {
 	            return -1;
 	        }
 	    }
+	}
+	
+	
+	// TEST
+	
+	@SuppressWarnings("unused")
+	private void printPoids() {
+		for (int i = 0; i < res.length; ++i) {
+			System.out.println("Poids " + i + " :" + res[i].getPoids() + " et la Penality : " + res[i].getPenality());
+		}
 	}
 }
