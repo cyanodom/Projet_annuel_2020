@@ -26,20 +26,11 @@ public class Population {
 	// COMMANDES
 
 	public void generatePopulation(int nbRes) {
-		System.out.println("Entering Generation");
 		for (int i = nbRes; i < nbIndividu; ++i) {
 			for (int j = 0; j < nbIndividu; ++j) {
 				list[i][j] = randomBit();
 			}
 		}
-
-		for (int i = 0; i < nbIndividu; ++i) {
-			for (int j = 0; j < nbIndividu; ++j) {
-				System.out.print(list[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println("Exiting Generation");
 	}
 
 	public int randomBit() {
