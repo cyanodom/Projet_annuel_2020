@@ -21,11 +21,14 @@ public class Steiner {
 	private Graph graph;
 	
 	private PoidsPenality res;
+	
+	private String fileLocation;
 
 
 	// CONSTRUCTEUR
 
-	public Steiner () {
+	public Steiner (String fileLocation) {
+		this.fileLocation = fileLocation;
 		runAlgo();
 	}
 
@@ -33,7 +36,7 @@ public class Steiner {
 	// COMMANDES
 
 	public void runAlgo() {
-		file = new File("C:\\Users\\tisda\\AppData\\Local\\Packages\\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\\LocalState\\rootfs\\home\\tisdam\\Projet_annuel_2020\\Steiner\\misc\\text.txt");
+		file = new File(fileLocation);
 
 		// NEW PARTIE LOAD
 		
@@ -45,26 +48,26 @@ public class Steiner {
 		
 		System.out.println("Nb Terminal : " + graph.getMaxTerminalNodeId());
 		
-		System.out.println("Tous les Sommets :");
-		for (int i = 0; i < graph.getNodes().length; i++) {
-			System.out.println(graph.getNodes()[i].getName());
-		}
+		// System.out.println("Tous les Sommets :");
+		// for (int i = 0; i < graph.getNodes().length; i++) {
+		// 	System.out.println(graph.getNodes()[i].getName());
+		// }
 
-		System.out.println();
+		// System.out.println();
 		
-		System.out.println("Tous les sommets Terminaux :");
+		// System.out.println("Tous les sommets Terminaux :");
 		for (int i = 0; i < graph.getMaxTerminalNodeId(); i++) {
 			System.out.println(graph.getNodes()[i].getName());
 		}
 		
-		System.out.println();
+		// System.out.println();
 		
-		System.out.println("Tous les Arcs :");
-		for (int i = 0; i < graph.getShape().size(); ++i) {
-			System.out.println("(" + graph.getShape().get(i).getNodes()[0].getName() + "," 
-								   + graph.getShape().get(i).getNodes()[1].getName() + ","
-								   + graph.getShape().get(i).getWeight() + ")");
-		}
+		// System.out.println("Tous les Arcs :");
+		// for (int i = 0; i < graph.getShape().size(); ++i) {
+		// 	System.out.println("(" + graph.getShape().get(i).getNodes()[0].getName() + "," 
+		// 						   + graph.getShape().get(i).getNodes()[1].getName() + ","
+		// 						   + graph.getShape().get(i).getWeight() + ")");
+		// }
 
 		// ============ TEST ==============
 
@@ -78,22 +81,21 @@ public class Steiner {
 		res = gene.getRes();
 		
 		
-		System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
-		System.out.println("Poids " + ": " + res.getPoids() + " et la Penality : " + res.getPenality());
-		System.out.println("Les arcs restants sont :");
+		// System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
+		System.out.println("Les arcs restants sont : "+res.getArc().size());
 		printArray(res.getArc());
+		System.out.println("Poids " + ": " + res.getPoids());
+		System.out.println("Penality : " + res.getPenality());
 	}
 	
 	// OUTILS
 	
 	public void printArray(LinkedList<Arc> res) {
-		System.out.println("Début Print du tab");
 		for (int i = 0; i < res.size(); ++i) {
 			System.out.println("(" + res.get(i).getNodes()[0].getName() + "," 
 								   + res.get(i).getNodes()[1].getName() + ","
 								   + res.get(i).getWeight() + ")");
 		}
-		System.out.println("Fin Print du tab\n");
 	}
 
 	// MAIN
@@ -102,7 +104,7 @@ public class Steiner {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Steiner();
+                new Steiner(args[0]);
             }
         });
     }
