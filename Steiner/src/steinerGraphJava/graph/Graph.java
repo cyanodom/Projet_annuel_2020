@@ -42,4 +42,21 @@ public class Graph implements IGraph {
 		return userAssociatedNodeNames;
 	}
 	
+	//--------------------
+	
+	@Override
+	public String convertNodeToName(Node node) {
+		return userAssociatedNodeNames.get(node);
+	}
+	
+	@Override
+	public Node convertNameToNode(String name) {
+		for (Node n : userAssociatedNodeNames.keySet()) {
+			if (userAssociatedNodeNames.get(n) == name) {
+				return n;
+			}
+		}
+		return null;
+	}
+	
 }

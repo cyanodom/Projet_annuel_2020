@@ -1,38 +1,25 @@
-package steinerGraphJava;
+package steinerGraphJava.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Observable;
+import java.util.Observer;
 
-import javax.swing.SwingUtilities;
-
-import steinerGraphJava.algorithms.Genetique;
 import steinerGraphJava.algorithms.kruskal.Kruskal;
-import steinerGraphJava.graph.graphFile.Reader;
-import steinerGraphJava.graph.graphFile.StructFile;
+import steinerGraphJava.graph.IGraph;
+import steinerGraphJava.graph.graphFile.IGraphFile;
 
-public class Steiner {
-
-	// ATTRIBUTS
-
-	private Reader reader;
-
-	private StructFile struct;
+public class SteinerModel extends Observable implements ISteinerModel {
 
 	private File file;
-
-	private Genetique gene;
-
-
-	// CONSTRUCTEUR
-
-	public Steiner () {
-		runAlgo();
+	
+	public SteinerModel() {
+		
 	}
-
-
-	// COMMANDES
-
-	public void runAlgo() {
+	
+	// OUTILS
+	
+	private void runAlgo() {
 		file = new File("misc/text.txt");
 
 		// Partie Reader
@@ -62,7 +49,7 @@ public class Steiner {
 		 * Faire la HashTable
 		 */
 
-		// PARTIE g�n�tique
+		// PARTIE génétique
 
 		switch(struct.getNomSommetsT().length) {
 		case 1 :
@@ -85,14 +72,8 @@ public class Steiner {
 		}
 	}
 
-	// MAIN
-
-	public static void main(final String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Steiner();
-            }
-        });
-    }
+	public IGraph getGraph() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
