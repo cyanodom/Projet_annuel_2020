@@ -11,33 +11,44 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import steinerGraphJava.graphics.GraphicGraph;
+import steinerGraphJava.model.ISteinerModel;
 import steinerGraphJava.model.SteinerModel;  
 
 
 
 public class Steiner {
 
-	private final int V_DEFAULT_SIZE = 940;
+	private final int V_DEFAULT_SIZE = 1200;
 	private final int H_DEFAULT_SIZE = 580;
 	
 	// VIEWS :
@@ -96,7 +107,7 @@ public class Steiner {
 	private JLabel statEfficiency;
 	private JLabel statTimeSolve;
 	
-	private SteinerModel model;
+	private ISteinerModel model;
 	
 	public Steiner() {
 		createModel();
@@ -135,8 +146,8 @@ public class Steiner {
 		editUndoMenu = new JMenuItem("Annuler la dernière action");
 		editRedoMenu = new JMenuItem("Refaire la dernière action annulée");
 		graphEmptyMenu = new JMenuItem("Vider le graph");
-		graphAddMenu = new JMenuItem("Ajouter un noeud");
-		graphRemoveMenu =new JMenuItem("Retirer un noeud");
+		graphAddMenu = new JMenuItem("Ajouter un élément");
+		graphRemoveMenu =new JMenuItem("Retirer un élément");
 		graphRenameMenu = new JMenuItem("Renommer un noeud");
 		statsSeeMenu = new JMenuItem("Voir les stats");
 		viewSwitchGraphMenu = new JMenuItem("Basculer vers la vue en mode < graph >");
@@ -355,7 +366,7 @@ public class Steiner {
 				
 				panel_6.add(graphAddButton);
 				
-				panel_6.add(new JLabel("le noeud :"));
+				panel_6.add(new JLabel("l'élément :"));
 				
 				panel_6.add(graphAddField);
 				
@@ -369,7 +380,7 @@ public class Steiner {
 				
 				panel_8.add(graphRemoveButton);
 				
-				JLabel lblLeNoeud_2 = new JLabel("le noeud :");
+				JLabel lblLeNoeud_2 = new JLabel("l'élément :");
 				panel_8.add(lblLeNoeud_2);
 				
 				panel_8.add(graphRemoveField);
@@ -625,7 +636,7 @@ public class Steiner {
 			leftPanel.add(panel, gbc_panel);
 			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 			
-			JLabel lblLeNoeud = new JLabel("le noeud :");
+			JLabel lblLeNoeud = new JLabel("l'élément :");
 			panel.add(lblLeNoeud);
 			
 			panel.add(graphAddField);
@@ -646,7 +657,7 @@ public class Steiner {
 			leftPanel.add(panel_1, gbc_panel_1);
 			panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 			
-			JLabel lblLeNoeud_1 = new JLabel("le noeud :");
+			JLabel lblLeNoeud_1 = new JLabel("l'élément :");
 			panel_1.add(lblLeNoeud_1);
 			
 			panel_1.add(graphRemoveField);
@@ -795,8 +806,15 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				JFileChooser fc = new JFileChooser();
 				
+				FileNameExtensionFilter graphFilter = new FileNameExtensionFilter("steiner graph file (*.gstein)", "gstein");
+				fc.setFileFilter(graphFilter);
+				
+				
+				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					model.addFile(fc.getSelectedFile());
+				}
 			}
 			
 		};
@@ -807,7 +825,117 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				JFrame removeFileFrame = new JFrame();
+				removeFileFrame.setTitle("Retirer un fichier");
+				removeFileFrame.setResizable(false);
+
+				removeFileFrame.setPreferredSize(new Dimension(400, 400));
+				
+				JPanel panel_1 = new JPanel(new BorderLayout());
+				
+				class HackedString implements CharSequence {
+					
+					String value;
+					Integer correspondingIndex;
+					
+					public HackedString(String s, Integer i) {
+						correspondingIndex = i;
+						value = s;
+					}
+					
+					@Override
+					public char charAt(int arg0) {
+						return value.charAt(arg0);
+					}
+
+					@Override
+					public int length() {
+						return value.length();
+					}
+
+					@Override
+					public CharSequence subSequence(int arg0, int arg1) {
+						return value.subSequence(arg0, arg1);
+					}
+					
+					@Override
+					public String toString() {
+						return value;
+					}
+					
+					public Integer getCorrespondingIndex() {
+						return correspondingIndex;
+					}
+					
+				}
+				
+				DefaultListModel<HackedString> listModel = new DefaultListModel<HackedString>();			
+				
+				int i = 0;
+				
+				for (String e : model.getFileNames()) {
+					listModel.addElement(new HackedString(e, i));
+					++i;
+				}
+				
+				JList<HackedString> fileList = new JList<HackedString>(listModel);
+				fileList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+				
+				panel_1.add(fileList,BorderLayout.CENTER);
+				JButton buttonRemove = new JButton("retirer !");
+				JButton buttonOk = new JButton("Ok !");
+				JButton buttonAbort = new JButton("Annuler tout !");
+				
+				JPanel panel_2 = new JPanel();
+				panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+				panel_2.add(buttonRemove);
+				panel_2.add(Box.createHorizontalGlue());
+				panel_2.add(buttonOk);
+				panel_2.add(Box.createHorizontalGlue());
+				panel_2.add(buttonAbort);
+				
+				
+				panel_1.add(panel_2, BorderLayout.SOUTH);
+				
+				
+				//FRAME CONTROLLER :
+				
+				List<HackedString> removedItems = new LinkedList<HackedString>();
+				
+				buttonRemove.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						removedItems.add(fileList.getSelectedValue());
+						listModel.remove(fileList.getSelectedIndex());
+					}
+					
+				});
+				
+				buttonOk.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						String message = new String();
+						for (HackedString e : removedItems) {
+							message += "Retirer : " + e.getCorrespondingIndex() + " : " + e + "\n";
+						}
+						int answer = JOptionPane.showConfirmDialog(null, "êtes vous sûr d'appliquer ces modifications ? \n" + message, "Attention !",
+								JOptionPane.YES_NO_OPTION);
+						if (answer == JOptionPane.YES_OPTION) {
+							for (HackedString e : removedItems) {
+								model.removeFileAtIndex(e.getCorrespondingIndex());
+							}
+							removeFileFrame.dispose();
+						}
+					}
+					
+				});
+
+				removeFileFrame.add(panel_1);
+				removeFileFrame.pack();
+				removeFileFrame.setLocationRelativeTo(null);
+				removeFileFrame.setVisible(true);
 				
 			}
 			
@@ -819,8 +947,15 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				JFileChooser fc = new JFileChooser();
 				
+				FileNameExtensionFilter graphFilter = new FileNameExtensionFilter("steiner graph file (*.gstein)", "gstein");
+				fc.setFileFilter(graphFilter);
+				
+				
+				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+					model.saveFileTo(fc.getSelectedFile());
+				}
 			}
 			
 		};
@@ -831,8 +966,7 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.undo();
 			}
 			
 		};
@@ -843,8 +977,7 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.redo();
 			}
 			
 		};
@@ -855,8 +988,7 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.emptyGraph();
 			}
 			
 		};
@@ -867,8 +999,10 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				String answer = JOptionPane.showInputDialog(null, "Ajouter cet élément : ", "Ajouter un élément", JOptionPane.YES_NO_OPTION);
+				if (answer != null) {
+					model.addElement(answer);
+				}
 			}
 			
 		};
@@ -876,20 +1010,22 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.addElement(graphAddField.getText());
+				graphAddField.setText("");
 			}
 			
 		};
-		graphAddMenu.addActionListener(graphAddFrameAction);;
-		graphAddButton.addActionListener(graphAddAction);;		
+		graphAddMenu.addActionListener(graphAddFrameAction);
+		graphAddButton.addActionListener(graphAddAction);	
 		
 		ActionListener graphRemoveFrameAction = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				String answer = JOptionPane.showInputDialog(null, "Retirer cet élément : ", "Retirer un élément", JOptionPane.YES_NO_OPTION);
+				if (answer != null) {
+					model.removeElement(answer);
+				}
 			}
 			
 		};
@@ -897,8 +1033,8 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.removeElement(graphRemoveField.getText());
+				graphRemoveField.setText("");
 			}
 			
 		};
@@ -909,8 +1045,31 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				String answerSource = null;
+				do {
+					String warning = "";
+					if (answerSource != null) {
+						warning = "Ce noeud n'existe pas ! Réessayez ! \n";
+					}
+					answerSource = JOptionPane.showInputDialog(null, warning + "Renommer ce Noeud : ", "Renommer un noeud", JOptionPane.YES_NO_OPTION);
+					if (answerSource == null) {
+						return;
+					}
+				} while (model.checkNodeExist(answerSource) == false);
+
+				String answerDest = null;
 				
+				do {
+					String warning = "";
+					if (answerDest != null) {
+						warning = "Ce noeud existe déja ! Réessayez !\n";
+					}
+					answerDest = JOptionPane.showInputDialog(null, warning + "Renommer ce Noeud : ", "Renommer un noeud", JOptionPane.YES_NO_OPTION);
+					if (answerDest == null) {
+						return;
+					}
+				} while (model.checkNodeExist(answerDest));
+				model.renameElement(answerSource, answerDest);
 			}
 			
 		};
@@ -918,8 +1077,7 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.renameElement(graphRenameSourceField.getText(), graphRenameDestField.getText());
 			}
 			
 		};
@@ -931,8 +1089,7 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.solve();
 			}
 			
 		};
@@ -943,8 +1100,7 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				model.switchGraphToOriginal();
 			}
 			
 		};
@@ -1062,7 +1218,60 @@ public class Steiner {
 	}
 
 	private void refresh() {
-		//TODO
+		if (model.getFileNames().isEmpty()) {
+			fileRemoveButton.setEnabled(false);
+			fileRemoveMenu.setEnabled(false);
+		} else {
+			fileRemoveButton.setEnabled(true);
+			fileRemoveMenu.setEnabled(true);
+		}
+		if (model.canUndo()) {
+			editUndoButton.setEnabled(true);
+			editUndoMenu.setEnabled(true);
+		} else {
+			editUndoButton.setEnabled(false);
+			editUndoMenu.setEnabled(false);
+		}
+		if (model.canRedo()) {
+			editRedoButton.setEnabled(true);
+			editRedoMenu.setEnabled(true);
+		} else {
+			editRedoButton.setEnabled(false);
+			editRedoMenu.setEnabled(false);
+		}
+		if (model.getGraph().getMaxTerminalNodeId() == 0/*UNSURE*/) {
+			graphEmptyButton.setEnabled(false);
+			graphEmptyMenu.setEnabled(false);
+			graphRemoveButton.setEnabled(false);
+			graphRemoveMenu.setEnabled(false);
+			graphRenameButton.setEnabled(false);
+			graphRenameMenu.setEnabled(false);
+		} else {
+			graphEmptyButton.setEnabled(true);
+			graphEmptyMenu.setEnabled(true);
+			graphRemoveButton.setEnabled(true);
+			graphRemoveMenu.setEnabled(true);
+			graphRenameButton.setEnabled(false);
+			graphRenameMenu.setEnabled(false);
+		}
+
+		statNbArc.setText(Integer.toString(model.getGraph().getShape().length)); //UNSURE
+		statNbArc.setText(Integer.toString(model.getGraph().getMaxTerminalNodeId())); //UNSURE
+		statNbModification.setText(model.getNbModification().toString() + "modifications");
+		if (model.isSolved()) {
+			statTimeSolve.setText(model.getTimeToSolve() + "s");
+			statEfficiency.setText(model.getEfficiency() + "noeuds");
+		} else {
+			statTimeSolve.setText("[Le modèle n'est pas résolu]");
+			statEfficiency.setText("[Le modèle n'est pas résolu]");
+		}
+		
+		filesPanel.removeAll();
+		
+		for (String e : model.getFileNames()) {
+			filesPanel.add(new JLabel(e));
+		}
+		
 	}
 
 	public static void main(String[] args) {
