@@ -17,24 +17,14 @@ import steinerGraphJava.graph.graphFile.*;
 import steinerGraphJava.model.ISteinerModel;
 import steinerGraphJava.model.SteinerModel;
 
-@SuppressWarnings("deprecation")
 public class GraphicGraph extends JComponent implements Scrollable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2792310977136639779L;
 
-	// texte Amis
-	private static final String FRIEND = "Amis :";
-	// texte Liste des points de rendez vous
-	private static final String RDV_POINT_LIST = 
-			"Lieu de rendez vous :";
 	// texte Liste des successeurs
 	private static final String SUCC_LIST = "Liste des successeurs :";
-	//texte pas de fichier d'entrée
-	private static final String NO_FILE = "Aucun fichier "
-			+ "n'a encore été défini en entrée !";
-
 	// Epaisseur des traits
 	private static final int THICK = 1;
 	// unitée de mesure de l'espacement
@@ -93,6 +83,8 @@ public class GraphicGraph extends JComponent implements Scrollable {
 				switch ((SteinerModel.State) arg) {
 				case GRAPH_CHANGED:
 					repaint();
+				case NOT_SPECIFIED:
+					repaint();
 				default:
 					break;
 				}
@@ -106,12 +98,6 @@ public class GraphicGraph extends JComponent implements Scrollable {
 		g.setFont(FONT);
 		IGraph graph = model.getGraph();
 		
-		/*if (graphFile == null) {
-			g.drawString(NO_FILE, SPACING, SPACING 
-					+ g.getFontMetrics().getHeight());
-			return;
-		}*/
-		
 		FontMetrics fm = g.getFontMetrics(FONT);
 		
 		g.setColor(BACKGROUND);
@@ -122,76 +108,6 @@ public class GraphicGraph extends JComponent implements Scrollable {
 		int x = SPACING;
 		int y = SPACING;
 		
-		//Dessin Bloc Amis:
-		/*drawTextEncadred(g, fm, x, y, FRIEND);
-		y += 2 * (THICK + V_SPACING_TEXT)
-				+ FONT_HEIGHT;
-		drawArcFriendEncadration(g, x, y);
-		y += THICK + SPACING;
-		x += SPACING + THICK;
-		drawArc(g, fm, x, y, graphFile.getFriendsPoints()[0]);
-		x += 2 * (THICK + SPACING + ARC_SIZE);
-		drawArc(g, fm, x, y, graphFile.getFriendsPoints()[1]);*/
-		
-		//Dessin bloc liste rdv
-		/*x += 2 * ARC_SIZE + 3 * (THICK + SPACING);
-		y = SPACING;
-		drawTextEncadred(g, fm, x, y, RDV_POINT_LIST);
-		y += 2 * (THICK + V_SPACING_TEXT)
-				+ FONT_HEIGHT;
-		g.drawLine(x, y, 
-				x + N_ARC_LIST * (2 * ARC_SIZE + SPACING 
-				+ THICK) + THICK + SPACING, y);
-		y += THICK + SPACING;
-		x += SPACING;
-		int i;
-		for (i = 0; i < rdvP.length / N_ARC_LIST; ++i) {
-			char[] cs = new char[N_ARC_LIST];
-			for (int k = 0; k < N_ARC_LIST; ++k) {
-				cs[k] = rdvP[k + (i * N_ARC_LIST)];
-			}
-			drawArcList(g, fm, x, y, cs);
-			g.drawLine(x - SPACING, y - THICK - SPACING,
-					x - SPACING, y + 2 * ARC_SIZE);
-			g.drawLine(x + N_ARC_LIST * (2 * ARC_SIZE + SPACING 
-					+ THICK) + THICK, y - THICK 
-					- SPACING, x + N_ARC_LIST 
-					* (2 * ARC_SIZE + SPACING 
-					+ THICK) + THICK,
-					y + 2 * ARC_SIZE);
-			y += 2 * ARC_SIZE + THICK + SPACING;
-		}
-		if (rdvP.length - (i * N_ARC_LIST) > 0) {
-			char[] cs = new char[rdvP.length - (i * N_ARC_LIST)];
-			for (int k = 0; k < rdvP.length - (i * N_ARC_LIST);
-					++k) {
-				cs[cs.length - k - 1] = rdvP[rdvP.length - k 
-				                             - 1];
-			}
-			drawArcList(g, fm, x, y, cs);
-			g.drawLine(x - SPACING, y - THICK - SPACING,
-					x - SPACING, y + 2 * ARC_SIZE);
-			g.drawLine(x + N_ARC_LIST * (2 * ARC_SIZE + SPACING 
-					+ THICK) + THICK, y - THICK 
-					- SPACING, x + N_ARC_LIST 
-					* (2 * ARC_SIZE + SPACING 
-					+ THICK) + THICK,
-					y + 2 * ARC_SIZE);
-			y += 2 * ARC_SIZE + THICK + SPACING;
-		}
-
-		g.drawLine(x - SPACING, y - THICK - SPACING,
-				x - SPACING, y);
-		g.drawLine(x + N_ARC_LIST * (2 * ARC_SIZE + SPACING 
-				+ THICK) + THICK, y - THICK 
-				- SPACING, x + N_ARC_LIST 
-				* (2 * ARC_SIZE + SPACING 
-				+ THICK) + THICK,
-				y);
-		g.drawLine(x - SPACING, y, 
-				x + N_ARC_LIST * (2 * ARC_SIZE + SPACING 
-				+ THICK) + THICK, y);
-		*/
 		// Dessins List succ Arcs
 		x = SPACING;
 		y += SPACING;
@@ -200,7 +116,7 @@ public class GraphicGraph extends JComponent implements Scrollable {
 				+ FONT_HEIGHT;
 		
 		x = SPACING;
-		//drawSuccArcList(g, fm, x, y, graph);
+		drawSuccArcList(g, fm, x, y, graph);
 		
 		this.setPreferredSize(new Dimension(
 				realWidth, realHeight));
@@ -227,45 +143,20 @@ public class GraphicGraph extends JComponent implements Scrollable {
 		g.drawString(text, x + H_SPACING_TEXT + THICK, y);
 	}
 	
-	private void drawArc(Graphics g, FontMetrics fm, int x, int y, char c) {
+	private void drawArc(Graphics g, FontMetrics fm, int x, int y, String c) {
 		g.drawOval(x, y, 2 * ARC_SIZE, 2 * ARC_SIZE);
-		String cc = Character.toString(c);
-		g.drawString(cc, x + ARC_SIZE - fm.stringWidth(cc) / 2,
+		g.drawString(c, x + ARC_SIZE - fm.stringWidth(c) / 2,
 				y + ARC_SIZE + ARC_FONT_HEIGHT / 2);
 	}
 	
-	@SuppressWarnings("unused")
-	private void drawArcList(Graphics g, FontMetrics fm, int x, int y,
-			char[] cs) {
-		for (int i = 0; i < cs.length; ++i) {
-			drawArc(g, fm, x, y, cs[i]);
-			x += 2 * (ARC_SIZE + THICK) + SPACING;
-		}
-	}
-	
-	@SuppressWarnings("unused")
-	private void drawArcFriendEncadration(Graphics g, int x, int y) {
-		g.drawLine(x, y, x + 4 * (ARC_SIZE + SPACING + THICK), y);
-		g.drawLine(x, y + 2 * (ARC_SIZE + SPACING) + THICK,
-				x + 4 * (ARC_SIZE + SPACING + THICK),
-				y + 2 * (ARC_SIZE + SPACING) + THICK);
-		g.drawLine(x, y, x, y + 2 * (ARC_SIZE + SPACING) + THICK);
-		g.drawLine(x + 2 * (ARC_SIZE + SPACING + THICK),
-				y, x + 2 * (ARC_SIZE + SPACING + THICK),
-				y + 2 * (ARC_SIZE + SPACING) + THICK);
-		g.drawLine(x + 4 * (ARC_SIZE + SPACING + THICK), 
-				y, x + 4 * (ARC_SIZE + SPACING + THICK), 
-				y + 2 * (ARC_SIZE + SPACING) + THICK);
-	}
-	
 	private void drawSuccArcList(Graphics g, FontMetrics fm, int x, int y,
-			Graph graph) {
+			IGraph graph) {
 		g.drawLine(x, y, x + SPACING * 7 + 6 * THICK + N_ARC_LIST 
 				* (2 * ARC_SIZE + SPACING + THICK) 
 				+ ARC_SIZE * 4, y);
 
 		y += THICK;
-		/*for (Character c : graph.getListSucc().keySet()) {
+		for (String c : graph.getListSucc().keySet()) {
 			PointTime[] pointTimeList = 
 					graph.getListSucc().get(c);
 			g.drawLine(x + SPACING * 7 + 6 
@@ -319,7 +210,7 @@ public class GraphicGraph extends JComponent implements Scrollable {
 						+ ARC_SIZE));
 			}
 			int i = 1;
-			/*for (PointTime pt : pointTimeList) {
+			for (PointTime pt : pointTimeList) {
 				if (i >= N_ARC_LIST) {
 					y += 2 * SPACING 
 							+ 4 * THICK 
@@ -443,7 +334,7 @@ public class GraphicGraph extends JComponent implements Scrollable {
 				* (2 * ARC_SIZE + SPACING + THICK) 
 				+ ARC_SIZE * 4;
 		
-		realHeight = y + SPACING + THICK;*/
+		realHeight = y + SPACING + THICK;
 	}
 	
 	private void drawCross(Graphics g, int x, int y) {

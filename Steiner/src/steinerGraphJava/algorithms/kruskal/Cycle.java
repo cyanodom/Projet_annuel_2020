@@ -4,7 +4,8 @@ package steinerGraphJava.algorithms.kruskal;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import steinerGraphJava.graph.graphFile.StructFile;
+import steinerGraphJava.graph.Arc;
+import steinerGraphJava.graph.Graph;
 
 public class Cycle {
 
@@ -13,17 +14,26 @@ public class Cycle {
 	private int nb;
 	private int length;
 	private LinkedList<Integer> list[];
-	private StructFile struct;
+	private int nbArbre;
 
 
 	// CONSTRUCTEUR
 
-	public Cycle(int length, StructFile struct) {
-		this.struct = struct;
-		this.length = length;
-		this.nb = struct.getNbSommets();
+	public Cycle(Graph graph) {
+		this.length = 0;
+		this.nb = graph.getNodes().length;
+		nbArbre = 0;
 	}
 
+	// REQUETES
+	
+	public int getNbArbre() {
+		return nbArbre;
+	}
+	
+	
+	// COMMANDES
+	
 	public Boolean searchCycle(int v, Boolean visite[], int parent) {
 		visite[v] = true;
 		Integer i;
@@ -46,25 +56,22 @@ public class Cycle {
 	}
 
 
-	public Boolean findCycle(int[][] tab, int l) {
+	public Boolean findCycle(LinkedList<Arc> kara, int l) {
 		length = l;
 		list = new LinkedList[nb];
+		Boolean visite[] = new Boolean[nb];
 		for (int i = 0; i < nb; ++i) {
 			list[i] = new LinkedList<Integer>();
+			visite[i] = false;
 		}
 
-		Boolean visite[] = new Boolean[nb];
-
-		int[][] tab1 = trans(tab, l);
-
-		String[][] res = newTab();
-
-		transNewTab(tab1, res);
-
-		createList(tab1);
+		nbArbre = 0;
+		
+		createList(kara);
 
 		for (int u = 0; u < nb; u++) {
-			if (!visite[u]) { // Si tu ne l'as toujours pas visit�, alors
+			if (!visite[u]) {
+				++nbArbre;
 				if (searchCycle(u, visite, -1)) { // Rechercher depuis ce sommet
 					return true;
 				}
@@ -74,76 +81,17 @@ public class Cycle {
 	}
 
 	/*
-	 * RES
-	 */
-
-	public int[][] trans(int[][] tab, int i) {
-		int[][] tab1 = new int[i][2];
-		for (int j = 0; j < i; j++) {
-			tab1[j] = tab[j];
-		}
-		return tab1;
-	}
-
-	public String[][] newTab() {
-		String[][] res = new String[nb][2];
-		for (int i = 0; i < nb; i++) {
-			res[i][0] = struct.getNomSommets()[i];
-			res[i][1] = Integer.toString(i + 1);
-		}
-		return res;
-	}
-
-	public void transNewTab(int[][]tab, String[][] res) {
-		for(int i = 0; i < length; i++) {
-			int j = tab[i][0];
-			int k = tab[i][1];
-			tab[i][0] = passToNewTab(j, res);
-			tab[i][1] = passToNewTab(k, res);
-		}
-	}
-
-	public int passToNewTab(int i, String[][] res) {
-		int k = 0;
-		while(!Integer.toString(i).equals(res[k][0])) {
-			k++;
-		}
-		return Integer.parseInt(res[k][1]);
-	}
-
-	/*
 	 * TAB
 	 */
 
-	public void createList(int[][] tab) {
+	public void createList(LinkedList<Arc> kara) {
 		for (int i = 0; i < length; i++) {
-			addList(tab[i]);
+			addList(kara.get(i));
 		}
 	}
 
-	public void addList(int[] tab) {
-		list[tab[0] - 1].add(tab[1]);
-		list[tab[1] - 1].add(tab[0]);
-	}
-
-
-	// PRINT FUNCTIONS
-
-	// INT
-	public void printArray(int[][] js) {
-		int n = js.length;
-		for (int i=0; i<n; ++i) {
-			System.out.print("(" + js[i][0] + "," + js[i][1] + "," + js[i][2] + ")");
-			System.out.println();
-		}
-	}
-
-	// STRING
-	public void printArrayS(String[][] js) {
-		int n = js.length;
-		for (int i=0; i<n; ++i) {
-			System.out.print("(" + js[i][0] + "," + js[i][1] + ")");
-			System.out.println();
-		}
+	public void addList(Arc tab1) {
+		list[tab1.getNodes()[0].getName() - 1].add(tab1.getNodes()[1].getName());
+		list[tab1.getNodes()[1].getName() - 1].add(tab1.getNodes()[0].getName());
 	}
 }

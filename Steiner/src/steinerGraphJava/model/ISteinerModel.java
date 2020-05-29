@@ -3,20 +3,21 @@ package steinerGraphJava.model;
 import java.io.File;
 import java.util.List;
 
+import steinerGraphJava.graph.GraphException;
 import steinerGraphJava.graph.IGraph;
 import steinerGraphJava.model.ObservableModel;
 
 public interface ISteinerModel extends ObservableModel {
 	
 	enum State {
-		SOLVED,
+		NOT_SPECIFIED,
 		FILE_CHANGED,
 		GRAPH_CHANGED;
 	}
 
 	IGraph getGraph();
 
-	void addFile(File selectedFile);
+	void addFile(File selectedFile) throws GraphException;
 
 	List<String> getFileNames();
 
@@ -30,17 +31,15 @@ public interface ISteinerModel extends ObservableModel {
 
 	void emptyGraph();
 
-	void addElement(String answer);
+	void addElement(String answer) throws GraphException;
 
-	void removeElement(String answer);
+	void removeElement(String answer) throws GraphException;
 
 	boolean checkNodeExist(String answerSource);
 
-	void renameElement(String answerSource, String answerDest);
-
 	void solve();
 
-	void switchGraphToOriginal();
+	void switchGraphToOriginal() throws GraphException;
 
 	boolean canUndo();
 
@@ -53,4 +52,6 @@ public interface ISteinerModel extends ObservableModel {
 	Integer getTimeToSolve();
 
 	Integer getEfficiency();
+
+	void renameNode(String answerSource, String answerDest) throws GraphException;
 }

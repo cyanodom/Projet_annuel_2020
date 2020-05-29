@@ -15,6 +15,8 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -40,6 +42,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import steinerGraphJava.graph.GraphException;
 import steinerGraphJava.graphics.GraphicGraph;
 import steinerGraphJava.model.ISteinerModel;
 import steinerGraphJava.model.SteinerModel;  
@@ -802,6 +805,7 @@ public class Steiner {
 	}
 	
 	public void createController() {
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ActionListener fileAddAction = new ActionListener() {
 
 			@Override
@@ -813,7 +817,11 @@ public class Steiner {
 				
 				
 				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					model.addFile(fc.getSelectedFile());
+					try {
+						model.addFile(fc.getSelectedFile());
+					} catch (GraphException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -1001,7 +1009,12 @@ public class Steiner {
 			public void actionPerformed(ActionEvent arg0) {
 				String answer = JOptionPane.showInputDialog(null, "Ajouter cet élément : ", "Ajouter un élément", JOptionPane.YES_NO_OPTION);
 				if (answer != null) {
-					model.addElement(answer);
+					try {
+						model.addElement(answer);
+					} catch (GraphException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -1010,7 +1023,12 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				model.addElement(graphAddField.getText());
+				try {
+					model.addElement(graphAddField.getText());
+				} catch (GraphException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				graphAddField.setText("");
 			}
 			
@@ -1024,7 +1042,12 @@ public class Steiner {
 			public void actionPerformed(ActionEvent arg0) {
 				String answer = JOptionPane.showInputDialog(null, "Retirer cet élément : ", "Retirer un élément", JOptionPane.YES_NO_OPTION);
 				if (answer != null) {
-					model.removeElement(answer);
+					try {
+						model.removeElement(answer);
+					} catch (GraphException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -1033,7 +1056,12 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				model.removeElement(graphRemoveField.getText());
+				try {
+					model.removeElement(graphRemoveField.getText());
+				} catch (GraphException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				graphRemoveField.setText("");
 			}
 			
@@ -1069,7 +1097,12 @@ public class Steiner {
 						return;
 					}
 				} while (model.checkNodeExist(answerDest));
-				model.renameElement(answerSource, answerDest);
+				try {
+					model.renameNode(answerSource, answerDest);
+				} catch (GraphException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		};
@@ -1077,7 +1110,12 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				model.renameElement(graphRenameSourceField.getText(), graphRenameDestField.getText());
+				try {
+					model.renameNode(graphRenameSourceField.getText(), graphRenameDestField.getText());
+				} catch (GraphException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		};
@@ -1100,7 +1138,12 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				model.switchGraphToOriginal();
+				try {
+					model.switchGraphToOriginal();
+				} catch (GraphException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		};
@@ -1208,6 +1251,15 @@ public class Steiner {
 			}
 			
 		});
+		
+		model.addObserver(new Observer() {
+
+			@Override
+			public void update(Observable arg0, Object arg1) {
+				refresh();
+			}
+			
+		});
 	}
 	
 	public void display() {
@@ -1218,6 +1270,7 @@ public class Steiner {
 	}
 
 	private void refresh() {
+		System.out.println("UI - refresh !");
 		if (model.getFileNames().isEmpty()) {
 			fileRemoveButton.setEnabled(false);
 			fileRemoveMenu.setEnabled(false);
@@ -1239,7 +1292,7 @@ public class Steiner {
 			editRedoButton.setEnabled(false);
 			editRedoMenu.setEnabled(false);
 		}
-		if (model.getGraph().getMaxTerminalNodeId() == 0/*UNSURE*/) {
+		if (model.getGraph().getNodes().length == 0) {
 			graphEmptyButton.setEnabled(false);
 			graphEmptyMenu.setEnabled(false);
 			graphRemoveButton.setEnabled(false);
@@ -1251,17 +1304,19 @@ public class Steiner {
 			graphEmptyMenu.setEnabled(true);
 			graphRemoveButton.setEnabled(true);
 			graphRemoveMenu.setEnabled(true);
-			graphRenameButton.setEnabled(false);
+			graphRenameButton.setEnabled(true);
 			graphRenameMenu.setEnabled(false);
 		}
 
-		statNbArc.setText(Integer.toString(model.getGraph().getShape().length)); //UNSURE
+		statNbArc.setText(Integer.toString(model.getGraph().getShape().size())); //UNSURE
 		statNbArc.setText(Integer.toString(model.getGraph().getMaxTerminalNodeId())); //UNSURE
 		statNbModification.setText(model.getNbModification().toString() + "modifications");
 		if (model.isSolved()) {
+			steinerSeeOriginalButton.setEnabled(true);
 			statTimeSolve.setText(model.getTimeToSolve() + "s");
 			statEfficiency.setText(model.getEfficiency() + "noeuds");
 		} else {
+			steinerSeeOriginalButton.setEnabled(false);
 			statTimeSolve.setText("[Le modèle n'est pas résolu]");
 			statEfficiency.setText("[Le modèle n'est pas résolu]");
 		}

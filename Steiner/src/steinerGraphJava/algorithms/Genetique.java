@@ -9,10 +9,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import steinerGraphJava.algorithms.Kruskal.Kruskal;
-import steinerGraphJava.algorithms.Population.PoidsPenality;
-import steinerGraphJava.algorithms.Population.Population;
-import steinerGraphJava.algorithms.Population.QuickSort;
+import steinerGraphJava.algorithms.kruskal.Kruskal;
+import steinerGraphJava.algorithms.population.PoidsPenality;
+import steinerGraphJava.algorithms.population.Population;
+import steinerGraphJava.algorithms.population.QuickSort;
 import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
 
@@ -106,7 +106,7 @@ public class Genetique {
 			for (int j = 0; j < complex; ++j) {
 				if (population.getList()[i][j] == 0) {
 					res[i].addPenality(-1); 
-					temp[i-nbRes].removeNode(graph.getNodes()[graph.getMaxTerminalNodeId() + j]);
+					temp[i-nbRes].removeRelatedArc(graph.getNodes()[graph.getMaxTerminalNodeId() + j]);
 				}
 			}
 			
