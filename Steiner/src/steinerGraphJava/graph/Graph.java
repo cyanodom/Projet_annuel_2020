@@ -23,7 +23,7 @@ public class Graph implements IGraph, Serializable {
 	
 	public Graph() {
 		userAssociatedNodeNames = new Hashtable<Node, String>();
-		maxTerminalNodeId = -1;
+		maxTerminalNodeId = 0;
 		shape = new LinkedList<Arc>();
 		nodes = new Node[0];
 	}
@@ -75,7 +75,7 @@ public class Graph implements IGraph, Serializable {
 	
 	@Override
 	public void addTerminalNode(String nodeName) throws GraphException {
-		insertNode(maxTerminalNodeId + 1, nodeName);
+		insertNode(maxTerminalNodeId, nodeName);
 		maxTerminalNodeId += 1;
 	}
 	
