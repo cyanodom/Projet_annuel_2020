@@ -81,7 +81,8 @@ public class Graph implements IGraph, Serializable {
 
 	private void insertNode(int node, String name) throws GraphException {
 		if (userAssociatedNodeNames.containsValue(name)) {
-			throw new GraphException(name + " Ce noeud ne peut être ajouté : il est déja présent !");
+			throw new GraphException(name + " Ce noeud ne peut être ajouté : il est déja présent !", 
+					GraphException.ErrorType.INSERT_NODE_ALREADY_IN);
 		}
 		Node[] new_nodes = new Node[nodes.length + 1];
 
@@ -124,7 +125,7 @@ public class Graph implements IGraph, Serializable {
 	@Override
 	public void renameNode(String nodeNameSource, String nodeNameDest) throws GraphException {
 		if (!userAssociatedNodeNames.containsValue(nodeNameSource)) {
-			throw new GraphException("noeud non trouvé");
+			throw new GraphException("noeud non trouvé", GraphException.ErrorType.RENAME_BUT_NODE_NOT_FOUND);
 		}
 
 		userAssociatedNodeNames.replace(convertNameToNode(nodeNameSource), nodeNameDest);
@@ -210,7 +211,7 @@ public class Graph implements IGraph, Serializable {
 		Arc newArc = new Arc(convertNameToNode(firstNode), convertNameToNode(secondNode), weight);
 		for (Arc a : shape) {
 			if (a.equals(newArc)) {
-				throw new GraphException("Cet Arc est déja existant !");
+				throw new GraphException("Cet Arc est déja existant !", GraphException.ErrorType.INSERT_NODE_ALREADY_IN);
 			}
 		}
 		shape.add(newArc);
@@ -228,7 +229,7 @@ public class Graph implements IGraph, Serializable {
 			}
 		}
 		if (node_1 == null || node_2 == null) {
-			throw new GraphException("Le noeud n'as pas été trouvé !");
+			throw new GraphException("Le noeud n'as pas été trouvé !", GraphException.ErrorType.REMOVE_NODE_NOT_FOUND);
 		}
 		Arc arc = new Arc(node_1, node_2, 0);
 		for (int i = 0; i < shape.size(); ++i) {
@@ -237,7 +238,7 @@ public class Graph implements IGraph, Serializable {
 				return;
 			}
 		}
-		throw new GraphException("L'arc n'as pas été trouvé !");
+		throw new GraphException("L'arc n'as pas été trouvé !", GraphException.ErrorType.REMOVE_ARC_NOT_FOUND);
 	}
 
 
@@ -267,7 +268,7 @@ public class Graph implements IGraph, Serializable {
 				return;
 			}
 		}
-		throw new GraphException("Noeud introuvable !");
+		throw new GraphException("Noeud introuvable !", GraphException.ErrorType.REMOVE_NODE_NOT_FOUND);
 	}
 
 	@Override

@@ -51,7 +51,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	// COMMANDES
 
-	public void runAlgo() {
+	public void runAlgo() throws GraphException {
 		if (isSolved) {
 			graph = graphOriginal;
 		}
@@ -91,7 +91,11 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		gene = new Genetique(graph, true);
 		gene.algoGene();
 
-		res = gene.getRes();
+		try {
+			res = gene.getRes();
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new GraphException("Cela est problématique !", GraphException.ErrorType.SOLVE_ARRAY_OUT_OF_BOUNDS);
+		}
 
 
 		// System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
@@ -109,7 +113,6 @@ public class SteinerModel extends Observable implements ISteinerModel {
         graph = resGraph;
 		long timeAfter = System.currentTimeMillis();
 		time = timeAfter - timeBefore;
-        change();
 	}
 
 	// OUTILS
@@ -134,8 +137,12 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public void addFile(File selectedFile) throws GraphException, GraphFileException {
-		graph.makeUnionWith(Translator.trans(selectedFile));
+	public void addFile(File selectedFile) throws GraphException {
+		try {
+			graph.makeUnionWith(Translator.trans(selectedFile));
+		} catch (GraphFileException e) {
+			throw new GraphException("Erreur d'entrée / sortie", GraphException.ErrorType.IO_ERROR);
+		}
 		files.add(selectedFile);
 		change();
 	}
@@ -152,8 +159,12 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public void removeFileAtIndex(Integer correspondingIndex) throws GraphFileException {
-		graph.makeRemove(Translator.trans(files.get(correspondingIndex)));
+	public void removeFileAtIndex(Integer correspondingIndex) throws GraphException {
+		try {
+			graph.makeRemove(Translator.trans(files.get(correspondingIndex)));
+		} catch (GraphFileException e) {
+			throw new GraphException("Erreur d'entrée / sortie", GraphException.ErrorType.IO_ERROR);
+		}
 		change();
 	}
 
@@ -200,7 +211,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 				if (!arcMode) {
 					if (answer.length() < i + 4 || answer.charAt(i + 1) != '-'
 							|| answer.charAt(i + 2) != ' ' || answer.charAt(i + 3) == ' ') {
-						throw new GraphException("La syntaxe est invalide !");
+						throw new GraphException("La syntaxe est invalide !", GraphException.ErrorType.ADD_ELEMENT_INVALID_SYNTAX);
 					}
 					i += 2;
 					thisIsSecondNode = true;
@@ -208,7 +219,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 				} else {
 					if (thisIsWeight || answer.length() < i + 4 || answer.charAt(i + 1) != ':'
 							|| answer.charAt(i + 2) != ' ' || answer.charAt(i + 3) == ' ') {
-						throw new GraphException("La syntaxe est invalide !");
+						throw new GraphException("La syntaxe est invalide !", GraphException.ErrorType.ADD_ELEMENT_INVALID_SYNTAX);
 					}
 					i += 2;
 					thisIsSecondNode = false;
@@ -252,13 +263,13 @@ public class SteinerModel extends Observable implements ISteinerModel {
 				if (!arcMode) {
 					if (answer.length() < i + 4 || answer.charAt(i + 1) != '-'
 							|| answer.charAt(i + 2) != ' ' || answer.charAt(i + 3) == ' ') {
-						throw new GraphException("La syntaxe est invalide !");
+						throw new GraphException("La syntaxe est invalide !", GraphException.ErrorType.ADD_ELEMENT_INVALID_SYNTAX);
 					}
 					i += 2;
 					thisIsSecondNode = true;
 					arcMode = true;
 				} else {
-					throw new GraphException("Erreur de syntaxe");
+					throw new GraphException("Erreur de syntaxe", GraphException.ErrorType.ADD_ELEMENT_INVALID_SYNTAX);
 				}
 			} else {
 				if (thisIsSecondNode) {
@@ -292,16 +303,17 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public void solve() {
+	public void solve() throws GraphException {
 		runAlgo();
 		isSolved = true;
+        change();
 	}
 
 
 	@Override
 	public void switchGraphToOriginal() throws GraphException {
 		if (!isSolved) {
-			throw new GraphException("Ceci est déja l'original !");
+			throw new GraphException("Ceci est déja l'original !", GraphException.ErrorType.SEE_ALREADY_ORIGINAL);
 		}
 		switched = !switched;
 		change();
@@ -330,7 +342,6 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	@Override
 	public Integer getNbModification() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

@@ -18,6 +18,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +38,6 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import steinerGraphJava.graph.GraphException;
-import steinerGraphJava.graph.graphFile.GraphFileException;
 import steinerGraphJava.graphics.GraphicGraph;
 import steinerGraphJava.model.ISteinerModel;
 import steinerGraphJava.model.SteinerModel;
@@ -816,10 +816,7 @@ public class Steiner {
 					try {
 						model.addFile(fc.getSelectedFile());
 					} catch (GraphException e) {
-						e.printStackTrace();
-					} catch (GraphFileException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						errorOccured(e);
 					}
 				}
 			}
@@ -933,9 +930,8 @@ public class Steiner {
 							for (HackedString e : removedItems) {
 								try {
 									model.removeFileAtIndex(e.getCorrespondingIndex());
-								} catch (GraphFileException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
+								} catch (GraphException e1) {
+									errorOccured(e1);
 								}
 							}
 							removeFileFrame.dispose();
@@ -1016,8 +1012,7 @@ public class Steiner {
 					try {
 						model.addElement(answer);
 					} catch (GraphException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						errorOccured(e);
 					}
 				}
 			}
@@ -1030,8 +1025,7 @@ public class Steiner {
 				try {
 					model.addElement(graphAddField.getText());
 				} catch (GraphException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					errorOccured(e);
 				}
 				graphAddField.setText("");
 			}
@@ -1050,8 +1044,7 @@ public class Steiner {
 					try {
 						model.removeElement(answer);
 					} catch (GraphException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						errorOccured(e);
 					}
 				}
 			}
@@ -1064,8 +1057,7 @@ public class Steiner {
 				try {
 					model.removeElement(graphRemoveField.getText());
 				} catch (GraphException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					errorOccured(e);
 				}
 				graphRemoveField.setText("");
 			}
@@ -1106,8 +1098,7 @@ public class Steiner {
 				try {
 					model.renameNode(answerSource, answerDest);
 				} catch (GraphException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					errorOccured(e);
 				}
 			}
 
@@ -1119,8 +1110,7 @@ public class Steiner {
 				try {
 					model.renameNode(graphRenameSourceField.getText(), graphRenameDestField.getText());
 				} catch (GraphException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					errorOccured(e);
 				}
 			}
 
@@ -1134,7 +1124,11 @@ public class Steiner {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				model.solve();
+				try {
+					model.solve();
+				} catch (GraphException e) {
+					errorOccured(e);
+				}
 			}
 
 		};
@@ -1148,8 +1142,7 @@ public class Steiner {
 				try {
 					model.switchGraphToOriginal();
 				} catch (GraphException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					errorOccured(e);
 				}
 			}
 
@@ -1341,10 +1334,70 @@ public class Steiner {
 
 			@Override
 			public void run() {
-				new Steiner().display();
+				try {
+					new Steiner().display();
+				} catch (Throwable e) {
+					try {
+						errorOccured(new GraphException("C'est la fin des haricots", 
+								GraphException.ErrorType.BIG_BAD_ERROR));
+					} catch (Throwable e2) {
+						e.printStackTrace();
+					} finally {
+						System.exit(GraphException.ErrorType.BIG_BAD_ERROR.ordinal());
+					}
+				}
 			}
 
 		});
+	}
+	
+	public static void errorOccured(GraphException e) {
+		String message = "Un probleme est survenu";
+		String messageSeverity = "Erreur";
+		switch (e.getError()) {
+		case ADD_ELEMENT_INVALID_SYNTAX:
+			message = "La syntaxe est invalide !\nVeuillez ééssayez !";
+			messageSeverity = "Attention";
+			break;
+		case BIG_BAD_ERROR:
+			message = "Ce n'etait pas censé se produire !\n Le programme va quitter !";
+			messageSeverity = "!!! Erreur !!!";
+			break;
+		case INSERT_NODE_ALREADY_IN:
+			message = "Vous essayez d'insérer un noeud qui est déja présent !\n Pensez à renommer l'existant ?";
+			messageSeverity = "Attention";
+			break;
+		case IO_ERROR:
+			message = "Une erreur d'entrée sortie s'est produite ... \nVerifiez que le fichier vous appartien bien ? ";
+			messageSeverity = "Erreur";
+			break;
+		case REMOVE_ARC_NOT_FOUND:
+			message = "L'arc que vous tentez de retirer n'est pas dans le graph ...\n Vérifiez l'orthographe ?";
+			messageSeverity = "Attention";
+			break;
+		case REMOVE_NODE_NOT_FOUND:
+			message = "Le noeud que vous tentez de retirer n'est pas dans le graph ...\n Vérifiez l'orthographe ?";
+			messageSeverity = "Attention";
+			break;
+		case RENAME_BUT_NODE_NOT_FOUND:
+			message = "Le noeud que vous tentez de renommer n'est pas dans le graph ...\n Vérifiez l'orthographe ?";
+			messageSeverity = "Attention";
+			break;
+		case SEE_ALREADY_ORIGINAL:
+			message = "Vous tentez de voir l'original ??? Vous l'avez déjà sous vos yeux !\nEnjoy ^^";
+			messageSeverity = "Attention";
+			break;
+		case SOLVE_ARRAY_OUT_OF_BOUNDS:
+			message = "Cela est notre faute ... ce n'est pas normal, mais pas bien dangeureux\n"
+					+ "PS: cette erreur se produit souvent lorsque le graph est vide\nlors de la résolution";
+			messageSeverity = "Attention";
+		default:
+			break;
+		}
+		JOptionPane optionPane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
+		JDialog dialog = optionPane.createDialog(messageSeverity);
+		dialog.setAlwaysOnTop(true);
+		dialog.setVisible(true);
 	}
 
 }

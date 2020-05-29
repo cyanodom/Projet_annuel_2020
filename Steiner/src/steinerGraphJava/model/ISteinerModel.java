@@ -18,11 +18,11 @@ public interface ISteinerModel extends ObservableModel {
 
 	IGraph getGraph();
 
-	void addFile(File selectedFile) throws GraphException, GraphFileException;
+	void addFile(File selectedFile) throws GraphException;
 
 	List<String> getFileNames();
 
-	void removeFileAtIndex(Integer correspondingIndex) throws GraphFileException;
+	void removeFileAtIndex(Integer correspondingIndex) throws GraphException;
 
 	void saveFileTo(File selectedFile);
 
@@ -38,7 +38,7 @@ public interface ISteinerModel extends ObservableModel {
 
 	boolean checkNodeExist(String answerSource);
 
-	void solve();
+	void solve() throws GraphException;
 
 	void switchGraphToOriginal() throws GraphException;
 
