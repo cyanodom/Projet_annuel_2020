@@ -1270,7 +1270,6 @@ public class Steiner {
 	}
 
 	private void refresh() {
-		System.out.println("UI - refresh !");
 		if (model.getFileNames().isEmpty()) {
 			fileRemoveButton.setEnabled(false);
 			fileRemoveMenu.setEnabled(false);
@@ -1292,7 +1291,6 @@ public class Steiner {
 			editRedoButton.setEnabled(false);
 			editRedoMenu.setEnabled(false);
 		}
-		System.out.println(model.getGraph());
 		if (model.getGraph().getNodes().length == 0) {
 			graphEmptyButton.setEnabled(false);
 			graphEmptyMenu.setEnabled(false);

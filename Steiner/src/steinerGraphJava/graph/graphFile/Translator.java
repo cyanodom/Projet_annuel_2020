@@ -33,7 +33,7 @@ public class Translator {
 				graph.getUserAssociatedNodeNames().put(new Node(i + 1), sommetT[i]);
 			}
 			for (int j = 0; j < sommet.length; j++) {
-				if (!graph.getUserAssociatedNodeNames().containsKey(sommet[j])) {
+				if (!graph.getUserAssociatedNodeNames().containsValue(sommet[j])) {
 					graph.getUserAssociatedNodeNames().put(new Node(i + 1), sommet[j]);
 					++i;
 				}

@@ -77,7 +77,7 @@ public class Graph implements IGraph, Serializable {
 	
 	private void insertNode(int node, String name) throws GraphException {
 		if (userAssociatedNodeNames.containsValue(name)) {
-			throw new GraphException("Ce noeud ne peut être ajouté : il est déja présent !");
+			throw new GraphException(name + " Ce noeud ne peut être ajouté : il est déja présent !");
 		}
 		Node[] new_nodes = new Node[nodes.length + 1];
 
@@ -250,7 +250,6 @@ public class Graph implements IGraph, Serializable {
 
 	@Override
 	public Hashtable<String, PointTime[]> getListSucc() {
-		System.out.println("-- start");
 		Hashtable<String, PointTime[]> map = new Hashtable<String, PointTime[]>();
 		for (Node n : nodes) {
 			int number = 0;
@@ -259,24 +258,20 @@ public class Graph implements IGraph, Serializable {
 					++number;
 				}
 			}
-			System.out.println("-- new Node of name : " + convertNodeToName(n) + " of size :" + number);
 			PointTime[] pt = new PointTime[number];
 			int i = 0;
 			for (Arc a : shape) {
 				if (a.getNodes()[0].equals(n)) {
 					pt[i] = new PointTime(convertNodeToName(a.getNodes()[1]), a.getWeight());
-					System.out.println("--arc : " + convertNodeToName(n) + " <-> " + convertNodeToName(a.getNodes()[1]) + " = " + a.getWeight());
 					++i;
 				}
 				if (a.getNodes()[1].equals(n)) {
 					pt[i] = new PointTime(convertNodeToName(a.getNodes()[0]), a.getWeight());
-					System.out.println("--arc : " + convertNodeToName(n) + " <-> " + convertNodeToName(a.getNodes()[0]) + " = " + a.getWeight());
 					++i;
 				}
 			}
 			map.put(convertNodeToName(n), pt);
 		}
-		System.out.println("-- end");
 		return map;
 	}
 	

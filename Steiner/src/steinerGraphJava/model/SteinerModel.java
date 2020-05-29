@@ -116,7 +116,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	@Override
 	public void addFile(File selectedFile) throws GraphException {
-		graph = Translator.trans(selectedFile);
+		graph.makeUnionWith(Translator.trans(selectedFile));
 		files.add(selectedFile);
 		change();
 	}
