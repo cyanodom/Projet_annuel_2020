@@ -1,9 +1,0 @@
-package steinerGraphJava.graph;
-
-public class GraphException extends Exception {
-
-	public GraphException(String string) {
-		// TODO Auto-generated constructor stub
-	}
-
-}

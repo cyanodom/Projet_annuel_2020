@@ -1,5 +1,0 @@
-package steinerGraphJava.model;
-
-public interface ISteinerModel {
-
-}
