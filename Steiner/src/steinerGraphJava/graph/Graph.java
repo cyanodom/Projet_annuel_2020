@@ -158,7 +158,7 @@ public class Graph implements IGraph, Serializable {
 
 	@Override
 	public void makeUnionWith(IGraph iGraph) throws GraphException {
-		for (int i = 0; i < iGraph.getShape().size(); ++i) {
+		for (int i = 0; i < iGraph.getNodes().length; ++i) {
 			if (i <= iGraph.getMaxTerminalNodeId()) {
 				addTerminalNode(iGraph.convertNodeToName(iGraph.getNodes()[i]));
 			} else {
