@@ -49,6 +49,8 @@ public class Translator {
 				tempo[2] = tempo[2].replace(')', ' ').trim();
 				Node node1 = changeValueHash(tempo[0], graph.getUserAssociatedNodeNames());
 				Node node2 = changeValueHash(tempo[1], graph.getUserAssociatedNodeNames());
+				System.out.println(node1);
+				System.out.println(node2);
 				int weight = stringToInt(tempo[2]);
 				Arc arc = new Arc(node1, node2, weight);
 				graph.getShape().add(arc);
