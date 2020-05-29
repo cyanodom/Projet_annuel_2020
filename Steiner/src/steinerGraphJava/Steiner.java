@@ -43,7 +43,6 @@ import steinerGraphJava.model.SteinerModel;
 
 
 
-@SuppressWarnings("deprecation")
 public class Steiner {
 
 	private final int V_DEFAULT_SIZE = 1200;

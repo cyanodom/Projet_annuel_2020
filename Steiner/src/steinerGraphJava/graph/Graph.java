@@ -86,7 +86,7 @@ public class Graph implements IGraph, Serializable {
 		Node[] new_nodes = new Node[nodes.length + 1];
 
 		if (node == nodes.length) {
-			new_nodes[nodes.length] = new Node(node);
+			new_nodes[nodes.length] = new Node(node + 1);
 			userAssociatedNodeNames.put(new_nodes[nodes.length], name);
 			for (int i = 0; i < nodes.length; ++i) {
 				new_nodes[i] = nodes[i];
@@ -98,7 +98,7 @@ public class Graph implements IGraph, Serializable {
 		for (int i = 0; i < nodes.length; ++i) {
 			new_nodes[i] = nodes[i];
 			if (i == node) {
-				Node the_new = new Node(nodes.length);
+				Node the_new = new Node(nodes.length + 1);
 				new_nodes[nodes.length] = the_new;
 				userAssociatedNodeNames.put(new_nodes[nodes.length], convertNodeToName(nodes[i]));
 				for (Arc a : shape) {
@@ -154,15 +154,15 @@ public class Graph implements IGraph, Serializable {
 		LinkedList<String> result = new LinkedList<String>();
 		for (int i = 0; i <= maxTerminalNodeId; ++i) {
 			for (int j = 0; j <= graph.getMaxTerminalNodeId(); ++j) {
-				if (graph.convertNodeToName(new Node (j)) == convertNodeToName(new Node(i))) {
+				if (graph.convertNodeToName(new Node (j)) == convertNodeToName(new Node(i + 1))) {
 					result.add(convertNodeToName(new Node(i)));
 				}
 			}
 		}
 		for (int i = maxTerminalNodeId + 1; i < nodes.length; ++i) {
 			for (int j = graph.getMaxTerminalNodeId() + 1; j < graph.getShape().size(); ++j) {
-				if (graph.convertNodeToName(new Node (j)) == convertNodeToName(new Node(i))) {
-					result.add(convertNodeToName(new Node(i)));
+				if (graph.convertNodeToName(new Node (j)) == convertNodeToName(new Node(i + 1))) {
+					result.add(convertNodeToName(new Node(i + 1)));
 				}
 			}
 		}
@@ -246,8 +246,8 @@ public class Graph implements IGraph, Serializable {
 		for (int i = 0; i < nodes.length; ++i) {
 			if (convertNodeToName(nodes[i]).equals(node)) {
 				if (i <= maxTerminalNodeId) {
-					userAssociatedNodeNames.replace(nodes[i], userAssociatedNodeNames.get(new Node(maxTerminalNodeId)));
-					userAssociatedNodeNames.replace(nodes[maxTerminalNodeId], userAssociatedNodeNames.get(new Node(nodes.length - 1)));
+					userAssociatedNodeNames.replace(nodes[i], userAssociatedNodeNames.get(new Node(maxTerminalNodeId + 1)));
+					userAssociatedNodeNames.replace(nodes[maxTerminalNodeId], userAssociatedNodeNames.get(new Node(nodes.length)));
 					userAssociatedNodeNames.remove(nodes[nodes.length -1]);
 					--maxTerminalNodeId;
 					Node[] new_nodes = new Node[nodes.length - 1];
@@ -256,7 +256,7 @@ public class Graph implements IGraph, Serializable {
 					}
 					nodes = new_nodes;
 				} else {
-					userAssociatedNodeNames.replace(nodes[i], userAssociatedNodeNames.get(new Node(nodes.length - 1)));
+					userAssociatedNodeNames.replace(nodes[i], userAssociatedNodeNames.get(new Node(nodes.length)));
 					userAssociatedNodeNames.remove(nodes[nodes.length -1]);
 					Node[] new_nodes = new Node[nodes.length - 1];
 					for (int j = 0; j < nodes.length - 1; ++j) {
