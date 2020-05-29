@@ -88,10 +88,19 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		
 		
 		// System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
-		System.out.println("Les arcs restants sont : "+res.getArc().size());
-		printArray(res.getArc());
-		System.out.println("Poids " + ": " + res.getPoids());
-		System.out.println("Penality : " + res.getPenality());
+		//System.out.println("Les arcs restants sont : " + res.getArc().size());
+		//printArray(res.getArc());
+		//System.out.println("Poids " + ": " + res.getPoids());
+		//System.out.println("Penality : " + res.getPenality());
+		
+		Graph resGraph = new Graph();
+        resGraph.addData(graph.getMaxTerminalNodeId(), graph.getNodes());
+        resGraph.addHash(graph.getUserAssociatedNodeNames());
+        resGraph.changeShape(res.getArc());
+        
+        graphOriginal = graph;
+        graph = resGraph;
+        change();
 	}
 	
 	// OUTILS
@@ -285,7 +294,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		if (!isSolved) {
 			throw new GraphException("Ceci est déja l'original !");
 		}
-		switched = true;
+		switched = !switched;
 		change();
 	}
 

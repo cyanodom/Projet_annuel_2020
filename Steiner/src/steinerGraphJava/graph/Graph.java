@@ -296,5 +296,10 @@ public class Graph implements IGraph, Serializable {
 		}
 		return map;
 	}
+
+
+	public void addHash(Hashtable<Node, String> userAssociatedNodeNames2) {
+		userAssociatedNodeNames = userAssociatedNodeNames2;
+	}
 	
 }
