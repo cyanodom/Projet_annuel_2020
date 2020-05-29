@@ -20,40 +20,21 @@ public class Translator {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			
-			// Premi�re Ligne
-			String temp = br.readLine();
-			int nbSommet = stringToInt(temp);
-			if (nbSommet <= 0) {
-				//TODO Stop le programme
-				br.close();
-				return graph;
-			}
-			
-			// Deuxi�me Ligne
-			String[] sommet = br.readLine().split(" ");
-			
-			if (nbSommet != sommet.length) {
-				//TODO Erreur dans le fichier STOP
-				return null;
-			}			
-			
-			// Troisi�me Ligne
+			String[] sommet = br.readLine().split(" ");		
+
 			String[] sommetT = br.readLine().split(" ");
-			if (nbSommet < sommetT.length) {
+			if (sommet.length < sommetT.length) {
 				//TODO Erreur dans le fichier STOP
 				return null;
 			}
 			
-			String[] nomSommets = new String[nbSommet];
 			int i;
 			for (i = 0; i < sommetT.length; ++i) {
 				graph.getUserAssociatedNodeNames().put(new Node(i + 1), sommetT[i]);
-				nomSommets[i] = sommetT[i];
 			}
 			for (int j = 0; j < sommet.length; j++) {
 				if (!graph.getUserAssociatedNodeNames().containsKey(sommet[j])) {
 					graph.getUserAssociatedNodeNames().put(new Node(i + 1), sommet[j]);
-					nomSommets[i] = sommet[j];
 					++i;
 				}
 			}
@@ -73,8 +54,8 @@ public class Translator {
 				graph.getShape().add(arc);
 			}
 			
-			Node[] nodeTab = new Node[nbSommet];
-			for (int j = 0; j < nbSommet; j++) {
+			Node[] nodeTab = new Node[sommet.length];
+			for (int j = 0; j < sommet.length; j++) {
 				nodeTab[j] = new Node(j + 1);	
 			}
 			
