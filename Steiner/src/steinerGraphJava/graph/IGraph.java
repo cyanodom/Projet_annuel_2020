@@ -30,7 +30,7 @@ public interface IGraph {
 
 	void makeUnionWith(IGraph iGraph) throws GraphException;
 
-	void addArc(String firstNode, String secondNode, int weight);
+	void addArc(String firstNode, String secondNode, int weight) throws GraphException;
 
 	void removeRelatedArc(Node n);
 

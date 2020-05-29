@@ -1029,7 +1029,8 @@ public class Steiner {
 			
 		};
 		graphAddMenu.addActionListener(graphAddFrameAction);
-		graphAddButton.addActionListener(graphAddAction);	
+		graphAddButton.addActionListener(graphAddAction);
+		graphAddField.addActionListener(graphAddAction);
 		
 		ActionListener graphRemoveFrameAction = new ActionListener() {
 
@@ -1061,8 +1062,9 @@ public class Steiner {
 			}
 			
 		};
-		graphRemoveMenu.addActionListener(graphRemoveFrameAction);;
-		graphRemoveButton.addActionListener(graphRemoveAction);;
+		graphRemoveMenu.addActionListener(graphRemoveFrameAction);
+		graphRemoveButton.addActionListener(graphRemoveAction);
+		graphRemoveField.addActionListener(graphRemoveAction);
 		
 		ActionListener graphRenameFrameAction = new ActionListener() {
 
@@ -1116,6 +1118,7 @@ public class Steiner {
 		};
 		graphRenameMenu.addActionListener(graphRenameFrameAction);
 		graphRenameButton.addActionListener(graphRenameAction);
+		graphRenameDestField.addActionListener(graphRenameAction);
 		
 
 		ActionListener steinerSolveAction = new ActionListener() {
@@ -1127,7 +1130,7 @@ public class Steiner {
 			
 		};
 		steinerSolveMenu.addActionListener(steinerSolveAction);
-		steinerSolveButton.addActionListener(steinerSolveAction);;
+		steinerSolveButton.addActionListener(steinerSolveAction);
 		
 		ActionListener steinerSeeOriginalAction = new ActionListener() {
 

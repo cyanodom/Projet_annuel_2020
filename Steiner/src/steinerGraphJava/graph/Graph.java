@@ -98,8 +98,17 @@ public class Graph implements IGraph, Serializable {
 		for (int i = 0; i < nodes.length; ++i) {
 			new_nodes[i] = nodes[i];
 			if (i == node) {
-				new_nodes[nodes.length] = new Node(nodes.length);
+				Node the_new = new Node(nodes.length);
+				new_nodes[nodes.length] = the_new;
 				userAssociatedNodeNames.put(new_nodes[nodes.length], convertNodeToName(nodes[i]));
+				for (Arc a : shape) {
+					if (a.getNodes()[0].equals(nodes[i])) {
+						a.getNodes()[0] = the_new;
+					}
+					if (a.getNodes()[1].equals(nodes[i])) {
+						a.getNodes()[0] = the_new;
+					}
+				}
 				userAssociatedNodeNames.replace(nodes[i], name);
 			}
 		}
@@ -169,6 +178,9 @@ public class Graph implements IGraph, Serializable {
 				addNode(iGraph.convertNodeToName(iGraph.getNodes()[i]));
 			}
 		}
+		for (Arc a : iGraph.getShape()) {
+			addArc(iGraph.convertNodeToName(a.getNodes()[0]), iGraph.convertNodeToName(a.getNodes()[1]), a.getWeight());
+		}
 	}
 
 	@Override
@@ -194,8 +206,14 @@ public class Graph implements IGraph, Serializable {
 	}
 
 	@Override
-	public void addArc(String firstNode, String secondNode, int weight) {
-		shape.add(new Arc(convertNameToNode(firstNode), convertNameToNode(secondNode), weight));
+	public void addArc(String firstNode, String secondNode, int weight) throws GraphException {
+		Arc newArc = new Arc(convertNameToNode(firstNode), convertNameToNode(secondNode), weight);
+		for (Arc a : shape) {
+			if (a.equals(newArc)) {
+				throw new GraphException("Cet Arc est déja existant !");
+			}
+		}
+		shape.add(newArc);
 	}
 
 	@Override
