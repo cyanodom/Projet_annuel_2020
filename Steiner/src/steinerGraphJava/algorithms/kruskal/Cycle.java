@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
+import steinerGraphJava.graph.IGraph;
 
 public class Cycle {
 
@@ -19,7 +20,7 @@ public class Cycle {
 
 	// CONSTRUCTEUR
 
-	public Cycle(Graph graph) {
+	public Cycle(IGraph graph) {
 		this.length = 0;
 		this.nb = graph.getNodes().length;
 		nbArbre = 0;

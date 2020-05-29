@@ -38,4 +38,10 @@ public interface IGraph {
 	void renameNode(String nodeNameSource, String nodeNameDest) throws GraphException;
 
 	Hashtable<String, PointTime[]> getListSucc();
+
+	public void makeRemove(IGraph trans);
+
+	public void empty();
+
+	public void removeArc(String firstNode, String secondNode) throws GraphException;
 }

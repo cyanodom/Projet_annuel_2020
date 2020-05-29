@@ -4,13 +4,14 @@ import java.util.LinkedList;
 
 import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
+import steinerGraphJava.graph.IGraph;
 import steinerGraphJava.graph.Node;
 
 public class Kruskal {
 
 	// ATTRIBUTS
 
-	private Graph graph;
+	private IGraph graph;
 	private Cycle cycle;
 	private int length;
 	private int arbre;
@@ -18,8 +19,8 @@ public class Kruskal {
 
 	// CONSTRUCTEUR
 
-	public Kruskal (Graph temp) {
-		this.graph = temp;
+	public Kruskal (IGraph graph2) {
+		this.graph = graph2;
 		this.length = graph.getShape().size();
 		this.cycle = new Cycle(this.graph);
 		this.arbre = 1;

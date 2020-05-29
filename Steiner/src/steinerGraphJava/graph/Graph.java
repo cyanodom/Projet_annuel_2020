@@ -167,7 +167,7 @@ public class Graph implements IGraph, Serializable {
 		}
 	}
 
-
+	@Override
 	public void makeRemove(IGraph graph) {
 		for (Node n : graph.getNodes()) {
 			String name = graph.convertNodeToName(n);
@@ -181,7 +181,7 @@ public class Graph implements IGraph, Serializable {
 		}
 	}
 
-
+	@Override
 	public void empty() {
 		userAssociatedNodeNames = new Hashtable<Node, String>();
 		nodes = new Node[0];
@@ -194,7 +194,7 @@ public class Graph implements IGraph, Serializable {
 		shape.add(new Arc(convertNameToNode(firstNode), convertNameToNode(secondNode), weight));
 	}
 
-
+	@Override
 	public void removeArc(String firstNode, String secondNode) throws GraphException {
 		Node node_1 = null;
 		Node node_2 = null;

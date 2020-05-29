@@ -19,9 +19,9 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	private Genetique gene;
 	
-	private Graph graph;
+	private IGraph graph;
 	
-	private Graph graphOriginal;
+	private IGraph graphOriginal;
 	
 	private boolean switched;
 	
@@ -116,8 +116,9 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	@Override
 	public void addFile(File selectedFile) throws GraphException {
-		graph.makeUnionWith(Translator.trans(selectedFile));
+		graph = Translator.trans(selectedFile);
 		files.add(selectedFile);
+		change();
 	}
 
 
@@ -134,6 +135,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	@Override
 	public void removeFileAtIndex(Integer correspondingIndex) {
 		graph.makeRemove(Translator.trans(files.get(correspondingIndex)));
+		change();
 	}
 
 

@@ -15,6 +15,7 @@ import steinerGraphJava.algorithms.population.Population;
 import steinerGraphJava.algorithms.population.QuickSort;
 import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
+import steinerGraphJava.graph.IGraph;
 
 public class Genetique {
 
@@ -22,7 +23,7 @@ public class Genetique {
 
 	private int complex;
 	private Population population;
-	private Graph graph;
+	private IGraph graph;
 	private PoidsPenality[] res;
 	private boolean remplacement;
 	private QuickSort quicksort;
@@ -30,10 +31,10 @@ public class Genetique {
 
 	// CONSTRUCTEURS
 
-	public Genetique(Graph graph, boolean remplacement) {
-		this.complex = graph.getNodes().length - graph.getMaxTerminalNodeId();
+	public Genetique(IGraph graph2, boolean remplacement) {
+		this.complex = graph2.getNodes().length - graph2.getMaxTerminalNodeId();
 		this.population = new Population(complex);
-		this.graph = graph;
+		this.graph = graph2;
 		this.remplacement = remplacement;
 		this.res = new PoidsPenality[complex];
 		for (int i = 0; i < complex; ++i) {
@@ -86,7 +87,7 @@ public class Genetique {
 		trierListArc(graph.getShape());
 		
 		
-		Graph[] temp = new Graph[complex-nbRes];
+		IGraph[] temp = new Graph[complex-nbRes];
 		
 		for (int i = 0; i < complex - nbRes; ++i) {
 			try {
@@ -135,18 +136,18 @@ public class Genetique {
 		Collections.sort(arc, new SortPerso());
 	}
 	
-	public Graph newObject(Graph graph) throws IOException, ClassNotFoundException {
+	public IGraph newObject(IGraph graph2) throws IOException, ClassNotFoundException {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(bos);
-		oos.writeObject(graph);
+		oos.writeObject(graph2);
 		oos.flush();
 		oos.close();
 		bos.close();
 		byte[] byteData = bos.toByteArray();
 
 		ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
-		graph = (Graph) new ObjectInputStream(bais).readObject();
-		return graph;
+		graph2 = (IGraph) new ObjectInputStream(bais).readObject();
+		return graph2;
 	}
 	
 	// Sort perso (possibilité d'utiliser le quicksort dans la class QuickSort)
