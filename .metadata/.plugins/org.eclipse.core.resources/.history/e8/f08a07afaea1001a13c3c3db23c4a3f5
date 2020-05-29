@@ -186,7 +186,6 @@ public class Graph implements IGraph, Serializable {
 		userAssociatedNodeNames = new Hashtable<Node, String>();
 		nodes = new Node[0];
 		shape = new LinkedList<Arc>();
-		maxTerminalNodeId = -1;
 	}
 
 	@Override
@@ -266,12 +265,10 @@ public class Graph implements IGraph, Serializable {
 				if (a.getNodes()[0].equals(n)) {
 					pt[i] = new PointTime(convertNodeToName(a.getNodes()[1]), a.getWeight());
 					System.out.println("--arc : " + convertNodeToName(n) + " <-> " + convertNodeToName(a.getNodes()[1]) + " = " + a.getWeight());
-					++i;
 				}
 				if (a.getNodes()[1].equals(n)) {
 					pt[i] = new PointTime(convertNodeToName(a.getNodes()[0]), a.getWeight());
 					System.out.println("--arc : " + convertNodeToName(n) + " <-> " + convertNodeToName(a.getNodes()[0]) + " = " + a.getWeight());
-					++i;
 				}
 			}
 			map.put(convertNodeToName(n), pt);

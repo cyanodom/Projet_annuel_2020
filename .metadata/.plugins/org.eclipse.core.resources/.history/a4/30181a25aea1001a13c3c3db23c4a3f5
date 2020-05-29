@@ -93,23 +93,21 @@ public class GraphicGraph extends JComponent implements Scrollable {
 			}
 			
 		});
+		Graphics2D.setRenderingHint(
+		        RenderingHints.KEY_TEXT_ANTIALIASING,
+		        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D)g;
-		
-		g2.setRenderingHint(
-		        RenderingHints.KEY_ANTIALIASING,
-		        RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setFont(FONT);
+		g.setFont(FONT);
 		IGraph graph = model.getGraph();
 		
-		FontMetrics fm = g2.getFontMetrics(FONT);
+		FontMetrics fm = g.getFontMetrics(FONT);
 		
-		g2.setColor(BACKGROUND);
-		g2.fillRect(0, 0, getWidth(), Integer.MAX_VALUE - 1);
-		g2.setColor(TEXT_COLOR);
+		g.setColor(BACKGROUND);
+		g.fillRect(0, 0, getWidth(), Integer.MAX_VALUE - 1);
+		g.setColor(TEXT_COLOR);
 		
 		//char[] rdvP = graphFile.getRdvPoints();
 		int x = SPACING;
@@ -118,12 +116,12 @@ public class GraphicGraph extends JComponent implements Scrollable {
 		// Dessins List succ Arcs
 		x = SPACING;
 		y += SPACING;
-		drawTextEncadred(g2, fm, x, y, SUCC_LIST);
+		drawTextEncadred(g, fm, x, y, SUCC_LIST);
 		y += 2 * (THICK + V_SPACING_TEXT)
 				+ FONT_HEIGHT;
 		
 		x = SPACING;
-		drawSuccArcList(g2, fm, x, y, graph);
+		drawSuccArcList(g, fm, x, y, graph);
 		
 		this.setPreferredSize(new Dimension(
 				realWidth, realHeight));
