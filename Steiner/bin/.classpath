@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-jre"/>
+	<classpathentry kind="lib" path="toolbox/hamcrest-core-1.3.0RC1.jar"/>
+	<classpathentry kind="lib" path="toolbox/hamcrest-library-1.3.0RC1.jar"/>
+	<classpathentry kind="lib" path="toolbox/jmock-2.6.0-RC2.jar"/>
+	<classpathentry kind="lib" path="toolbox/jmock-junit4-2.6.0-RC2.jar"/>
+	<classpathentry kind="lib" path="toolbox/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="toolbox/utils.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

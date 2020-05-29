@@ -7,53 +7,53 @@ import java.util.LinkedList;
 import steinerGraphJava.graphics.PointTime;
 
 public class Graph implements IGraph, Serializable {
-	
+
 	// ATTRIBUTS
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3574766666525944701L;
 	private int maxTerminalNodeId;
 	private LinkedList<Arc> shape;
 	private Node[] nodes;
 	private Hashtable<Node, String> userAssociatedNodeNames;
-	
+
 	// CONSTRUCTEUR
-	
+
 	public Graph() {
 		userAssociatedNodeNames = new Hashtable<Node, String>();
 		maxTerminalNodeId = 0;
 		shape = new LinkedList<Arc>();
 		nodes = new Node[0];
 	}
-	
-	
+
+
 	// REQUETES
-	
+
 	@Override
 	public Node[] getNodes() {
 		return nodes;
 	}
-	
+
 	@Override
 	public LinkedList<Arc> getShape() {
 		return shape;
 	}
-	
+
 	@Override
 	public int getMaxTerminalNodeId() {
 		return maxTerminalNodeId;
 	}
-	
+
 	@Override
 	public Hashtable<Node, String> getUserAssociatedNodeNames() {
 		return userAssociatedNodeNames;
 	}
-	
-	
+
+
 	// COMMANDES
-	
+
 	//TO SEE
 	@Override
 	public void removeRelatedArc(Node n) {
@@ -65,20 +65,20 @@ public class Graph implements IGraph, Serializable {
 			}
 		}
 	}
-	
+
 	//REMOVE
 	@Override
 	public void addData(int length, Node[] nodeTab) {
 		maxTerminalNodeId = length;
 		nodes = nodeTab;
 	}
-	
+
 	@Override
 	public void addTerminalNode(String nodeName) throws GraphException {
 		insertNode(maxTerminalNodeId, nodeName);
 		maxTerminalNodeId += 1;
 	}
-	
+
 	private void insertNode(int node, String name) throws GraphException {
 		if (userAssociatedNodeNames.containsValue(name)) {
 			throw new GraphException(name + " Ce noeud ne peut être ajouté : il est déja présent !");
@@ -112,33 +112,33 @@ public class Graph implements IGraph, Serializable {
 				userAssociatedNodeNames.replace(nodes[i], name);
 			}
 		}
-		
+
 		nodes = new_nodes;
 	}
-	
+
 	@Override
 	public void addNode(String nodeName) throws GraphException {
 		insertNode(nodes.length, nodeName);
 	}
-	
+
 	@Override
 	public void renameNode(String nodeNameSource, String nodeNameDest) throws GraphException {
 		if (!userAssociatedNodeNames.containsValue(nodeNameSource)) {
 			throw new GraphException("noeud non trouvé");
 		}
-		
+
 		userAssociatedNodeNames.replace(convertNameToNode(nodeNameSource), nodeNameDest);
 	}
-	
+
 	public void changeShape(LinkedList<Arc> shape) {
 		this.shape = shape;
 	}
-	
+
 	@Override
 	public String convertNodeToName(Node node) {
 		return userAssociatedNodeNames.get(node);
 	}
-	
+
 	@Override
 	public Node convertNameToNode(String name) {
 		for (Node n : userAssociatedNodeNames.keySet()) {
@@ -301,5 +301,5 @@ public class Graph implements IGraph, Serializable {
 	public void addHash(Hashtable<Node, String> userAssociatedNodeNames2) {
 		userAssociatedNodeNames = userAssociatedNodeNames2;
 	}
-	
+
 }
