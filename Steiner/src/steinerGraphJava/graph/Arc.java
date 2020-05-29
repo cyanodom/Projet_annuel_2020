@@ -1,6 +1,12 @@
 package steinerGraphJava.graph;
 
-public class Arc {
+import java.io.Serializable;
+
+public class Arc implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int weight;
 	private Node[] nodes;
 	

@@ -34,4 +34,9 @@
     <fullyQualifiedTypeName name="java.util.Map.Entry"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="java.util.Observer"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="steinerGraphJava.graphics.PointTime"/>
+    <fullyQualifiedTypeName name="java.awt.RenderingHints"/>
+    <fullyQualifiedTypeName name="steinerGraphJava.graph.Node"/>
+    <fullyQualifiedTypeName name="java.io.Serializable"/>
 </qualifiedTypeNameHistroy>
