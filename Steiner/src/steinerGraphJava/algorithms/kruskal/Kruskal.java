@@ -3,7 +3,6 @@ package steinerGraphJava.algorithms.kruskal;
 import java.util.LinkedList;
 
 import steinerGraphJava.graph.Arc;
-import steinerGraphJava.graph.Graph;
 import steinerGraphJava.graph.IGraph;
 import steinerGraphJava.graph.Node;
 

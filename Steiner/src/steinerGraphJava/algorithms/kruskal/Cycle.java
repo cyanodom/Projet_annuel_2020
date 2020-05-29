@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import steinerGraphJava.graph.Arc;
-import steinerGraphJava.graph.Graph;
 import steinerGraphJava.graph.IGraph;
 
 public class Cycle {
@@ -57,6 +56,7 @@ public class Cycle {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public Boolean findCycle(LinkedList<Arc> kara, int l) {
 		length = l;
 		list = new LinkedList[nb];

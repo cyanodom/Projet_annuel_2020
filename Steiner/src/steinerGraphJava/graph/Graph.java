@@ -10,6 +10,10 @@ public class Graph implements IGraph, Serializable {
 	
 	// ATTRIBUTS
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3574766666525944701L;
 	private int maxTerminalNodeId;
 	private LinkedList<Arc> shape;
 	private Node[] nodes;

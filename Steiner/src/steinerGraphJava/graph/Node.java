@@ -1,6 +1,12 @@
 package steinerGraphJava.graph;
 
-public class Node {
+import java.io.Serializable;
+
+public class Node implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -924758096838125298L;
 	private int name;
 	
 	public Node(int name) {

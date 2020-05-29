@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Hashtable;
 import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
@@ -18,6 +17,7 @@ public class Translator {
 	public static IGraph trans(File f){
 		IGraph graph = new Graph();
 		try {
+			@SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			
 			String[] sommet = br.readLine().split(" ");		

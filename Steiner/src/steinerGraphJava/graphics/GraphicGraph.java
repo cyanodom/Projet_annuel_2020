@@ -15,10 +15,10 @@ import javax.swing.JComponent;
 import javax.swing.Scrollable;
 
 import steinerGraphJava.graph.*;
-import steinerGraphJava.graph.graphFile.*;
 import steinerGraphJava.model.ISteinerModel;
 import steinerGraphJava.model.SteinerModel;
 
+@SuppressWarnings({ "deprecation"})
 public class GraphicGraph extends JComponent implements Scrollable {
 	/**
 	 * 

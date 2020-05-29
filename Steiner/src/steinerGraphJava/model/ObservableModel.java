@@ -8,6 +8,7 @@ import java.util.Observer;
  * @inv <pre>
  *     countObservers() >= 0 </pre>
  */
+@SuppressWarnings("deprecation")
 public interface ObservableModel {
     
     // REQUETES

@@ -1,6 +1,5 @@
 package steinerGraphJava.graph;
 
-import java.io.File;
 import java.util.Hashtable;
 import java.util.LinkedList;
 

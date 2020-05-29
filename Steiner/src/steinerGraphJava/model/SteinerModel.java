@@ -13,6 +13,7 @@ import steinerGraphJava.graph.GraphException;
 import steinerGraphJava.graph.IGraph;
 import steinerGraphJava.graph.graphFile.Translator;
 
+@SuppressWarnings("deprecation")
 public class SteinerModel extends Observable implements ISteinerModel {
 
 	// ATTRIBUTS
@@ -225,10 +226,8 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	public void removeElement(String answer) throws GraphException {
 		boolean arcMode = false;
 		boolean thisIsSecondNode = false;
-		boolean thisIsWeight = false;
 		String firstNode = "";
 		String secondNode = "";
-		String weight = "";
 		
 		for (int i = 0; i < answer.length(); ++i) {
 			if (answer.charAt(i) == ' ' ) {
@@ -241,19 +240,11 @@ public class SteinerModel extends Observable implements ISteinerModel {
 					thisIsSecondNode = true;
 					arcMode = true;
 				} else {
-					if (thisIsWeight || answer.length() < i + 4 || answer.charAt(i + 1) != ':' 
-							|| answer.charAt(i + 2) != ' ' || answer.charAt(i + 3) == ' ') {
-						throw new GraphException("La syntaxe est invalide !");
-					}
-					i += 2;
-					thisIsSecondNode = false;
-					thisIsWeight = true;
+					throw new GraphException("Erreur de syntaxe");
 				}
 			} else {
 				if (thisIsSecondNode) {
 					secondNode += answer.charAt(i);
-				} else if (thisIsWeight) {
-					weight += answer.charAt(i);
 				} else {
 					firstNode += answer.charAt(i);
 				}
