@@ -1,2 +1,3 @@
 cd src
 find ./ -name "*.java" | javac -d ../class @/dev/stdin
+cd ../class && java steinerGraphJava.Steiner && cd ../src

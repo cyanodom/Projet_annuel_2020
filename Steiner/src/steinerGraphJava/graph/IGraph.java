@@ -6,19 +6,19 @@ import java.util.LinkedList;
 import steinerGraphJava.graphics.PointTime;
 
 public interface IGraph {
-	public Node[] getNodes();
-	
-	public void removeNode(String n) throws GraphException;
-	
-	public LinkedList<Arc> getShape();
-	
-	public int getMaxTerminalNodeId();
-	
-	public Hashtable<Node, String> getUserAssociatedNodeNames();
+	Node[] getNodes();
 
-	public String convertNodeToName(Node node);
+	void removeNode(String n) throws GraphException;
 
-	public Node convertNameToNode(String node);
+	LinkedList<Arc> getShape();
+
+	int getMaxTerminalNodeId();
+
+	Hashtable<Node, String> getUserAssociatedNodeNames();
+
+	String convertNodeToName(Node node);
+
+	Node convertNameToNode(String node);
 
 	void addData(int length, Node[] nodeTab);
 
@@ -38,9 +38,10 @@ public interface IGraph {
 
 	Hashtable<String, PointTime[]> getListSucc();
 
-	public void makeRemove(IGraph trans);
+	void makeRemove(IGraph trans);
 
-	public void empty();
+	void empty();
 
-	public void removeArc(String firstNode, String secondNode) throws GraphException;
+	void removeArc(String firstNode, String secondNode) throws GraphException;
+
 }

@@ -11,6 +11,7 @@ import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
 import steinerGraphJava.graph.GraphException;
 import steinerGraphJava.graph.IGraph;
+import steinerGraphJava.graph.graphFile.GraphFileException;
 import steinerGraphJava.graph.graphFile.Translator;
 
 @SuppressWarnings("deprecation")
@@ -19,20 +20,22 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	// ATTRIBUTS
 
 	private Genetique gene;
-	
+
 	private IGraph graph;
-	
+
 	private IGraph graphOriginal;
-	
+
 	private boolean switched;
-	
+
 	private PoidsPenality res;
-	
+
 	private LinkedList<File> files;
-	
+
 	private boolean isSolved;
-	
+
 	private State state;
+	
+	private long time;
 
 
 	// CONSTRUCTEUR
@@ -49,28 +52,31 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	// COMMANDES
 
 	public void runAlgo() {
-		
+		if (isSolved) {
+			graph = graphOriginal;
+		}
+
 		// ============ TEST ==============
-		
-		System.out.println("Nb Terminal : " + graph.getMaxTerminalNodeId());
-		
+
+		//System.out.println("Nb Terminal : " + graph.getMaxTerminalNodeId());
+
 		// System.out.println("Tous les Sommets :");
 		// for (int i = 0; i < graph.getNodes().length; i++) {
 		// 	System.out.println(graph.getNodes()[i].getName());
 		// }
 
 		// System.out.println();
-		
+
 		// System.out.println("Tous les sommets Terminaux :");
-		for (int i = 0; i < graph.getMaxTerminalNodeId(); i++) {
-			System.out.println(graph.getNodes()[i].getName());
-		}
-		
+		//for (int i = 0; i < graph.getMaxTerminalNodeId(); i++) {
+		//	System.out.println(graph.getNodes()[i].getName());
+		//}
+
 		// System.out.println();
-		
+
 		// System.out.println("Tous les Arcs :");
 		// for (int i = 0; i < graph.getShape().size(); ++i) {
-		// 	System.out.println("(" + graph.getShape().get(i).getNodes()[0].getName() + "," 
+		// 	System.out.println("(" + graph.getShape().get(i).getNodes()[0].getName() + ","
 		// 						   + graph.getShape().get(i).getNodes()[1].getName() + ","
 		// 						   + graph.getShape().get(i).getWeight() + ")");
 		// }
@@ -79,35 +85,38 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 		// PARTIE Genetique
-		
+
 		// True = elitiste / false = generationnel
+		long timeBefore = System.currentTimeMillis();
 		gene = new Genetique(graph, true);
 		gene.algoGene();
-		
+
 		res = gene.getRes();
-		
-		
+
+
 		// System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
 		//System.out.println("Les arcs restants sont : " + res.getArc().size());
 		//printArray(res.getArc());
 		//System.out.println("Poids " + ": " + res.getPoids());
 		//System.out.println("Penality : " + res.getPenality());
-		
+
 		Graph resGraph = new Graph();
         resGraph.addData(graph.getMaxTerminalNodeId(), graph.getNodes());
         resGraph.addHash(graph.getUserAssociatedNodeNames());
         resGraph.changeShape(res.getArc());
-        
+
         graphOriginal = graph;
         graph = resGraph;
+		long timeAfter = System.currentTimeMillis();
+		time = timeAfter - timeBefore;
         change();
 	}
-	
+
 	// OUTILS
-	
+
 	public void printArray(LinkedList<Arc> res) {
 		for (int i = 0; i < res.size(); ++i) {
-			System.out.println("(" + res.get(i).getNodes()[0].getName() + "," 
+			System.out.println("(" + res.get(i).getNodes()[0].getName() + ","
 								   + res.get(i).getNodes()[1].getName() + ","
 								   + res.get(i).getWeight() + ")");
 		}
@@ -125,7 +134,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public void addFile(File selectedFile) throws GraphException {
+	public void addFile(File selectedFile) throws GraphException, GraphFileException {
 		graph.makeUnionWith(Translator.trans(selectedFile));
 		files.add(selectedFile);
 		change();
@@ -143,7 +152,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public void removeFileAtIndex(Integer correspondingIndex) {
+	public void removeFileAtIndex(Integer correspondingIndex) throws GraphFileException {
 		graph.makeRemove(Translator.trans(files.get(correspondingIndex)));
 		change();
 	}
@@ -152,21 +161,21 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	@Override
 	public void saveFileTo(File selectedFile) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void undo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void redo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
@@ -185,11 +194,11 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		String firstNode = "";
 		String secondNode = "";
 		String weight = "";
-		
+
 		for (int i = 0; i < answer.length(); ++i) {
 			if (answer.charAt(i) == ' ' ) {
 				if (!arcMode) {
-					if (answer.length() < i + 4 || answer.charAt(i + 1) != '-' 
+					if (answer.length() < i + 4 || answer.charAt(i + 1) != '-'
 							|| answer.charAt(i + 2) != ' ' || answer.charAt(i + 3) == ' ') {
 						throw new GraphException("La syntaxe est invalide !");
 					}
@@ -197,7 +206,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 					thisIsSecondNode = true;
 					arcMode = true;
 				} else {
-					if (thisIsWeight || answer.length() < i + 4 || answer.charAt(i + 1) != ':' 
+					if (thisIsWeight || answer.length() < i + 4 || answer.charAt(i + 1) != ':'
 							|| answer.charAt(i + 2) != ' ' || answer.charAt(i + 3) == ' ') {
 						throw new GraphException("La syntaxe est invalide !");
 					}
@@ -227,7 +236,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 				change();
 			}
 		}
-		
+
 	}
 
 
@@ -237,11 +246,11 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		boolean thisIsSecondNode = false;
 		String firstNode = "";
 		String secondNode = "";
-		
+
 		for (int i = 0; i < answer.length(); ++i) {
 			if (answer.charAt(i) == ' ' ) {
 				if (!arcMode) {
-					if (answer.length() < i + 4 || answer.charAt(i + 1) != '-' 
+					if (answer.length() < i + 4 || answer.charAt(i + 1) != '-'
 							|| answer.charAt(i + 2) != ' ' || answer.charAt(i + 3) == ' ') {
 						throw new GraphException("La syntaxe est invalide !");
 					}
@@ -265,7 +274,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		} else {
 			graph.removeNode(firstNode);
 			change();
-		}		
+		}
 	}
 
 
@@ -284,8 +293,8 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	@Override
 	public void solve() {
-		isSolved = true;
 		runAlgo();
+		isSolved = true;
 	}
 
 
@@ -327,9 +336,8 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public Integer getTimeToSolve() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getTimeToSolve() {
+		return Long.toString(time);
 	}
 
 
@@ -338,9 +346,19 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	private void change() {
 		setChanged();
 		notifyObservers(state);
 	}
+
+  @Override
+  public String getPenality() {
+    return Integer.toString(res.getPenality());
+  }
+
+  @Override
+  public String getPoids() {
+    return Integer.toString(res.getPoids());
+  }
 }

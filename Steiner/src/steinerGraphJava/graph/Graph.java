@@ -23,7 +23,7 @@ public class Graph implements IGraph, Serializable {
 
 	public Graph() {
 		userAssociatedNodeNames = new Hashtable<Node, String>();
-		maxTerminalNodeId = -1;
+		maxTerminalNodeId = 0;
 		shape = new LinkedList<Arc>();
 		nodes = new Node[0];
 	}

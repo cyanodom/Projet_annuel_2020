@@ -5,10 +5,11 @@ import java.util.List;
 
 import steinerGraphJava.graph.GraphException;
 import steinerGraphJava.graph.IGraph;
+import steinerGraphJava.graph.graphFile.GraphFileException;
 import steinerGraphJava.model.ObservableModel;
 
 public interface ISteinerModel extends ObservableModel {
-	
+
 	enum State {
 		NOT_SPECIFIED,
 		FILE_CHANGED,
@@ -17,11 +18,11 @@ public interface ISteinerModel extends ObservableModel {
 
 	IGraph getGraph();
 
-	void addFile(File selectedFile) throws GraphException;
+	void addFile(File selectedFile) throws GraphException, GraphFileException;
 
 	List<String> getFileNames();
 
-	void removeFileAtIndex(Integer correspondingIndex);
+	void removeFileAtIndex(Integer correspondingIndex) throws GraphFileException;
 
 	void saveFileTo(File selectedFile);
 
@@ -49,9 +50,13 @@ public interface ISteinerModel extends ObservableModel {
 
 	Integer getNbModification();
 
-	Integer getTimeToSolve();
+	String getTimeToSolve();
 
 	Integer getEfficiency();
 
 	void renameNode(String answerSource, String answerDest) throws GraphException;
+
+  String getPoids();
+
+  String getPenality();
 }

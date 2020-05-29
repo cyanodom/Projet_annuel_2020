@@ -14,7 +14,7 @@ import steinerGraphJava.graph.Node;
 
 public class Translator {
 
-	public static IGraph trans(File f){
+	public static IGraph trans(File f) throws GraphFileException{
 		IGraph graph = new Graph();
 		try {
 			@SuppressWarnings("resource")
@@ -24,8 +24,7 @@ public class Translator {
 
 			String[] sommetT = br.readLine().split(" ");
 			if (sommet.length < sommetT.length) {
-				//TODO Erreur dans le fichier STOP
-				return null;
+				throw new GraphFileException();
 			}
 			
 			int i;
@@ -62,7 +61,7 @@ public class Translator {
 			graph.addData(sommetT.length, nodeTab);
 			br.close();
 		} catch (IOException e) {
-			// TODO Afficher un message d'erreur et demander de rechoisir
+			throw new GraphFileException();
 		}
 		return graph;
 	}
