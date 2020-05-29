@@ -1,0 +1,2 @@
+cd src
+find ./ -name "*.java" | javac -d ../class @/dev/stdin
