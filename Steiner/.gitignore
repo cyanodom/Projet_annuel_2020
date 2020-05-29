@@ -1,5 +1,1 @@
-*
-!src/
-!toolbox/
-!misc/
-!.gitignore
+/bin/

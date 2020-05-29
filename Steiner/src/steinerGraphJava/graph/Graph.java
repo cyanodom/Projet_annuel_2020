@@ -190,7 +190,7 @@ public class Graph implements IGraph, Serializable {
 
 	@Override
 	public void addArc(String firstNode, String secondNode, int weight) {
-		
+		shape.add(new Arc(convertNameToNode(firstNode), convertNameToNode(secondNode), weight));
 	}
 
 
@@ -249,6 +249,7 @@ public class Graph implements IGraph, Serializable {
 
 	@Override
 	public Hashtable<String, PointTime[]> getListSucc() {
+		System.out.println("-- start");
 		Hashtable<String, PointTime[]> map = new Hashtable<String, PointTime[]>();
 		for (Node n : nodes) {
 			int number = 0;
@@ -257,18 +258,22 @@ public class Graph implements IGraph, Serializable {
 					++number;
 				}
 			}
-			PointTime[] pt = new PointTime[number * 2];
+			System.out.println("-- new Node of name : " + convertNodeToName(n) + " of size :" + number);
+			PointTime[] pt = new PointTime[number];
 			int i = 0;
 			for (Arc a : shape) {
 				if (a.getNodes()[0].equals(n)) {
 					pt[i] = new PointTime(convertNodeToName(a.getNodes()[1]), a.getWeight());
+					System.out.println("--arc : " + convertNodeToName(n) + " <-> " + convertNodeToName(a.getNodes()[1]) + " = " + a.getWeight());
 				}
 				if (a.getNodes()[1].equals(n)) {
 					pt[i] = new PointTime(convertNodeToName(a.getNodes()[0]), a.getWeight());
+					System.out.println("--arc : " + convertNodeToName(n) + " <-> " + convertNodeToName(a.getNodes()[0]) + " = " + a.getWeight());
 				}
 			}
 			map.put(convertNodeToName(n), pt);
 		}
+		System.out.println("-- end");
 		return map;
 	}
 	

@@ -1,0 +1,14 @@
+package steinerGraphJava;
+
+import javax.swing.JPanel;
+
+public class truc extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public truc() {
+
+	}
+
+}

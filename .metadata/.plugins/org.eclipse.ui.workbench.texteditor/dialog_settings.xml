@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value=""/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="removeN"/>
+			<item value="Sys"/>
+			<item value="StructFile"/>
+			<item value="un noeud"/>
+			<item value="le noeud"/>
+			<item value="Hash"/>
+			<item value="statSeeAction"/>
+			<item value="seeStat"/>
+			<item value="mainFrame"/>
+			<item value="private JMenuItem "/>
+			<item value="private JButton "/>
+			<item value="mainPanel"/>
+			<item value="this"/>
+			<item value="20"/>
+			<item value="setRightComponent"/>
+		</list>
+		<list key="replacehistory">
+			<item value="un élément"/>
+			<item value=""/>
+			<item value="30"/>
+			<item value="leftPanel.add"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="23"/>
+		<item key="DIALOG_Y_ORIGIN" value="15"/>
+		<item key="DIALOG_WIDTH" value="341"/>
+		<item key="DIALOG_HEIGHT" value="412"/>
+		<item key="DIALOG_FONT_NAME" value="1|Cantarell|11.0|0|GTK|1|"/>
+	</section>
+</section>

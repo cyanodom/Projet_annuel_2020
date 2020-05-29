@@ -1,0 +1,294 @@
+package steinerGraphJava;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.SwingUtilities;
+
+import steinerGraphJava.graphics.GraphicGraph;
+import steinerGraphJava.model.SteinerModel;  
+
+
+
+public class Steiner {
+
+	private final int V_DEFAULT_SIZE = 600;
+	private final int H_DEFAULT_SIZE = 400;
+	
+	// VIEWS :
+	
+	private final int ID_GRAPH_VIEW = 2;
+	private final int ID_EQUAL_VIEW = 1;
+	private final int ID_CONTROL_VIEW = 0;
+	private final int ID_DEFAULT_VIEW = ID_EQUAL_VIEW;
+	private final int NB_VIEW = 3;
+	
+	private int idActualView;
+	
+	private JFrame mainFrame;
+	private JPanel mainPanel;
+	
+	private JMenuBar menuBar;
+	private JMenuItem fileAddMenu;
+	private JMenuItem fileRemoveMenu;
+	private JMenuItem fileSaveMenu;
+	private JMenuItem editUndoMenu;
+	private JMenuItem editRedoMenu;
+	private JMenuItem graphEmptyMenu;
+	private JMenuItem graphAddMenu;
+	private JMenuItem graphRemoveMenu;
+	private JMenuItem graphRenameMenu;
+	private JMenuItem steinerSolveMenu;
+	private JMenuItem steinerSeeOriginalMenu;
+	private JMenuItem statsSeeMenu;
+	private JMenuItem viewSwitchGraphMenu;
+	private JMenuItem viewSwitchEqualMenu;
+	private JMenuItem viewSwitchControlMenu;
+	
+	private JButton fileAddButton;
+	private JButton fileRemoveButton;
+	private JButton fileSaveButton;
+	private JButton editUndoButton;
+	private JButton editRedoButton;
+	private JButton graphEmptyButton;
+	private JButton graphAddButton;
+	private JButton graphRemoveButton;
+	private JButton graphRenameButton;
+	private JButton steinerSolveButton;
+	private JButton steinerSeeOriginalButton;
+	private JButton statsSeeButton;
+	private JButton viewSwitchNextButton;
+	private JButton viewSwitchPrevButton;
+	
+	private GraphicGraph graphicGraph;
+	
+	private SteinerModel model;
+	
+	public Steiner() {
+		createModel();
+		createView();
+		placeComponents();
+		createController();
+	}
+	
+	public void createView() {
+		mainFrame = new JFrame("Steiner");
+		mainFrame.setPreferredSize(new Dimension(V_DEFAULT_SIZE, H_DEFAULT_SIZE));
+		
+		graphicGraph = new GraphicGraph(model);
+		
+		idActualView = ID_DEFAULT_VIEW;
+		mainPanel = new JPanel();
+		
+		fileAddButton = new JButton("Ajouter");
+		fileRemoveButton = new JButton("Retirer");
+		fileSaveButton = new JButton("Sauvegarder");
+		editUndoButton = new JButton("Annuler");
+		editRedoButton = new JButton("Refaire");
+		graphEmptyButton = new JButton("Vider");
+		graphAddButton = new JButton("Ajouter");
+		graphRemoveButton = new JButton("Retirer");
+		graphRenameButton = new JButton("Renommer");
+		steinerSolveButton = new JButton("Résoudre");
+		steinerSeeOriginalButton = new JButton("Voir l'original");
+		statsSeeButton = new JButton("Voir");
+		viewSwitchNextButton = new JButton(">");
+		viewSwitchPrevButton = new JButton("<");
+		
+		steinerSolveMenu = new JMenuItem("Résoudre le modèle");
+		steinerSeeOriginalMenu = new JMenuItem("Voir l'original");
+		fileAddMenu = new JMenuItem("Ajouter un fichier");
+		fileRemoveMenu = new JMenuItem("Retirer un fichier");
+		fileSaveMenu = new JMenuItem("Sauvegarder dans un fichier");
+		editUndoMenu = new JMenuItem("Annuler la dernière action");
+		editRedoMenu = new JMenuItem("Refaire la dernière action annulée");
+		graphEmptyMenu = new JMenuItem("Vider le graph");
+		graphAddMenu = new JMenuItem("Ajouter un noeud");
+		graphRemoveMenu =new JMenuItem("Retirer un noeud");
+		graphRenameMenu = new JMenuItem("Renommer un noeud");
+		statsSeeMenu = new JMenuItem("Voir les stats");
+		viewSwitchGraphMenu = new JMenuItem("Basculer vers la vue en mode < graph >");
+		viewSwitchEqualMenu = new JMenuItem("Basculer vers la vue en mode < équilibrée >");
+		viewSwitchControlMenu = new JMenuItem("Basculer vers la vue en mode < contrôle >");
+		
+		menuBar = new JMenuBar(); {
+			JMenu m = new JMenu("Steiner"); {
+				m.add(steinerSolveMenu);
+				m.add(steinerSeeOriginalMenu);
+			}
+			menuBar.add(m);
+			m = new JMenu("Fichier"); {
+				m.add(fileAddMenu);
+				m.add(fileRemoveMenu);
+				m.add(fileSaveMenu);
+			}
+			menuBar.add(m);
+			m = new JMenu("Edition"); {
+				m.add(editUndoMenu);
+				m.add(editRedoMenu);
+			}
+			menuBar.add(m);
+			m = new JMenu("Graph"); {
+				m.add(graphEmptyMenu);
+				m.add(graphAddMenu);
+				m.add(graphRemoveMenu);
+				m.add(graphRenameMenu);
+			}
+			menuBar.add(m);
+			m = new JMenu("View"); {
+				m.add(viewSwitchGraphMenu);
+				m.add(viewSwitchEqualMenu);
+				m.add(viewSwitchControlMenu);
+			}
+			menuBar.add(m);
+			m = new JMenu("Stats"); {
+				m.add(statsSeeMenu);
+			}
+			menuBar.add(m);
+		}
+	}
+	
+	public void createModel() {
+		model = new SteinerModel();
+	}
+	
+	public void nextView() {
+		if (idActualView == NB_VIEW) {
+			//ERREUR
+		}
+		++idActualView;
+		rebuildView();
+	}
+	
+	public void switchToView(int viewId) {
+		idActualView = viewId;
+		rebuildView();
+	}
+	
+	public void previousView() {
+		if (idActualView == 0) {
+			//ERREUR
+		}
+		--idActualView;
+		rebuildView();
+	}
+	
+	public void rebuildView() {
+		mainPanel.removeAll();
+		placeComponentsView(idActualView);
+		mainPanel.repaint();
+		mainPanel.revalidate();
+	}
+	
+	public void placeComponents() {
+		placeComponentsView(ID_DEFAULT_VIEW);
+		mainFrame.add(mainPanel);
+	}
+
+	private void placeComponentsView(int viewId) {
+		mainPanel.setLayout(new BorderLayout());
+		
+		//--------------------------
+		viewId = ID_GRAPH_VIEW;
+		//--------------------------
+		
+		if (viewId == ID_GRAPH_VIEW) {
+			
+			mainPanel.add(menuBar, BorderLayout.NORTH);
+			JPanel contentPane = new JPanel(); {
+				GridLayout s = new GridLayout(0, 2);
+				contentPane.setLayout(s);
+				
+				JPanel leftArea = new JPanel(new BorderLayout()); {
+					JPanel p = new JPanel(); {
+						p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+						
+						p.add(new JLabel("Fichier :"));
+					}
+					leftArea.add(p, BorderLayout.CENTER);
+					leftArea.add(viewSwitchPrevButton, BorderLayout.EAST);
+				}
+				contentPane.add(leftArea);
+				
+				JPanel rightArea = new JPanel(); {
+					rightArea.add(graphicGraph);
+
+					rightArea.setBackground(Color.red);
+				}
+				contentPane.add(rightArea);
+			}
+			mainPanel.add(contentPane);
+			
+		} else if (viewId == ID_EQUAL_VIEW) {
+			
+			mainPanel.add(menuBar, BorderLayout.NORTH);
+			JPanel p = new JPanel(); {
+				SpringLayout s = new SpringLayout();
+				p.setLayout(s);
+				
+				JPanel q = new JPanel(new BorderLayout()); {
+					q.add(viewSwitchNextButton, BorderLayout.WEST);
+					q.add(viewSwitchNextButton, BorderLayout.EAST);
+				}
+				p.add(q);
+			}
+			mainPanel.add(p);
+			
+		} else if (viewId == ID_CONTROL_VIEW) {
+			
+			mainPanel.add(menuBar, BorderLayout.NORTH);
+			JPanel p = new JPanel(); {
+				SpringLayout s = new SpringLayout();
+				p.setLayout(s);
+				
+				JPanel q = new JPanel(new BorderLayout()); {
+					q.add(viewSwitchNextButton, BorderLayout.WEST);
+					q.add(viewSwitchNextButton, BorderLayout.EAST);
+				}
+				p.add(q);
+			}
+			mainPanel.add(p);
+			
+		}
+	}
+	
+	public void createController() {
+	}
+	
+	public void display() {
+		refresh();
+		mainFrame.pack();
+		mainFrame.setLocationRelativeTo(null);
+		mainFrame.setVisible(true);
+	}
+
+	private void refresh() {
+		
+	}
+
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				new Steiner().display();
+			}
+			
+		});
+	}
+
+}

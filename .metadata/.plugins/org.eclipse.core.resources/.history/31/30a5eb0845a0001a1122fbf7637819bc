@@ -1,0 +1,271 @@
+package steinerGraphJava.model;
+
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.awt.FlowLayout;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import javax.swing.JSeparator;
+import javax.swing.Box;
+import java.awt.BorderLayout;
+
+public class GraphView extends JPanel {
+	private JTextField txtNomDuNoeud;
+	private JTextField txtNomDuNoeud_2;
+	private JTextField txtNom;
+	private JTextField txtNomdest;
+
+	/**
+	 * Create the panel.
+	 */
+	public GraphView() {
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		
+		JSplitPane splitPane = new JSplitPane();
+		add(splitPane);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		splitPane.setLeftComponent(scrollPane);
+		
+		JPanel panel = new JPanel();
+		scrollPane.setViewportView(panel);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		panel.add(horizontalGlue);
+		
+		JPanel panel_15 = new JPanel();
+		panel.add(panel_15);
+		panel_15.setLayout(new BoxLayout(panel_15, BoxLayout.Y_AXIS));
+		
+		JPanel panel_16 = new JPanel();
+		panel_15.add(panel_16);
+		panel_16.setLayout(new BoxLayout(panel_16, BoxLayout.Y_AXIS));
+		
+		JPanel Fichier = new JPanel();
+		panel_16.add(Fichier);
+		Fichier.setLayout(new BoxLayout(Fichier, BoxLayout.Y_AXIS));
+		
+		JPanel panel_3 = new JPanel();
+		Fichier.add(panel_3);
+		panel_3.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
+		
+		JLabel lblFichier = new JLabel("Fichier");
+		lblFichier.setHorizontalAlignment(SwingConstants.LEFT);
+		panel_3.add(lblFichier);
+		
+		JPanel panel_2 = new JPanel();
+		Fichier.add(panel_2);
+		FlowLayout flowLayout_7 = (FlowLayout) panel_2.getLayout();
+		flowLayout_7.setAlignment(FlowLayout.LEADING);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panel_2.add(horizontalStrut);
+		
+		JButton btnAjouter = new JButton("Ajouter");
+		panel_2.add(btnAjouter);
+		
+		JButton btnSauvegarder = new JButton("Sauvegarder");
+		panel_2.add(btnSauvegarder);
+		
+		JSeparator separator_1 = new JSeparator();
+		panel_16.add(separator_1);
+		
+		JPanel Edition = new JPanel();
+		panel_16.add(Edition);
+		Edition.setLayout(new BoxLayout(Edition, BoxLayout.Y_AXIS));
+		
+		JPanel panel_9 = new JPanel();
+		FlowLayout flowLayout_5 = (FlowLayout) panel_9.getLayout();
+		flowLayout_5.setAlignment(FlowLayout.LEADING);
+		Edition.add(panel_9);
+		
+		JLabel lblEdition = new JLabel("Edition");
+		panel_9.add(lblEdition);
+		
+		JPanel panel_10 = new JPanel();
+		FlowLayout flowLayout_6 = (FlowLayout) panel_10.getLayout();
+		flowLayout_6.setAlignment(FlowLayout.LEADING);
+		Edition.add(panel_10);
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		panel_10.add(horizontalStrut_1);
+		
+		JButton btnAnnuler = new JButton("Annuler");
+		panel_10.add(btnAnnuler);
+		
+		JButton btnRefaire = new JButton("Refaire");
+		panel_10.add(btnRefaire);
+		
+		JSeparator separator_2 = new JSeparator();
+		panel_16.add(separator_2);
+		
+		JPanel Graph = new JPanel();
+		panel_16.add(Graph);
+		Graph.setLayout(new BoxLayout(Graph, BoxLayout.Y_AXIS));
+		
+		JPanel panel_4 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		Graph.add(panel_4);
+		
+		JLabel lblGraph = new JLabel("Graph");
+		lblGraph.setHorizontalAlignment(SwingConstants.LEFT);
+		panel_4.add(lblGraph);
+		
+		JPanel panel_5 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_5.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEADING);
+		Graph.add(panel_5);
+		
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		panel_5.add(horizontalStrut_2);
+		
+		JButton btnVider = new JButton("Vider");
+		panel_5.add(btnVider);
+		
+		JPanel panel_6 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_6.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEADING);
+		Graph.add(panel_6);
+		
+		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+		panel_6.add(horizontalStrut_3);
+		
+		JButton btnAjouter_1 = new JButton("Ajouter");
+		panel_6.add(btnAjouter_1);
+		
+		JLabel lblLeNoeud = new JLabel("le noeud :");
+		panel_6.add(lblLeNoeud);
+		
+		txtNomDuNoeud = new JTextField();
+		txtNomDuNoeud.setText("nom du noeud");
+		panel_6.add(txtNomDuNoeud);
+		txtNomDuNoeud.setColumns(10);
+		
+		JPanel panel_8 = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) panel_8.getLayout();
+		flowLayout_3.setAlignment(FlowLayout.LEADING);
+		Graph.add(panel_8);
+		
+		Component horizontalStrut_4 = Box.createHorizontalStrut(20);
+		panel_8.add(horizontalStrut_4);
+		
+		JButton btnRetirer = new JButton("Retirer");
+		panel_8.add(btnRetirer);
+		
+		JLabel lblLeNoeud_2 = new JLabel("le noeud :");
+		panel_8.add(lblLeNoeud_2);
+		
+		txtNomDuNoeud_2 = new JTextField();
+		txtNomDuNoeud_2.setText("nom du noeud");
+		panel_8.add(txtNomDuNoeud_2);
+		txtNomDuNoeud_2.setColumns(10);
+		
+		JPanel panel_7 = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panel_7.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.LEADING);
+		Graph.add(panel_7);
+		
+		Component horizontalStrut_5 = Box.createHorizontalStrut(20);
+		panel_7.add(horizontalStrut_5);
+		
+		JButton btnRenommer = new JButton("Renommer");
+		panel_7.add(btnRenommer);
+		
+		JLabel lblDe = new JLabel("de :");
+		panel_7.add(lblDe);
+		
+		txtNom = new JTextField();
+		txtNom.setText("nom");
+		panel_7.add(txtNom);
+		txtNom.setColumns(10);
+		
+		JLabel lblEn = new JLabel("en");
+		panel_7.add(lblEn);
+		
+		txtNomdest = new JTextField();
+		txtNomdest.setText("nomdest");
+		panel_7.add(txtNomdest);
+		txtNomdest.setColumns(10);
+		
+		JSeparator separator_3 = new JSeparator();
+		panel_16.add(separator_3);
+		
+		JPanel Stats = new JPanel();
+		panel_16.add(Stats);
+		Stats.setLayout(new BoxLayout(Stats, BoxLayout.Y_AXIS));
+		
+		JPanel panel_13 = new JPanel();
+		FlowLayout flowLayout_9 = (FlowLayout) panel_13.getLayout();
+		flowLayout_9.setAlignment(FlowLayout.LEADING);
+		Stats.add(panel_13);
+		
+		JLabel lblStats = new JLabel("Stats");
+		panel_13.add(lblStats);
+		
+		JPanel panel_14 = new JPanel();
+		FlowLayout flowLayout_10 = (FlowLayout) panel_14.getLayout();
+		flowLayout_10.setAlignment(FlowLayout.LEADING);
+		Stats.add(panel_14);
+		
+		Component horizontalStrut_6 = Box.createHorizontalStrut(20);
+		panel_14.add(horizontalStrut_6);
+		
+		JButton btnVoir = new JButton("Voir");
+		panel_14.add(btnVoir);
+		
+		Component horizontalGlue_1 = Box.createHorizontalGlue();
+		panel_14.add(horizontalGlue_1);
+		
+		JSeparator separator = new JSeparator();
+		panel_16.add(separator);
+		
+		JPanel Steiner = new JPanel();
+		panel_16.add(Steiner);
+		Steiner.setLayout(new BoxLayout(Steiner, BoxLayout.Y_AXIS));
+		
+		JPanel panel_11 = new JPanel();
+		FlowLayout flowLayout_8 = (FlowLayout) panel_11.getLayout();
+		flowLayout_8.setAlignment(FlowLayout.LEADING);
+		Steiner.add(panel_11);
+		
+		JLabel lblSteiner = new JLabel("Steiner");
+		panel_11.add(lblSteiner);
+		
+		JPanel panel_12 = new JPanel();
+		Steiner.add(panel_12);
+		panel_12.setLayout(new FlowLayout(FlowLayout.LEADING, 5, 5));
+		
+		Component horizontalStrut_7 = Box.createHorizontalStrut(20);
+		panel_12.add(horizontalStrut_7);
+		
+		JButton btnRsoudre = new JButton("Résoudre");
+		panel_12.add(btnRsoudre);
+		
+		JButton btnVoirLoriginal = new JButton("Voir l'original");
+		panel_12.add(btnVoirLoriginal);
+		
+		Component horizontalGlue_2 = Box.createHorizontalGlue();
+		panel.add(horizontalGlue_2);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		splitPane.setRightComponent(scrollPane_1);
+		
+		JPanel panel_1 = new JPanel();
+		scrollPane_1.setViewportView(panel_1);
+
+	}
+
+}

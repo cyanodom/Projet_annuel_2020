@@ -1,0 +1,313 @@
+package steinerGraphJava.model;
+
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.awt.FlowLayout;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import javax.swing.JSeparator;
+import javax.swing.Box;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.border.EtchedBorder;
+
+public class GraphView extends JPanel {
+	private JTextField txtNomDuNoeud;
+	private JTextField txtNomDuNoeud_1;
+	private JTextField txtNomDuNoeud_2;
+	private JTextField txtNomDuNoeud_3;
+	public GraphView() {
+		
+		JSplitPane splitPane = new JSplitPane();
+		add(splitPane);
+		
+		JPanel leftPanel = new JPanel();
+		
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		setLayout(gridBagLayout);
+		
+		JPanel panel_4 = new JPanel();
+		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
+		gbc_panel_4.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_4.fill = GridBagConstraints.BOTH;
+		gbc_panel_4.gridx = 1;
+		gbc_panel_4.gridy = 0;
+		leftPanel.add(panel_4, gbc_panel_4);
+		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.Y_AXIS));
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		panel_4.add(verticalStrut);
+		
+		Component verticalGlue = Box.createVerticalGlue();
+		panel_4.add(verticalGlue);
+		
+		JPanel panel_6 = new JPanel();
+		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
+		gbc_panel_6.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_6.fill = GridBagConstraints.BOTH;
+		gbc_panel_6.gridx = 0;
+		gbc_panel_6.gridy = 1;
+		leftPanel.add(panel_6, gbc_panel_6);
+		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.X_AXIS));
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		horizontalStrut.setPreferredSize(new Dimension(30, 0));
+		panel_6.add(horizontalStrut);
+		
+		Component horizontalGlue_2 = Box.createHorizontalGlue();
+		panel_6.add(horizontalGlue_2);
+		
+		JLabel lblFichier = new JLabel("Fichier");
+		GridBagConstraints gbc_lblFichier = new GridBagConstraints();
+		gbc_lblFichier.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFichier.gridx = 1;
+		gbc_lblFichier.gridy = 1;
+		leftPanel.add(lblFichier, gbc_lblFichier);
+		
+		Component horizontalGlue_1 = Box.createHorizontalGlue();
+		GridBagConstraints gbc_horizontalGlue_1 = new GridBagConstraints();
+		gbc_horizontalGlue_1.insets = new Insets(0, 0, 5, 5);
+		gbc_horizontalGlue_1.gridx = 2;
+		gbc_horizontalGlue_1.gridy = 1;
+		leftPanel.add(horizontalGlue_1, gbc_horizontalGlue_1);
+		
+		JButton btnAjouter_1 = new JButton("Ajouter");
+		GridBagConstraints gbc_btnAjouter_1 = new GridBagConstraints();
+		gbc_btnAjouter_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAjouter_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnAjouter_1.gridx = 3;
+		gbc_btnAjouter_1.gridy = 1;
+		leftPanel.add(btnAjouter_1, gbc_btnAjouter_1);
+		
+		JButton btnSauvegarder = new JButton("Sauvegarder");
+		GridBagConstraints gbc_btnSauvegarder = new GridBagConstraints();
+		gbc_btnSauvegarder.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSauvegarder.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSauvegarder.gridx = 4;
+		gbc_btnSauvegarder.gridy = 1;
+		leftPanel.add(btnSauvegarder, gbc_btnSauvegarder);
+		
+		JPanel panel_7 = new JPanel();
+		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
+		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_7.fill = GridBagConstraints.BOTH;
+		gbc_panel_7.gridx = 7;
+		gbc_panel_7.gridy = 1;
+		leftPanel.add(panel_7, gbc_panel_7);
+		panel_7.setLayout(new BoxLayout(panel_7, BoxLayout.X_AXIS));
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		panel_7.add(horizontalStrut_1);
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		panel_7.add(horizontalGlue);
+		
+		Component verticalGlue_2 = Box.createVerticalGlue();
+		GridBagConstraints gbc_verticalGlue_2 = new GridBagConstraints();
+		gbc_verticalGlue_2.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalGlue_2.gridx = 1;
+		gbc_verticalGlue_2.gridy = 2;
+		leftPanel.add(verticalGlue_2, gbc_verticalGlue_2);
+		
+		JLabel lblEdition = new JLabel("Edition");
+		GridBagConstraints gbc_lblEdition = new GridBagConstraints();
+		gbc_lblEdition.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEdition.gridx = 1;
+		gbc_lblEdition.gridy = 3;
+		leftPanel.add(lblEdition, gbc_lblEdition);
+		
+		JButton btnAnnuler = new JButton("Annuler");
+		GridBagConstraints gbc_btnAnnuler = new GridBagConstraints();
+		gbc_btnAnnuler.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAnnuler.insets = new Insets(0, 0, 5, 5);
+		gbc_btnAnnuler.gridx = 3;
+		gbc_btnAnnuler.gridy = 3;
+		leftPanel.add(btnAnnuler, gbc_btnAnnuler);
+		
+		JButton btnRefaire = new JButton("Refaire");
+		GridBagConstraints gbc_btnRefaire = new GridBagConstraints();
+		gbc_btnRefaire.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnRefaire.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRefaire.gridx = 4;
+		gbc_btnRefaire.gridy = 3;
+		leftPanel.add(btnRefaire, gbc_btnRefaire);
+		
+		Component verticalGlue_3 = Box.createVerticalGlue();
+		GridBagConstraints gbc_verticalGlue_3 = new GridBagConstraints();
+		gbc_verticalGlue_3.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalGlue_3.gridx = 1;
+		gbc_verticalGlue_3.gridy = 4;
+		leftPanel.add(verticalGlue_3, gbc_verticalGlue_3);
+		
+		JLabel lblGraph = new JLabel("Graph");
+		GridBagConstraints gbc_lblGraph = new GridBagConstraints();
+		gbc_lblGraph.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGraph.gridx = 1;
+		gbc_lblGraph.gridy = 5;
+		leftPanel.add(lblGraph, gbc_lblGraph);
+		
+		JButton btnVider = new JButton("Vider");
+		GridBagConstraints gbc_btnVider = new GridBagConstraints();
+		gbc_btnVider.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnVider.insets = new Insets(0, 0, 5, 5);
+		gbc_btnVider.gridx = 3;
+		gbc_btnVider.gridy = 5;
+		leftPanel.add(btnVider, gbc_btnVider);
+		
+		JButton btnAjouter = new JButton("Ajouter");
+		GridBagConstraints gbc_btnAjouter = new GridBagConstraints();
+		gbc_btnAjouter.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAjouter.insets = new Insets(0, 0, 5, 5);
+		gbc_btnAjouter.gridx = 3;
+		gbc_btnAjouter.gridy = 6;
+		leftPanel.add(btnAjouter, gbc_btnAjouter);
+		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 4;
+		gbc_panel.gridy = 6;
+		leftPanel.add(panel, gbc_panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		JLabel lblLeNoeud = new JLabel("le noeud :");
+		panel.add(lblLeNoeud);
+		
+		txtNomDuNoeud = new JTextField();
+		txtNomDuNoeud.setText("nom du noeud");
+		panel.add(txtNomDuNoeud);
+		txtNomDuNoeud.setColumns(10);
+		
+		JButton btnSupprimer = new JButton("Supprimer");
+		GridBagConstraints gbc_btnSupprimer = new GridBagConstraints();
+		gbc_btnSupprimer.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSupprimer.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSupprimer.gridx = 5;
+		gbc_btnSupprimer.gridy = 6;
+		leftPanel.add(btnSupprimer, gbc_btnSupprimer);
+		
+		JPanel panel_1 = new JPanel();
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 6;
+		gbc_panel_1.gridy = 6;
+		leftPanel.add(panel_1, gbc_panel_1);
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
+		
+		JLabel lblLeNoeud_1 = new JLabel("le noeud :");
+		panel_1.add(lblLeNoeud_1);
+		
+		txtNomDuNoeud_1 = new JTextField();
+		txtNomDuNoeud_1.setText("nom du noeud");
+		panel_1.add(txtNomDuNoeud_1);
+		txtNomDuNoeud_1.setColumns(10);
+		
+		JButton btnRenommer = new JButton("Renommer");
+		GridBagConstraints gbc_btnRenommer = new GridBagConstraints();
+		gbc_btnRenommer.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRenommer.gridx = 3;
+		gbc_btnRenommer.gridy = 7;
+		leftPanel.add(btnRenommer, gbc_btnRenommer);
+		
+		JPanel panel_2 = new JPanel();
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.gridx = 4;
+		gbc_panel_2.gridy = 7;
+		leftPanel.add(panel_2, gbc_panel_2);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+		
+		JLabel lblDe = new JLabel("de :");
+		panel_2.add(lblDe);
+		
+		txtNomDuNoeud_2 = new JTextField();
+		txtNomDuNoeud_2.setText("nom du noeud");
+		panel_2.add(txtNomDuNoeud_2);
+		txtNomDuNoeud_2.setColumns(10);
+		
+		JPanel panel_3 = new JPanel();
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridx = 5;
+		gbc_panel_3.gridy = 7;
+		leftPanel.add(panel_3, gbc_panel_3);
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
+		
+		JLabel lblEn = new JLabel("en :");
+		panel_3.add(lblEn);
+		
+		txtNomDuNoeud_3 = new JTextField();
+		txtNomDuNoeud_3.setText("nom du noeud");
+		panel_3.add(txtNomDuNoeud_3);
+		txtNomDuNoeud_3.setColumns(10);
+		
+		Component verticalGlue_4 = Box.createVerticalGlue();
+		GridBagConstraints gbc_verticalGlue_4 = new GridBagConstraints();
+		gbc_verticalGlue_4.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalGlue_4.gridx = 1;
+		gbc_verticalGlue_4.gridy = 8;
+		leftPanel.add(verticalGlue_4, gbc_verticalGlue_4);
+		
+		JLabel lblSteiner = new JLabel("Steiner");
+		GridBagConstraints gbc_lblSteiner = new GridBagConstraints();
+		gbc_lblSteiner.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSteiner.gridx = 1;
+		gbc_lblSteiner.gridy = 9;
+		leftPanel.add(lblSteiner, gbc_lblSteiner);
+		
+		JButton btnRsoudre = new JButton("Résoudre");
+		GridBagConstraints gbc_btnRsoudre = new GridBagConstraints();
+		gbc_btnRsoudre.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnRsoudre.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRsoudre.gridx = 3;
+		gbc_btnRsoudre.gridy = 9;
+		leftPanel.add(btnRsoudre, gbc_btnRsoudre);
+		
+		JButton btnVoirLoriginal = new JButton("Voir l'original");
+		GridBagConstraints gbc_btnVoirLoriginal = new GridBagConstraints();
+		gbc_btnVoirLoriginal.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnVoirLoriginal.insets = new Insets(0, 0, 5, 5);
+		gbc_btnVoirLoriginal.gridx = 4;
+		gbc_btnVoirLoriginal.gridy = 9;
+		leftPanel.add(btnVoirLoriginal, gbc_btnVoirLoriginal);
+		
+		JPanel panel_5 = new JPanel();
+		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
+		gbc_panel_5.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_5.gridx = 1;
+		gbc_panel_5.gridy = 10;
+		leftPanel.add(panel_5, gbc_panel_5);
+		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.Y_AXIS));
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		panel_5.add(verticalStrut_1);
+		
+		Component verticalGlue_1 = Box.createVerticalGlue();
+		panel_5.add(verticalGlue_1);
+		
+		JPanel panel_6 = new JPanel();
+		splitPane.setRightComponent(panel);
+		
+
+	}
+
+}

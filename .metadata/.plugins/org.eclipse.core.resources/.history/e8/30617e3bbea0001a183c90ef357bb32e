@@ -1,0 +1,73 @@
+package steinerGraphJava.model;
+
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.awt.FlowLayout;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import javax.swing.JSeparator;
+import javax.swing.Box;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.border.EtchedBorder;
+
+public class GraphView extends JPanel {
+	public GraphView() {
+		
+		JPanel panel = new JPanel();
+		add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		JPanel panel_1 = new JPanel();
+		panel.add(panel_1, BorderLayout.NORTH);
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+		
+		Component verticalGlue = Box.createVerticalGlue();
+		panel_1.add(verticalGlue);
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		panel_1.add(verticalStrut);
+		
+		JPanel panel_2 = new JPanel();
+		panel.add(panel_2, BorderLayout.SOUTH);
+		
+		Component verticalGlue_1 = Box.createVerticalGlue();
+		panel_2.add(verticalGlue_1);
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		panel_2.add(verticalStrut_1);
+		
+		JPanel panel_3 = new JPanel();
+		panel.add(panel_3);
+		
+		Component horizontalGlue_1 = Box.createHorizontalGlue();
+		panel_3.add(horizontalGlue_1);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panel_3.add(horizontalStrut);
+		
+		JPanel panel_4 = new JPanel();
+		panel.add(panel_4);
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		panel_4.add(horizontalStrut_1);
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		panel_4.add(horizontalGlue);
+		
+		JPanel mainPanel = new JPanel();
+		panel.add(mainPanel);
+
+	}
+
+}

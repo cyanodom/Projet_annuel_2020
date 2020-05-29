@@ -1,0 +1,22 @@
+package steinerGraphJava.model;
+
+import java.io.File;
+
+import steinerGraphJava.graph.IGraph;
+import steinerGraphJava.model.ObservableModel;
+
+public interface ISteinerModel extends ObservableModel {
+
+	
+	enum State {
+		SOLVED,
+		FILE_CHANGED,
+		GRAPH_CHANGED;
+	}
+
+	IGraph getGraph();
+
+	void addFile(File selectedFile);
+
+	Iterable getFileNames();
+}

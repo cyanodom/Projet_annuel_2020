@@ -1,0 +1,17 @@
+package steinerGraphJava.graphics;
+
+public class PointTime {
+	
+	private int time;
+	private int point;
+	
+	public PoinTime(int i, int t) {
+		point = i;
+		time = t;
+	}
+	
+	public int getTime() {
+		return 0;
+	}
+
+}

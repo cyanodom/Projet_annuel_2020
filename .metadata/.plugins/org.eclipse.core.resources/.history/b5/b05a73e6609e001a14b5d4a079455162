@@ -1,0 +1,7 @@
+package steinerGraphJava.model;
+
+import steinerGraphJava.model.*;
+
+public interface ISteinerModel extends ObservableModel {
+
+}

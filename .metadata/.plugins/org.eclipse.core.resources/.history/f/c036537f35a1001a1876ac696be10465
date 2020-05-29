@@ -1,0 +1,5 @@
+package steinerGraphJava.graph;
+
+public class GraphException extends Exception {
+
+}

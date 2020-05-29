@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<moveEntry
+		id="org.eclipse.wb.swing.BoxLayout javax.swing.Box createHorizontalStrut(int)"
+		category="org.eclipse.wb.swing.BoxLayout"/>
+</commands>

@@ -8,6 +8,7 @@ public class Arc {
 		nodes = new Node[2];
 		nodes[0] = first;
 		nodes[1] = second;
+		this.weight = weight;
 	}
 	
 	public Node[] getNodes() {

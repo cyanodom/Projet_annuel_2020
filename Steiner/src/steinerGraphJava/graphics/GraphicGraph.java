@@ -269,6 +269,8 @@ public class GraphicGraph extends JComponent implements Scrollable {
 						+ ARC_SIZE),
 						y + SPACING);
 				
+				System.out.println("#" + c);
+				
 				String str =
 						Integer.toString(pt.getTime());
 				
