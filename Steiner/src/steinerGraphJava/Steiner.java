@@ -1395,6 +1395,9 @@ public class Steiner {
 			message = "Cela est notre faute ... ce n'est pas normal, mais pas bien dangeureux\n"
 					+ "PS: cette erreur se produit souvent lorsque le graph est vide\nlors de la résolution";
 			messageSeverity = "Attention";
+		case ASSERTION_ERROR:
+			message = "Cela est notre faute ... je ne pensais pas cela possible\n";
+			messageSeverity = "Attention";
 		default:
 			break;
 		}

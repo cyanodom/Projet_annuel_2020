@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import steinerGraphJava.graphics.PointTime;
 
-public interface IGraph {
+public interface IGraph extends Cloneable {
 	Node[] getNodes();
 
 	void removeNode(String n) throws GraphException;
@@ -38,10 +38,12 @@ public interface IGraph {
 
 	Hashtable<String, PointTime[]> getListSucc();
 
-	void makeRemove(IGraph trans);
+	void makeRemove(IGraph trans) throws GraphException;
 
 	void empty();
 
 	void removeArc(String firstNode, String secondNode) throws GraphException;
+
+	IGraph clone();
 
 }

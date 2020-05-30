@@ -70,6 +70,9 @@ public class Translator {
 	
 	public static void writeGraph(IGraph graph, File file) throws GraphFileException {
 		try {
+			if (file.exists()) {
+				file.delete();
+			}
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
 			boolean first = true;
 			for (Node n : graph.getNodes()) {

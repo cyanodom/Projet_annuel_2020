@@ -28,6 +28,28 @@ public class Graph implements IGraph, Serializable {
 		shape = new LinkedList<Arc>();
 		nodes = new Node[0];
 	}
+	
+	public Graph(IGraph graph) {
+		this();
+		for (Node n : graph.getNodes()) {
+			try {
+				addNode(graph.convertNodeToName(n));
+			} catch (GraphException e) {
+			}
+		}
+		for (Arc a : graph.getShape()) {
+			try {
+				addArc(graph.convertNodeToName(a.getNodes()[0]), graph.convertNodeToName(a.getNodes()[1]), a.getWeight());
+			} catch (GraphException e) {
+			}
+		}
+	}
+
+	@Override
+	public IGraph clone() {
+		IGraph g = new Graph(this);
+		return g;
+	}
 
 
 	// REQUETES
@@ -188,14 +210,14 @@ public class Graph implements IGraph, Serializable {
 	}
 
 	@Override
-	public void makeRemove(IGraph graph) {
+	public void makeRemove(IGraph graph) throws GraphException {
 		for (Node n : graph.getNodes()) {
 			String name = graph.convertNodeToName(n);
 			if (userAssociatedNodeNames.containsValue(name)) {
-				for (Node m : nodes) {
-					if (convertNodeToName(m) == name) {
-						userAssociatedNodeNames.remove(m);
-					}
+				try {
+					removeNode(name);
+				} catch (GraphException e) {
+					throw new GraphException("Ceci n'est pas censé arriver", GraphException.ErrorType.ASSERTION_ERROR);
 				}
 			}
 		}

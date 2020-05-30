@@ -18,7 +18,8 @@ public class GraphException extends Exception {
 		IO_ERROR,
 		SEE_ALREADY_ORIGINAL,
 		BIG_BAD_ERROR,
-		SOLVE_ARRAY_OUT_OF_BOUNDS
+		SOLVE_ARRAY_OUT_OF_BOUNDS,
+		ASSERTION_ERROR
 	}
 
 	public GraphException(String string, ErrorType err) {

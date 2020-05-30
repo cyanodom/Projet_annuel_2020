@@ -47,15 +47,11 @@ public interface ISteinerModel extends ObservableModel {
 
 	boolean isSolved();
 
-	Integer getNbModification();
-
 	String getTimeToSolve();
-
-	Integer getEfficiency();
 
 	void renameNode(String answerSource, String answerDest) throws GraphException;
 
-  String getPoids();
-
-  String getPenality();
+	String getPoids();
+	
+	String getPenality();
 }

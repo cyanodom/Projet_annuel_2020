@@ -36,6 +36,8 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	private State state;
 	
 	private long time;
+	
+	private UndoRedoStack stack;
 
 
 	// CONSTRUCTEUR
@@ -46,6 +48,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		isSolved = false;
 		files = new LinkedList<File>();
 		graph = new Graph();
+		stack = new UndoRedoStack(graph);
 	}
 
 
@@ -98,7 +101,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		}
 
 
-		// System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
+		//System.out.println("\nOn sort de l'algo génétique en ayant obtenue les valeurs : ");
 		//System.out.println("Les arcs restants sont : " + res.getArc().size());
 		//printArray(res.getArc());
 		//System.out.println("Poids " + ": " + res.getPoids());
@@ -144,6 +147,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 			throw new GraphException("Erreur d'entrée / sortie", GraphException.ErrorType.IO_ERROR);
 		}
 		files.add(selectedFile);
+		stack.doIt(graph);
 		change();
 	}
 
@@ -161,10 +165,11 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	@Override
 	public void removeFileAtIndex(Integer correspondingIndex) throws GraphException {
 		try {
-			graph.makeRemove(Translator.readGraph(files.get(correspondingIndex)));//TODO
+			graph.makeRemove(Translator.readGraph(files.get(correspondingIndex)));
 		} catch (GraphFileException e) {
 			throw new GraphException("Erreur d'entrée / sortie", GraphException.ErrorType.IO_ERROR);
 		}
+		stack.doIt(graph);
 		change();
 	}
 
@@ -181,21 +186,22 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-
+		graph = stack.undoIt();
+		change();
 	}
 
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-
+		graph = stack.redoIt();
+		change();
 	}
 
 
 	@Override
 	public void emptyGraph() {
 		graph.empty();
+		stack.doIt(graph);
 		change();
 	}
 
@@ -240,17 +246,15 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		}
 		if (arcMode) {
 			graph.addArc(firstNode, secondNode, Integer.parseInt(weight));
-			change();
 		} else {
 			if (firstNode.length() > 2 && firstNode.charAt(0) == '[' && firstNode.charAt(1) == 'T' && firstNode.charAt(2) == ']') {
 				graph.addTerminalNode(firstNode);
-				change();
 			} else {
 				graph.addNode(firstNode);
-				change();
 			}
 		}
-
+		stack.doIt(graph);
+		change();
 	}
 
 
@@ -284,11 +288,11 @@ public class SteinerModel extends Observable implements ISteinerModel {
 		}
 		if (arcMode) {
 			graph.removeArc(firstNode, secondNode);
-			change();
 		} else {
 			graph.removeNode(firstNode);
-			change();
 		}
+		stack.doIt(graph);
+		change();
 	}
 
 
@@ -301,6 +305,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	@Override
 	public void renameNode(String answerSource, String answerDest) throws GraphException {
 		graph.renameNode(answerSource, answerDest);
+		stack.doIt(graph);
 		change();
 	}
 
@@ -325,15 +330,13 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 	@Override
 	public boolean canUndo() {
-		// TODO Auto-generated method stub
-		return false;
+		return stack.canUndo();
 	}
 
 
 	@Override
 	public boolean canRedo() {
-		// TODO Auto-generated method stub
-		return false;
+		return stack.canRedo();
 	}
 
 
@@ -344,21 +347,8 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public Integer getNbModification() {
-		return 0;
-	}
-
-
-	@Override
 	public String getTimeToSolve() {
 		return Long.toString(time);
-	}
-
-
-	@Override
-	public Integer getEfficiency() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private void change() {
