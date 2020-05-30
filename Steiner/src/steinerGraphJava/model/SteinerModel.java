@@ -139,7 +139,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	@Override
 	public void addFile(File selectedFile) throws GraphException {
 		try {
-			graph.makeUnionWith(Translator.trans(selectedFile));
+			graph.makeUnionWith(Translator.readGraph(selectedFile));
 		} catch (GraphFileException e) {
 			throw new GraphException("Erreur d'entrée / sortie", GraphException.ErrorType.IO_ERROR);
 		}
@@ -161,7 +161,7 @@ public class SteinerModel extends Observable implements ISteinerModel {
 	@Override
 	public void removeFileAtIndex(Integer correspondingIndex) throws GraphException {
 		try {
-			graph.makeRemove(Translator.trans(files.get(correspondingIndex)));
+			graph.makeRemove(Translator.readGraph(files.get(correspondingIndex)));//TODO
 		} catch (GraphFileException e) {
 			throw new GraphException("Erreur d'entrée / sortie", GraphException.ErrorType.IO_ERROR);
 		}
@@ -170,9 +170,12 @@ public class SteinerModel extends Observable implements ISteinerModel {
 
 
 	@Override
-	public void saveFileTo(File selectedFile) {
-		// TODO Auto-generated method stub
-
+	public void saveFileTo(File selectedFile) throws GraphException {
+		try {
+			Translator.writeGraph((IGraph) graph, selectedFile);
+		} catch (GraphFileException e) {
+			throw new GraphException("Erreur d'entrée / sortie", GraphException.ErrorType.IO_ERROR);
+		}
 	}
 
 

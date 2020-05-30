@@ -5,7 +5,6 @@ import java.util.List;
 
 import steinerGraphJava.graph.GraphException;
 import steinerGraphJava.graph.IGraph;
-import steinerGraphJava.graph.graphFile.GraphFileException;
 import steinerGraphJava.model.ObservableModel;
 
 public interface ISteinerModel extends ObservableModel {
@@ -24,7 +23,7 @@ public interface ISteinerModel extends ObservableModel {
 
 	void removeFileAtIndex(Integer correspondingIndex) throws GraphException;
 
-	void saveFileTo(File selectedFile);
+	void saveFileTo(File selectedFile) throws GraphException;
 
 	void undo();
 

@@ -32,7 +32,7 @@ public class Genetique {
 	// CONSTRUCTEURS
 
 	public Genetique(IGraph graph2, boolean remplacement) {
-		this.complex = graph2.getNodes().length - graph2.getMaxTerminalNodeId();
+		this.complex = graph2.getNodes().length - (graph2.getMaxTerminalNodeId() + 1);
 		this.population = new Population(complex);
 		this.graph = graph2;
 		this.remplacement = remplacement;
@@ -47,7 +47,7 @@ public class Genetique {
 	// COMMANDES
 
 	public void algoGene() {
-		switch(graph.getMaxTerminalNodeId()) {
+		switch(graph.getMaxTerminalNodeId() + 1) {
 		case 1 :
 			System.out.println("Arbre Final : " + graph.getNodes()[0]);
 			System.out.println("Poids de 0");
@@ -56,7 +56,7 @@ public class Genetique {
 			// DIJKSTRA
 			break;
 		default :
-			if (graph.getShape().size() == graph.getMaxTerminalNodeId()) {
+			if (graph.getShape().size() == (graph.getMaxTerminalNodeId() + 1)) {
 				// SI S = T
 				Kruskal kruskal = new Kruskal(graph);
 				kruskal.kruskal();
@@ -107,7 +107,7 @@ public class Genetique {
 			for (int j = 0; j < complex; ++j) {
 				if (population.getList()[i][j] == 0) {
 					res[i].addPenality(-1); 
-					temp[i-nbRes].removeRelatedArc(graph.getNodes()[graph.getMaxTerminalNodeId() + j]);
+					temp[i-nbRes].removeRelatedArc(graph.getNodes()[(graph.getMaxTerminalNodeId() + j + 1)]);
 				}
 			}
 			

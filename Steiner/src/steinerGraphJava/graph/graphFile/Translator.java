@@ -2,8 +2,10 @@ package steinerGraphJava.graph.graphFile;
 
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Hashtable;
 import steinerGraphJava.graph.Arc;
@@ -14,7 +16,7 @@ import steinerGraphJava.graph.Node;
 
 public class Translator {
 
-	public static IGraph trans(File f) throws GraphFileException{
+	public static IGraph readGraph(File f) throws GraphFileException{
 		IGraph graph = new Graph();
 		try {
 			@SuppressWarnings("resource")
@@ -59,11 +61,50 @@ public class Translator {
 			}
 			
 			graph.addData(sommetT.length, nodeTab);
+			
 			br.close();
 		} catch (IOException e) {
 			throw new GraphFileException();
 		}
 		return graph;
+	}
+	
+	public static void writeGraph(IGraph graph, File file) throws GraphFileException {
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(file));
+			boolean first = true;
+			for (Node n : graph.getNodes()) {
+				if (first) {
+					first = false;
+				} else {
+					out.write(' ');
+				}
+				out.write(graph.convertNodeToName(n));
+			}
+			first = true;
+			out.write('\n');
+			for (int i = 0; i <= graph.getMaxTerminalNodeId(); ++i) {
+				if (first) {
+					first = false;
+				} else {
+					out.write(' ');
+				}
+				out.write(graph.convertNodeToName(graph.getNodes()[i]));
+			}
+			for (Arc a : graph.getShape()) {
+				out.write('\n');
+				out.write('(');
+				out.write(graph.convertNodeToName(a.getNodes()[0]));
+				out.write(',');
+				out.write(graph.convertNodeToName(a.getNodes()[1]));
+				out.write(',');
+				out.write(Integer.toString(a.getWeight()));
+				out.write(')');
+			}
+			out.close();
+		} catch (IOException e) {
+			throw new GraphFileException();
+		}
 	}
 	
 	// OUTILS 

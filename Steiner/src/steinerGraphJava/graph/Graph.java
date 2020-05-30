@@ -23,7 +23,7 @@ public class Graph implements IGraph, Serializable {
 
 	public Graph() {
 		userAssociatedNodeNames = new Hashtable<Node, String>();
-		maxTerminalNodeId = 0;
+		maxTerminalNodeId = -1;
 		shape = new LinkedList<Arc>();
 		nodes = new Node[0];
 	}
@@ -66,16 +66,15 @@ public class Graph implements IGraph, Serializable {
 		}
 	}
 
-	//REMOVE
 	@Override
 	public void addData(int length, Node[] nodeTab) {
-		maxTerminalNodeId = length;
+		maxTerminalNodeId = length - 1;
 		nodes = nodeTab;
 	}
 
 	@Override
 	public void addTerminalNode(String nodeName) throws GraphException {
-		insertNode(maxTerminalNodeId, nodeName);
+		insertNode(maxTerminalNodeId + 1, nodeName);
 		maxTerminalNodeId += 1;
 	}
 
@@ -84,6 +83,7 @@ public class Graph implements IGraph, Serializable {
 			throw new GraphException(name + " Ce noeud ne peut être ajouté : il est déja présent !", 
 					GraphException.ErrorType.INSERT_NODE_ALREADY_IN);
 		}
+		
 		Node[] new_nodes = new Node[nodes.length + 1];
 
 		if (node == nodes.length) {
@@ -97,21 +97,15 @@ public class Graph implements IGraph, Serializable {
 		}
 
 		for (int i = 0; i < nodes.length; ++i) {
-			new_nodes[i] = nodes[i];
 			if (i == node) {
-				Node the_new = new Node(nodes.length + 1);
-				new_nodes[nodes.length] = the_new;
-				userAssociatedNodeNames.put(new_nodes[nodes.length], convertNodeToName(nodes[i]));
-				for (Arc a : shape) {
-					if (a.getNodes()[0].equals(nodes[i])) {
-						a.getNodes()[0] = the_new;
-					}
-					if (a.getNodes()[1].equals(nodes[i])) {
-						a.getNodes()[0] = the_new;
-					}
-				}
+				Node endNode = new Node(new_nodes.length);
+				new_nodes[new_nodes.length - 1] = endNode;
+				System.out.println(nodes[i]);
+				System.out.println(maxTerminalNodeId);
+				userAssociatedNodeNames.put(endNode, convertNodeToName(nodes[i]));
 				userAssociatedNodeNames.replace(nodes[i], name);
 			}
+			new_nodes[i] = nodes[i];
 		}
 
 		nodes = new_nodes;
@@ -160,8 +154,8 @@ public class Graph implements IGraph, Serializable {
 				}
 			}
 		}
-		for (int i = maxTerminalNodeId + 1; i < nodes.length; ++i) {
-			for (int j = graph.getMaxTerminalNodeId() + 1; j < graph.getShape().size(); ++j) {
+		for (int i = maxTerminalNodeId; i < nodes.length; ++i) {
+			for (int j = graph.getMaxTerminalNodeId(); j < graph.getShape().size(); ++j) {
 				if (graph.convertNodeToName(new Node (j)) == convertNodeToName(new Node(i + 1))) {
 					result.add(convertNodeToName(new Node(i + 1)));
 				}

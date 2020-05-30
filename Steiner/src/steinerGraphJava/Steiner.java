@@ -962,7 +962,11 @@ public class Steiner {
 
 
 				if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-					model.saveFileTo(fc.getSelectedFile());
+					try {
+						model.saveFileTo(fc.getSelectedFile());
+					} catch (GraphException e) {
+						errorOccured(e);
+					}
 				}
 			}
 
