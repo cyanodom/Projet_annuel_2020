@@ -12,7 +12,6 @@ import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
 import steinerGraphJava.graph.IGraph;
 import steinerGraphJava.graph.Node;
-//import util.Contract;
 
 public class Translator {
 
@@ -110,7 +109,6 @@ public class Translator {
 	// OUTILS 
 	
 	public static int stringToInt(String car) {
-		//Contract.checkCondition(car != null);
 		return Integer.parseInt(car);
 	}
 	

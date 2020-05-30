@@ -104,6 +104,14 @@ public class Graph implements IGraph, Serializable {
 				System.out.println(maxTerminalNodeId);
 				userAssociatedNodeNames.put(endNode, convertNodeToName(nodes[i]));
 				userAssociatedNodeNames.replace(nodes[i], name);
+				for (Arc a : getShape()) {
+					if (a.getNodes()[0].equals(nodes[i])) {
+						a.getNodes()[0] = endNode;
+					}
+					if (a.getNodes()[1].equals(nodes[i])) {
+						a.getNodes()[1] = endNode;
+					}
+				}
 			}
 			new_nodes[i] = nodes[i];
 		}
