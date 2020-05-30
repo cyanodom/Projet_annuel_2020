@@ -2,6 +2,7 @@ package steinerGraphJava.graph;
 
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import steinerGraphJava.graphics.PointTime;
@@ -248,25 +249,48 @@ public class Graph implements IGraph, Serializable {
 	public void removeNode(String node) throws GraphException {
 		for (int i = 0; i < nodes.length; ++i) {
 			if (convertNodeToName(nodes[i]).equals(node)) {
-				if (i <= maxTerminalNodeId) {
-					userAssociatedNodeNames.replace(nodes[i], userAssociatedNodeNames.get(new Node(maxTerminalNodeId + 1)));
-					userAssociatedNodeNames.replace(nodes[maxTerminalNodeId], userAssociatedNodeNames.get(new Node(nodes.length)));
-					userAssociatedNodeNames.remove(nodes[nodes.length -1]);
-					--maxTerminalNodeId;
-					Node[] new_nodes = new Node[nodes.length - 1];
-					for (int j = 0; j < nodes.length - 1; ++j) {
-						new_nodes[j] = nodes[j];
+				int toReplace;
+				Iterator<Arc> itera = getShape().iterator();
+				while (itera.hasNext()) {
+					Arc a = itera.next();
+					if (a.getNodes()[0].equals(nodes[i]) || a.getNodes()[1].equals(nodes[i])) {
+						itera.remove();
 					}
-					nodes = new_nodes;
-				} else {
-					userAssociatedNodeNames.replace(nodes[i], userAssociatedNodeNames.get(new Node(nodes.length)));
-					userAssociatedNodeNames.remove(nodes[nodes.length -1]);
-					Node[] new_nodes = new Node[nodes.length - 1];
-					for (int j = 0; j < nodes.length - 1; ++j) {
-						new_nodes[j] = nodes[j];
-					}
-					nodes = new_nodes;
 				}
+				if (i < maxTerminalNodeId) {
+					userAssociatedNodeNames.replace(nodes[i], convertNodeToName(nodes[maxTerminalNodeId]));
+					for (Arc a : getShape()) {
+						if (a.getNodes()[0].equals(nodes[maxTerminalNodeId])) {
+							a.getNodes()[0] = nodes[i];
+						}
+						if (a.getNodes()[1].equals(nodes[maxTerminalNodeId])) {
+							a.getNodes()[1] = nodes[i];
+						}
+					}
+					toReplace = maxTerminalNodeId;
+					--maxTerminalNodeId;
+				} else {
+					toReplace = i;
+				}
+				if (toReplace != nodes.length - 1) {
+					userAssociatedNodeNames.replace(nodes[toReplace], convertNodeToName(nodes[nodes.length - 1]));
+					userAssociatedNodeNames.remove(nodes[nodes.length - 1]);
+					for (Arc a : getShape()) {
+						if (a.getNodes()[0].equals(nodes[nodes.length - 1])) {
+							a.getNodes()[0] = nodes[toReplace];
+						}
+						if (a.getNodes()[1].equals(nodes[nodes.length - 1])) {
+							a.getNodes()[1] = nodes[toReplace];
+						}
+					}
+				} else {
+					userAssociatedNodeNames.remove(nodes[nodes.length - 1]);
+				}
+				Node[] new_nodes = new Node[nodes.length - 1];
+				for (int j = 0; j < nodes.length - 1; ++j) {
+					new_nodes[j] = nodes[j];
+				}
+				nodes = new_nodes;
 				return;
 			}
 		}
