@@ -1,0 +1,6 @@
+#!/bin/bash
+cd ../bin/class
+find ./ -name "*.class" | jar -cvfm Steiner.jar manifest.txt @/dev/stdin
+mv Steiner.jar ../Steiner.jar
+cd ../../Steiner/src
+

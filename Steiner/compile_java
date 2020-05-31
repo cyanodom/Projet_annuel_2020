@@ -1,3 +1,5 @@
+#!/bin/bash
 cd src
-find ./ -name "*.java" | javac -d ../class @/dev/stdin
-cd ../class && java steinerGraphJava.Steiner && cd ../src
+find ./ -name "*.java" | javac -d ../../bin/class @/dev/stdin
+cp manifest.txt ../../bin/class
+cd ..

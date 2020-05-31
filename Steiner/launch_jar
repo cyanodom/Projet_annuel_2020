@@ -1,0 +1,4 @@
+#!/bin/bash
+cd ../bin
+java -jar Steiner.jar
+cd ../Steiner

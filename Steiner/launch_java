@@ -1,0 +1,2 @@
+#!/bin/bash
+cd ../bin/class && java steinerGraphJava/Steiner && cd ../../Steiner
