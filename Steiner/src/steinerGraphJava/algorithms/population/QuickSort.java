@@ -4,6 +4,10 @@ import java.util.LinkedList;
 
 import steinerGraphJava.graph.Arc;
 
+/*
+ * Les Quicksorts qui peuvent être utiles pour faire des test, ils ne sont pas tous nécessaires au programme.
+ */
+
 public class QuickSort {
 
 	// CONSTRUCTEUR

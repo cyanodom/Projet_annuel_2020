@@ -46,4 +46,6 @@ public interface IGraph extends Cloneable {
 
 	IGraph clone();
 
+	int weightArc(Node firstNode, Node secondNode);
+
 }

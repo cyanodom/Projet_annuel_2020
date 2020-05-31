@@ -345,7 +345,17 @@ public class Graph implements IGraph, Serializable {
 		}
 		return map;
 	}
-
+	
+	@Override
+	public int weightArc(Node firstNode, Node secondNode) {
+        Arc newArc = new Arc(firstNode, secondNode, 0);
+        for (Arc a : getShape()) {
+            if (a.equalsWithoutWeight(newArc)) {
+                return a.getWeight();
+            }
+         }
+		return 0;
+    }
 
 	public void addHash(Hashtable<Node, String> userAssociatedNodeNames2) {
 		userAssociatedNodeNames = userAssociatedNodeNames2;

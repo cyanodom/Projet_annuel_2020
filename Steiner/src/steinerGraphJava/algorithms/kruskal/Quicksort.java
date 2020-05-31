@@ -1,5 +1,8 @@
 package steinerGraphJava.algorithms.kruskal;
 
+/*
+ * Les Quicksorts qui peuvent être utiles pour faire des test, ils ne sont pas tous nécessaires.
+ */
 
 class QuickSort {
 

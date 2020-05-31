@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import steinerGraphJava.algorithms.dijkstra.Dijkstra;
 import steinerGraphJava.algorithms.kruskal.Kruskal;
 import steinerGraphJava.algorithms.population.PoidsPenality;
 import steinerGraphJava.algorithms.population.Population;
@@ -16,6 +17,7 @@ import steinerGraphJava.algorithms.population.QuickSort;
 import steinerGraphJava.graph.Arc;
 import steinerGraphJava.graph.Graph;
 import steinerGraphJava.graph.IGraph;
+import steinerGraphJava.graph.Node;
 
 public class Genetique {
 
@@ -30,9 +32,17 @@ public class Genetique {
 	
 
 	// CONSTRUCTEURS
-
+	
+	/*
+	 * Algorithme Génétique
+	 * 
+	 * remplacement : choix entre élitiste ou générationnel
+	 */
 	public Genetique(IGraph graph2, boolean remplacement) {
 		this.complex = graph2.getNodes().length - (graph2.getMaxTerminalNodeId() + 1);
+		if (complex == 0) {
+			complex = 1;
+		} 
 		this.population = new Population(complex);
 		this.graph = graph2;
 		this.remplacement = remplacement;
@@ -49,27 +59,76 @@ public class Genetique {
 	public void algoGene() {
 		switch(graph.getMaxTerminalNodeId() + 1) {
 		case 1 :
-			System.out.println("Arbre Final : " + graph.getNodes()[0]);
-			System.out.println("Poids de 0");
+			System.out.println("Entre dans cas 1 :");
+			
+			if (graph.getNodes()[0] != null) {
+				LinkedList<Arc> list = new LinkedList<Arc>();
+				list.add(new Arc(graph.getNodes()[0], graph.getNodes()[0],0));
+				
+				res[0].changeArc(list);
+				res[0].addPenality(1);
+				res[0].addPoids(0);	
+			}
 			break;
 		case 2 :
-			// DIJKSTRA
+			System.out.println("Entre dans cas 2 :");
+			
+			LinkedList<Arc> arcList = new LinkedList<Arc>();
+			
+			String[] list = Dijkstra.dijkstra(graph, graph.convertNodeToName(graph.getNodes()[0]), graph.convertNodeToName(graph.getNodes()[1]), false);
+			
+			if (!list.equals(null) || list.length > 2) {
+				Node first = graph.convertNameToNode(list[0]);
+				Node second = graph.convertNameToNode(list[1]);
+				for (int i = 0; i < list.length; i++) {
+					Node[] nodes = new Node[2];
+					nodes[0] = first;
+					nodes[1] = second;
+					Arc arc = new Arc(first, second, graph.weightArc(first, second));
+					arcList.add(arc);
+					if (i+2 != list.length) {
+						first = second;
+						second = graph.convertNameToNode(list[i+2]);
+					} else {
+						break;
+					}
+				}
+
+				res[0].changeArc(arcList);
+				res[0].changePenality(1);
+				for (int i = 0; i < res[0].getArc().size(); ++i) {
+					res[0].addPoids(res[0].getArc().get(i).getWeight());  
+				}
+			} else {
+				res[0].changeArc(arcList);
+				res[0].changePenality(2);
+				res[0].changePoids(0);
+			}
+			
 			break;
 		default :
-			if (graph.getShape().size() == (graph.getMaxTerminalNodeId() + 1)) {
+			if (graph.getNodes().length == (graph.getMaxTerminalNodeId() + 1)) { // autant de sommets terminaux que de sommets
 				// SI S = T
+				
+				System.out.println("Entre dans cas Kruskal S == T:");
+				
 				Kruskal kruskal = new Kruskal(graph);
-				kruskal.kruskal();
-				System.out.println("Le poids de notre arbre est : "); // TODO finir poids
+				
+				res[0].changeArc(kruskal.kruskal());
+				res[0].addPenality(kruskal.getNbArbre());
+				for (int i = 0; i < res[0].getArc().size(); ++i) {
+					res[0].addPoids(res[0].getArc().get(i).getWeight());  
+				}
 			} else {
-				algoGeneNormal(0); // Aucun Ã©lÃ©ment Ã  garder
+				System.out.println("Entre dans cas Algo GENE :");
+				
+				algoGeneNormal(0); // Aucun élément à garder
 				for (int i = 0; i < complex - 1; ++i) {
 					if (remplacement) {
 						// do Elitiste Algo
-						algoGeneNormal(1); // On garde un Ã©lÃ©ment
+						algoGeneNormal(1); // On garde un élément
 					} else {
 						// do Gerenationnel Algo
-						algoGeneNormal((complex - (complex%2))/2);
 					}
 				}
 			}
@@ -93,10 +152,10 @@ public class Genetique {
 			try {
 				temp[i] = newObject(graph);
 			} catch (ClassNotFoundException e) {
-				// TODO IHM MISSING CLASS, SPOILED APPLI, TRY DOWNLOADING AGAIN
+				// TODO Interface s'en charge
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO ERROR DURING CONVERTION, TRY AGAIN 
+				// TODO Interface s'en charge
 				e.printStackTrace();
 			}
 		}
