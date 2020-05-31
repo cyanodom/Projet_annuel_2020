@@ -16,7 +16,7 @@ public class PoidsPenality {
 	// CONSTRUCTEUR
 	
 	/*
-	 * Permet de créer un PoidsPenality, c'est à dire un Objet qui contient les résultats pour un groupe d'individus
+	 * Permet de crÃ©er un PoidsPenality, c'est Ã  dire un Objet qui contient les rÃ©sultats pour un groupe d'individus
 	 * 
 	 * poids : la somme de tous les poids de chaques Arcs
 	 * penality : le nombre d'arbres
@@ -32,21 +32,21 @@ public class PoidsPenality {
 	// REQUETES 
 	
 	/*
-	 * Permet de récupérer le poids de ce groupe
+	 * Permet de rÃ©cupÃ©rer le poids de ce groupe
 	 */
 	public int getPoids() {
 		return poids;
 	}
 	
 	/*
-	 * Permet de récupérer la pénalité de ce groupe
+	 * Permet de rÃ©cupÃ©rer la pÃ©nalitÃ© de ce groupe
 	 */
 	public int getPenality() {
 		return penality;
 	}
 	
 	/*
-	 * Permet de récupérer la liste d'Arc de ce groupe
+	 * Permet de rÃ©cupÃ©rer la liste d'Arc de ce groupe
 	 */
 	public LinkedList<Arc> getArc() {
 		return arc;
@@ -62,7 +62,7 @@ public class PoidsPenality {
 	}
 	
 	/*
-	 * Change la pénalitée de ce groupe avec une nouvelle
+	 * Change la pÃ©nalitÃ©e de ce groupe avec une nouvelle
 	 */
 	public void changePenality(int newPenality) {
 		penality = newPenality;
@@ -83,7 +83,7 @@ public class PoidsPenality {
 	}
 	
 	/*
-	 * Permet de rajouter une pénalitée à la pénalitée actuelle
+	 * Permet de rajouter une pÃ©nalitÃ©e Ã  la pÃ©nalitÃ©e actuelle
 	 */
 	public void addPenality(int addPenality) {
 		penality += addPenality;

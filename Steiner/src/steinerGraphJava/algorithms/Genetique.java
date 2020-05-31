@@ -34,9 +34,9 @@ public class Genetique {
 	// CONSTRUCTEURS
 	
 	/*
-	 * Algorithme Génétique
+	 * Algorithme GÃ©nÃ©tique
 	 * 
-	 * remplacement : choix entre élitiste ou générationnel
+	 * remplacement : choix entre Ã©litiste ou gÃ©nÃ©rationnel
 	 */
 	public Genetique(IGraph graph2, boolean remplacement) {
 		this.complex = graph2.getNodes().length - (graph2.getMaxTerminalNodeId() + 1);
@@ -122,11 +122,11 @@ public class Genetique {
 			} else {
 				System.out.println("Entre dans cas Algo GENE :");
 				
-				algoGeneNormal(0); // Aucun élément à garder
+				algoGeneNormal(0); // Aucun Ã©lÃ©ment Ã  garder
 				for (int i = 0; i < complex - 1; ++i) {
 					if (remplacement) {
 						// do Elitiste Algo
-						algoGeneNormal(1); // On garde un élément
+						algoGeneNormal(1); // On garde un Ã©lÃ©ment
 					} else {
 						// do Gerenationnel Algo
 					}
@@ -152,10 +152,10 @@ public class Genetique {
 			try {
 				temp[i] = newObject(graph);
 			} catch (ClassNotFoundException e) {
-				// TODO Interface s'en charge
+				// Interface s'en charge
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Interface s'en charge
+				// Interface s'en charge
 				e.printStackTrace();
 			}
 		}

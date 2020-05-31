@@ -32,14 +32,14 @@ public class Kruskal {
 	// REQUETES
 	
 	/*
-	 * Permet de renvoyer le poids de l'arbre à la fin de l'algo de kruskal
+	 * Permet de renvoyer le poids de l'arbre Ã  la fin de l'algo de kruskal
 	 */
 	public int getLength() {
 		return length;
 	}
 	
 	/*
-	 * Permet de renvoyer la pénalité de l'arbre à la fin de l'algo de kruskal
+	 * Permet de renvoyer la pÃ©nalitÃ© de l'arbre Ã  la fin de l'algo de kruskal
 	 */
 	public int getNbArbre() {
 		return arbre;
@@ -57,18 +57,18 @@ public class Kruskal {
 		for (int i = 0; i < getLength(); i++) {
 			kara.add(graph.getShape().get(i)); // Ajout d'un Arc
 			// Recherche d'un cycle dans la nouvelle liste
-			if (cycle.findCycle(kara, i + 1 - n)) { // Présence d'un cycle
+			if (cycle.findCycle(kara, i + 1 - n)) { // PrÃ©sence d'un cycle
 				kara.removeLast();  // On retire l'Arc que l'on vient de rajouter
 				++n;
 			} else { // On garde l'Arc
-				arbre = cycle.getNbArbre(); // On met à jour la pénalité avec le nouvelle arbre
+				arbre = cycle.getNbArbre(); // On met Ã  jour la pÃ©nalitÃ© avec le nouvelle arbre
 			}
 		}
 		return kara;
 	}
 	
 	/*
-	 * Permet de remettre à zéro un Arc déjà initialisé
+	 * Permet de remettre Ã  zÃ©ro un Arc dÃ©jÃ  initialisÃ©
 	 */
 	public void vide(Arc kara) {
 		kara.getNodes()[0] = new Node(0);

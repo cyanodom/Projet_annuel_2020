@@ -11,7 +11,7 @@ public class Population {
 	// CONSTRUCTEUR
 	
 	/*
-	 * Nous indiquons combien d'individu nous voulons par génération et par groupe
+	 * Nous indiquons combien d'individu nous voulons par gÃ©nÃ©ration et par groupe
 	 * 
 	 * Ici, nous voulons nbIndividus individus dans nbIndividus groupes
 	 */
@@ -24,7 +24,7 @@ public class Population {
 	// REQUETES
 
 	/*
-	 * Permet de récupérer tous les groupes de la génération créé
+	 * Permet de rÃ©cupÃ©rer tous les groupes de la gÃ©nÃ©ration crÃ©Ã©
 	 */
 	public int[][] getList() {
 		return list;
@@ -35,11 +35,11 @@ public class Population {
 
 	
 	/*
-	 * Permet de générer la population que nous allons ensuite générer
+	 * Permet de gÃ©nÃ©rer la population que nous allons ensuite gÃ©nÃ©rer
 	 * 
-	 * nbRes indique le nombre de groupe que nous voulons garder de la génération précédente
+	 * nbRes indique le nombre de groupe que nous voulons garder de la gÃ©nÃ©ration prÃ©cÃ©dente
 	 * 
-	 * Ici, on prend en compte que les groupes que vous voulez garder sont placés le plus haut possible dans le tableau
+	 * Ici, on prend en compte que les groupes que vous voulez garder sont placÃ©s le plus haut possible dans le tableau
 	 */
 	public void generatePopulation(int nbRes) {
 		for (int i = nbRes; i < nbIndividu; ++i) {
@@ -51,7 +51,7 @@ public class Population {
 	
 	
 	/*
-	 * Permet de créer un bit aléatoirement, càd un nombre compris entre 0 et 1
+	 * Permet de crÃ©er un bit alÃ©atoirement, cÃ d un nombre compris entre 0 et 1
 	 */
 	public int randomBit() {
 		return (int)Math.round(Math.random());

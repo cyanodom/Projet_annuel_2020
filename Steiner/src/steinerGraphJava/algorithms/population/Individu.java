@@ -10,7 +10,7 @@ public class Individu {
 	// CONSTRUCTEUR
 	
 	/*
-	 * Cela représente un individu
+	 * Cela reprÃ©sente un individu
 	 */
 	public Individu(int[] individu) {
 		this.individu = individu;
@@ -20,7 +20,7 @@ public class Individu {
 	// REQUETES
 	
 	/*
-	 * Permet de récupérer un individu
+	 * Permet de rÃ©cupÃ©rer un individu
 	 */
 	public int[] getIndividu() {
 		return individu;

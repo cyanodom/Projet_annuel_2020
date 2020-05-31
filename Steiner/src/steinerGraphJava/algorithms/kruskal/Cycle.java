@@ -29,7 +29,7 @@ public class Cycle {
 	// REQUETES
 	
 	/*
-	 * Permet de rÈcupÈrer le nombre d'arbre dans le dernier passage de findCycle
+	 * Permet de r√©cup√©rer le nombre d'arbre dans le dernier passage de findCycle
 	 */
 	public int getNbArbre() {
 		return nbArbre;
@@ -63,7 +63,7 @@ public class Cycle {
 	}
 
 	/*
-	 * La fonction de recherche de cycle dans un graph gr‚ce ‡ une liste d'Arcs
+	 * La fonction de recherche de cycle dans un graph gr√¢ce √† une liste d'Arcs
 	 * 
 	 * 
 	 */
@@ -77,13 +77,13 @@ public class Cycle {
 			visite[i] = false;
 		}
 
-		nbArbre = 0; // remise ‡ 0 de la pÈnalitÈ
+		nbArbre = 0; // remise √† 0 de la p√©nalit√©
 		
 		createList(kara);
 
 		for (int u = 0; u < nb; u++) { // Passage sur tous les sommets 
 			if (!visite[u]) {
-				++nbArbre; // Ajout d'une pÈnalitÈ si plusieurs arbres
+				++nbArbre; // Ajout d'une p√©nalit√© si plusieurs arbres
 				if (searchCycle(u, visite, -1)) { // Rechercher depuis ce sommet
 					return true;
 				}
@@ -105,7 +105,7 @@ public class Cycle {
 	}
 	
 	/*
-	 * Permet d'ajouter ‡ "list" un Arc
+	 * Permet d'ajouter √† "list" un Arc
 	 */
 	public void addList(Arc tab1) {
 		list[tab1.getNodes()[0].getName() - 1].add(tab1.getNodes()[1].getName());
